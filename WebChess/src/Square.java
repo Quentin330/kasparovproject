@@ -1,16 +1,31 @@
 
 public class Square {
 	
-	private static Coordinate coordinate_;
-	private static Piece current_piece_;
+	private int width;
+	private int heigth;
+	
+	public int getWidth() {
+		return width;
+	}
+	/*public void setWidth(int width) {
+		this.width = width;
+	}*/
+	public int getHeigth() {
+		return heigth;
+	}
+	/*public void setHeigth(int heigth) {
+		this.heigth = heigth;
+	}*/
 	
 	
-	public Square(int x, int y, Piece p) {
-		this.coordinate_ = new Coordinate(x,y);
-		
-		
+	public Square(int heigth, int width) {
+		this.width = width;
+		this.heigth = heigth;
 	}
 	
+	public boolean isThisSquare(int heigth, int width){
+		return (heigth == this.getHeigth() && width == this.width);
+	}
 	
 
 }
