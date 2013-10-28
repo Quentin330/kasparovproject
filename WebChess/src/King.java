@@ -63,4 +63,9 @@ public class King extends Piece{
 		}
 		return movesList;
 	}
+
+
+	protected Piece clone() {
+		return new King( this.getColor(), this.getHeigth(), this.getWidth());
+	}
 }

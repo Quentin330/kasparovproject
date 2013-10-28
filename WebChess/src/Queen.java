@@ -19,6 +19,10 @@ public class Queen extends Piece{
 		movesList1.addAll(movesList2);
 		return movesList1;
 	}
+	
+	protected Piece clone() {
+		return new Queen( this.getColor(), this.getHeigth(), this.getWidth());
+	}
 
 
 }

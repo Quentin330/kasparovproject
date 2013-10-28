@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 abstract public class Piece {
@@ -18,6 +19,8 @@ abstract public class Piece {
 	 */
 	private int width;
 
+	protected abstract Piece clone();
+	
 	public boolean isBlack(){
 		return (this.color.equals("black"));
 	}
@@ -25,7 +28,7 @@ abstract public class Piece {
 	public boolean isWhite(){
 		return (this.color.equals("white"));
 	}
-	
+
 	public String getColor() {
 		return color;
 	}
@@ -49,11 +52,11 @@ abstract public class Piece {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	
+
 	public boolean isDead(){
 		return (this.getHeigth()==0 && this.getWidth()==0);
 	}
-	
+
 	public boolean isOpponent(Board board, int heigth, int width){
 		if (this.isBlack()){
 			return board.isWhite(heigth, width);
@@ -62,7 +65,7 @@ abstract public class Piece {
 			return board.isBlack(heigth, width);
 		}
 	}
-	
+
 	public boolean isSameColor(Board board, int heigth, int width){
 		if (this.isBlack()){
 			return board.isBlack(heigth, width);
@@ -112,7 +115,7 @@ abstract public class Piece {
 		}
 		return movesList;
 	}
-	
+
 	public ArrayList<Square> possibleMovesDroit(Board board){
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		int i = 1;
@@ -160,8 +163,41 @@ abstract public class Piece {
 		}
 		return false;
 	}
-	
+
+	private void estMange(){
+		this.heigth = 0;
+		this.width = 0;
+	}
+
+
+	public void deplacerPiece(Board board, int heigth, int width) throws OutOfBoardException, NonPossibleMoveException{
+		if ((heigth < 1) || (heigth > 8) || (width < 1) || (width > 8)){
+			throw new OutOfBoardException("jeu hors des limites");
+		}
+		ArrayList<Square> listeCoups = this.possibleMoves(board);
+		boolean peutJouer = false;
+		Iterator<Square> it = listeCoups.iterator();
+		while(it.hasNext()){
+			Square s = it.next();
+			if (s.isThisSquare(heigth, width)){
+				peutJouer = true;
+			}
+		}
+		if (!peutJouer){
+			throw new NonPossibleMoveException("coup non possible");
+		}
+		if (board.isEmpty(heigth, width)){
+			this.heigth = heigth;
+			this.width = width;
+		}
+		else{
+			board.getPiece(heigth, width).estMange();
+			this.heigth = heigth;
+			this.width = width;
+		}
+	}
+
 	abstract ArrayList<Square> possibleMoves(Board board);
-	
-	
+
+
 }

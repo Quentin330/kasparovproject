@@ -65,4 +65,8 @@ public class Knight extends Piece{
 		return movesList;
 	}
 
+	protected Piece clone() {
+		return new Knight( this.getColor(), this.getHeigth(), this.getWidth());
+	}
+
 }

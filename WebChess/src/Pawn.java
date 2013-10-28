@@ -71,4 +71,8 @@ public class Pawn extends Piece{
 		}
 		return movesList;
 	}
+	
+	protected Piece clone() {
+		return new Pawn( this.getColor(), this.getHeigth(), this.getWidth());
+	}
 }
