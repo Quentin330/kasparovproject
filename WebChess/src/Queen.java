@@ -20,7 +20,7 @@ public class Queen extends Piece{
 		return movesList1;
 	}
 	
-	protected Piece clone() {
+	protected Queen clone() {
 		return new Queen( this.getColor(), this.getHeigth(), this.getWidth());
 	}
 

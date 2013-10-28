@@ -17,7 +17,7 @@ public class Rook extends Piece{
 		return this.possibleMovesDroit(board);
 	}
 	
-	protected Piece clone() {
+	protected Rook clone() {
 		return new Rook( this.getColor(), this.getHeigth(), this.getWidth());
 	}
 

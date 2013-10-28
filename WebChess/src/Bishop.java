@@ -18,7 +18,7 @@ public class Bishop extends Piece{
 			return this.possibleMovesDiagonale(board);
 		}
 		
-		protected Piece clone() {
+		protected Bishop clone() {
 			return new Bishop( this.getColor(), this.getHeigth(), this.getWidth());
 		}
 }

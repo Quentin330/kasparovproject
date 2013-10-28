@@ -170,7 +170,11 @@ abstract public class Piece {
 	}
 
 
-	public void deplacerPiece(Board board, int heigth, int width) throws OutOfBoardException, NonPossibleMoveException{
+	public void deplacerPiece(Board board, int heigth, int width) throws OutOfBoardException, NonPossibleMoveException, EchecException{
+		int oldHeigth = this.heigth;
+		int oldWidth = this.width;
+		boolean mange = false;
+		Piece pieceMange = new Pawn("blue", 0, 0);
 		if ((heigth < 1) || (heigth > 8) || (width < 1) || (width > 8)){
 			throw new OutOfBoardException("jeu hors des limites");
 		}
@@ -191,9 +195,33 @@ abstract public class Piece {
 			this.width = width;
 		}
 		else{
-			board.getPiece(heigth, width).estMange();
+			mange = true;
+			pieceMange = board.getPiece(heigth, width);
+			pieceMange.estMange();
 			this.heigth = heigth;
 			this.width = width;
+		}
+		if (this.color.equals("black")){
+			if (board.isEchec("black", board.getBlackKing().getHeigth(), board.getBlackKing().getWidth())){
+				this.heigth = oldHeigth;
+				this.width = oldWidth;
+				if (mange){
+					pieceMange.setHeigth(heigth);
+					pieceMange.setWidth(width);
+				}
+				throw new EchecException("Ce mouvement met votre roi en echec");
+			}
+		}
+		else{
+			if (board.isEchec("white", board.getWhiteKing().getHeigth(), board.getWhiteKing().getWidth())){
+				this.heigth = oldHeigth;
+				this.width = oldWidth;
+				if (mange){
+					pieceMange.setHeigth(heigth);
+					pieceMange.setWidth(width);
+				}
+				throw new EchecException("Ce mouvement met votre roi en echec");
+			}
 		}
 	}
 

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class TestFonctions {
 
@@ -41,14 +43,34 @@ public class TestFonctions {
 		Board b = new Board();
 		System.out.println(affichageBoard(b));
 		try{
-			b.deplacerPiece("C2", "C4");
+			/*b.deplacerPiece("E2", "E4");
 			System.out.println(affichageBoard(b));
-			b.deplacerPiece("E7", "E5");
+			b.deplacerPiece("A7", "A5");
 			System.out.println(affichageBoard(b));
-			b.deplacerPiece("D1", "A4");
+			b.deplacerPiece("F1", "B5");
 			System.out.println(affichageBoard(b));
+			b.deplacerPiece("D7", "D5");
+			System.out.println(affichageBoard(b));*/
+			
+			Piece[] pieces = new Piece[32];
+			King roi = new King("black", 8, 5);
+			pieces[0] = roi;
+			King roiInutile = new King("white", 1, 1);
+			pieces[1] = roiInutile;
+			Queen reine = new Queen("white", 2, 5);
+			pieces[2] = reine;
+			Pawn pionNoir = new Pawn("black", 6, 5);
+			pieces[3] = pionNoir;
+			Bishop fouBlanc = new Bishop("white", 5, 6);
+			pieces[4] = fouBlanc;
+			Pawn pionMort = new Pawn("yellow", 0, 0);
+			for (int i = 5; i<32; ++i){
+				pieces[i] = pionMort;
+			}
+			Board board = new Board(pieces, roi, roiInutile);
+			board.deplacerPiece("E6", "F5");
 		}
-		catch (NonPossibleMoveException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

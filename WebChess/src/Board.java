@@ -30,9 +30,16 @@ public class Board {
 	}
 
 	public Board(Piece[] pieces, King blackKing, King whiteKing) {
-		this.pieces = pieces.clone();
-		this.blackKing = blackKing;
-		this.whiteKing = whiteKing;
+		this.pieces = new Piece[32];
+		for (int i = 0; i<32; ++i){
+			this.pieces[i] = pieces[i].clone();
+		}
+		this.blackKing = blackKing.clone();
+		this.whiteKing = whiteKing.clone();
+	}
+	
+	public Board clone(){
+		return new Board(this.pieces, this.blackKing, this.whiteKing);
 	}
 
 	public Board(){
@@ -96,14 +103,14 @@ public class Board {
 
 	public ArrayList<Square> echec(String color){
 		ArrayList<Square> echecList = new ArrayList<Square>();
-		if (color == "black"){
+		if (color.equals("black")){
 			for (int i=0; i<32; ++i){
 				if (this.pieces[i].isWhite()){
 					echecList.addAll(this.pieces[i].possibleMoves(this));
 				}
 			}
 		}
-		if (color == "white"){
+		if (color.equals("white")){
 			for (int i=0; i<32; ++i){
 				if (this.pieces[i].isBlack()){
 					echecList.addAll(this.pieces[i].possibleMoves(this));
