@@ -1,41 +1,73 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
+/**
+ * TODO
+ *
+ */
 public class Board {
 	
-	//-----------------------------------------------------------------------
-	//varaible de classe-----------------------------------------------------
 	
 	//private Square[] historique_;
+	/**
+	 * TODO
+	 */
 	private Piece[] pieces;
+	/**
+	 * TODO
+	 */
 	private King blackKing;
+	/**
+	 * TODO
+	 */
 	private King whiteKing;
 
-	
-	//-----------------------------------------------------------------------
-	//fonctions--------------------------------------------------------------
-	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public Piece[] getPieces() {
 		return pieces;
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public King getBlackKing() {
 		return blackKing;
 	}
 
+	/**
+	 * TODO
+	 * @param blackKing
+	 */
 	public void setBlackKing(King blackKing) {
 		this.blackKing = blackKing;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public King getWhiteKing() {
 		return whiteKing;
 	}
 
+	/**
+	 * TODO
+	 * @param whiteKing
+	 */
 	public void setWhiteKing(King whiteKing) {
 		this.whiteKing = whiteKing;
 	}
 
+	/**
+	 * TODO
+	 * @param pieces
+	 * @param blackKing
+	 * @param whiteKing
+	 */
 	public Board(Piece[] pieces, King blackKing, King whiteKing) {
 		this.pieces = new Piece[32];
 		for (int i = 0; i<32; ++i){
@@ -45,10 +77,16 @@ public class Board {
 		this.whiteKing = whiteKing.clone();
 	}
 	
+	/**
+	 * TODO
+	 */
 	public Board clone(){
 		return new Board(this.pieces, this.blackKing, this.whiteKing);
 	}
 
+	/**
+	 * TODO
+	 */
 	public Board(){
 		this.pieces = new Piece[32];
 		this.pieces[0] = new Rook("black", 8, 1);
@@ -75,6 +113,12 @@ public class Board {
 		this.pieces[31] = new Rook("white", 1, 8);
 	}
 	
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isEmpty(int row, int column){
 		for (int i=0; i<32; ++i){
 			if (this.pieces[i].getRow()==row){
@@ -86,6 +130,12 @@ public class Board {
 		return true;
 	}
 	
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isWhite(int row, int column){
 		for (int i=0; i<32; ++i){
 			if (this.pieces[i].getRow()==row){
@@ -97,6 +147,12 @@ public class Board {
 		return false;
 	}
 	
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isBlack(int row, int column){
 		for (int i=0; i<32; ++i){
 			if (this.pieces[i].getRow()==row){
@@ -108,6 +164,11 @@ public class Board {
 		return false;
 	}
 
+	/**
+	 * TODO
+	 * @param color
+	 * @return
+	 */
 	public ArrayList<Square> echec(String color){
 		ArrayList<Square> echecList = new ArrayList<Square>();
 		if (color.equals("black")){
@@ -127,11 +188,25 @@ public class Board {
 		return echecList;
 	}
 	
+	/**
+	 * TODO
+	 * @param color
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isEchec(String color, int row, int column){
 		ArrayList<Square> echecList = this.echec(color);
 		return this.isEchec(echecList, row, column);
 	}
 	
+	/**
+	 * TODO
+	 * @param echecList
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isEchec(ArrayList<Square> echecList, int row, int column){
 		Iterator<Square> it = echecList.iterator();
 		while (it.hasNext()){
@@ -143,6 +218,12 @@ public class Board {
 		return false;
 	}
 	
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public Piece getPiece(int row, int column){
 		assert (!this.isEmpty(row, column));
 		int i=0;
@@ -154,11 +235,27 @@ public class Board {
 		return this.getPieces()[i];
 	}
 	
+	/**
+	 * TODO
+	 * @param row1
+	 * @param column1
+	 * @param row2
+	 * @param column2
+	 * @throws OutOfBoardException
+	 * @throws NonPossibleMoveException
+	 */
 	public void deplacerPiece(int row1, int column1, int row2, int column2) 
 			throws OutOfBoardException, NonPossibleMoveException{
 		this.getPiece(row1, column1).deplacerPiece(this, row2, column2);
 	}
 	
+	/**
+	 * TODO
+	 * @param caseDepart
+	 * @param caseArrivee
+	 * @throws OutOfBoardException
+	 * @throws NonPossibleMoveException
+	 */
 	public void deplacerPiece(String caseDepart, String caseArrivee) 
 			throws OutOfBoardException, NonPossibleMoveException{
 		assert(!(caseDepart.charAt(0)<'A') && 

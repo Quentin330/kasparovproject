@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
+/**
+ * TODO
+ *
+ */
 abstract public class Piece {
-
-
-	//-----------------------------------------------------------------------
-	//variables de classe----------------------------------------------------
 
 	/**
 	 * black or white 
@@ -24,53 +23,98 @@ abstract public class Piece {
 	private int column;
 
 
-	//-----------------------------------------------------------------------
-	//fonctions abstraites---------------------------------------------------
-
+	/**
+	 * TODO
+	 */
 	protected abstract Piece clone();
 
+	/**
+	 * TODO
+	 * @param board
+	 * @return
+	 */
 	abstract ArrayList<Square> possibleMoves(Board board);
 
 
-	//-----------------------------------------------------------------------
-	//fonctions--------------------------------------------------------------
-
+	/**
+	 * TODO
+	 * @return
+	 */
 	public boolean isBlack(){
 		return (this.color.equals("black"));
 	}
-
+	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public boolean isWhite(){
 		return (this.color.equals("white"));
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public String getColor() {
 		return color;
 	}
 
+	/**
+	 * TODO
+	 * @param color
+	 */
 	public void setColor(String color) {
 		this.color = color;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public int getRow() {
 		return row;
 	}
 
+	/**
+	 * TODO
+	 * @param row
+	 */
 	public void setRow(int row) {
 		this.row = row;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public int getColumn() {
 		return column;
 	}
 
+	/**
+	 * TODO
+	 * @param column
+	 */
 	public void setColumn(int column) {
 		this.column = column;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public boolean isDead(){
 		return (this.getRow()==0 && this.getColumn()==0);
 	}
 
+	/**
+	 * TODO
+	 * @param board
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isOpponent(Board board, int row, int column){
 		if (this.isBlack()){
 			return board.isWhite(row, column);
@@ -80,6 +124,13 @@ abstract public class Piece {
 		}
 	}
 
+	/**
+	 * TODO
+	 * @param board
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isSameColor(Board board, int row, int column){
 		if (this.isBlack()){
 			return board.isBlack(row, column);
@@ -89,6 +140,11 @@ abstract public class Piece {
 		}
 	}
 
+	/**
+	 * TODO
+	 * @param board
+	 * @return
+	 */
 	public ArrayList<Square> possibleMovesDiagonale(Board board){
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		int i = 1;
@@ -134,6 +190,11 @@ abstract public class Piece {
 		return movesList;
 	}
 
+	/**
+	 * TODO
+	 * @param board
+	 * @return
+	 */
 	public ArrayList<Square> possibleMovesDroit(Board board){
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		int i = 1;
@@ -179,6 +240,10 @@ abstract public class Piece {
 		return movesList;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public boolean isKing(){
 		if (this instanceof King){
 			return true;
@@ -186,11 +251,23 @@ abstract public class Piece {
 		return false;
 	}
 
+	/**
+	 * TODO
+	 */
 	private void estMange(){
 		this.row = 0;
 		this.column = 0;
 	}
 
+	/**
+	 * TODO
+	 * @param board
+	 * @param row
+	 * @param column
+	 * @throws OutOfBoardException
+	 * @throws NonPossibleMoveException
+	 * @throws EchecException
+	 */
 	public void deplacerPiece(Board board, int row, int column) 
 			throws OutOfBoardException, NonPossibleMoveException, EchecException{
 

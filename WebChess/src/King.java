@@ -1,15 +1,26 @@
 import java.util.ArrayList;
 
-
+/**
+ * TODO
+ *
+ */
 public class King extends Piece{
 	
+	/**
+	 * TODO
+	 * @param color
+	 * @param heigth
+	 * @param width
+	 */
 	public King(String color, int heigth, int width){
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
 	}
 	
-	
+	/**
+	 * TODO
+	 */
 	public ArrayList<Square> possibleMoves(Board board){
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		//haut
@@ -63,7 +74,9 @@ public class King extends Piece{
 		return movesList;
 	}
 
-
+	/**
+	 * TODO
+	 */
 	protected King clone() {
 		return new King( this.getColor(), this.getRow(), this.getColumn());
 	}

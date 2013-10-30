@@ -1,32 +1,58 @@
-
+/**
+ * TODO
+ *
+ */
 public class Square {
 	
+	/**
+	 * TODO
+	 */
 	private int row;
+	/**
+	 * TODO
+	 */
 	private int column;
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public int getWidth() {
 		return row;
 	}
-	/*public void setWidth(int width) {
-		this.width = width;
-	}*/
+	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public int getHeigth() {
 		return column;
 	}
-	/*public void setHeigth(int heigth) {
-		this.heigth = heigth;
-	}*/
 	
-	
+	/**
+	 * TODO
+	 * @param heigth
+	 * @param width
+	 */
 	public Square(int heigth, int width) {
 		this.row = width;
 		this.column = heigth;
 	}
 	
+	/**
+	 * TODO
+	 * @param heigth
+	 * @param width
+	 * @return
+	 */
 	public boolean isThisSquare(int heigth, int width){
 		return (heigth == this.getHeigth() && width == this.row);
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public String getNomCase(){
 		String nom = new String();
 		if (this.getWidth()==1){

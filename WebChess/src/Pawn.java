@@ -1,15 +1,26 @@
 import java.util.ArrayList;
 
-
+/**
+ * TODO
+ *
+ */
 public class Pawn extends Piece{
 	
+	/**
+	 * TODO
+	 * @param color
+	 * @param heigth
+	 * @param width
+	 */
 	public Pawn(String color, int heigth, int width){
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
 	}
 
-	
+	/**
+	 * TODO
+	 */
 	public ArrayList<Square> possibleMoves(Board board){
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		if (this.isDead()){
@@ -72,6 +83,9 @@ public class Pawn extends Piece{
 		return movesList;
 	}
 	
+	/**
+	 * TODO
+	 */
 	protected Pawn clone() {
 		return new Pawn( this.getColor(), this.getRow(), this.getColumn());
 	}

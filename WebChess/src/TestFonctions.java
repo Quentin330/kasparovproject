@@ -1,12 +1,16 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 /**
- * 
- * @author aramdria
+ * TODO
  *
  */
 public class TestFonctions {
 
+	/**
+	 * TODO
+	 * @param b
+	 * @return
+	 */
 	public static String affichageBoard(Board b){
 		String s = "";
 		Piece p;
@@ -43,40 +47,48 @@ public class TestFonctions {
 		return s;
 	}
 
+	/**
+	 * TODO
+	 * @param argv
+	 */
 	public static void main(String argv[]) {
 		Board b = new Board();
 		System.out.println(affichageBoard(b));
 		try{
-			/*b.deplacerPiece("E2", "E4");
-			System.out.println(affichageBoard(b));
-			b.deplacerPiece("A7", "A5");
-			System.out.println(affichageBoard(b));
-			b.deplacerPiece("F1", "B5");
-			System.out.println(affichageBoard(b));
-			b.deplacerPiece("D7", "D5");
-			System.out.println(affichageBoard(b));*/
-			
-			Piece[] pieces = new Piece[32];
-			King roi = new King("black", 8, 5);
-			pieces[0] = roi;
-			King roiInutile = new King("white", 1, 1);
-			pieces[1] = roiInutile;
-			Queen reine = new Queen("white", 2, 5);
-			pieces[2] = reine;
-			Pawn pionNoir = new Pawn("black", 6, 5);
-			pieces[3] = pionNoir;
-			Bishop fouBlanc = new Bishop("white", 5, 6);
-			pieces[4] = fouBlanc;
-			Pawn pionMort = new Pawn("yellow", 0, 0);
-			for (int i = 5; i<32; ++i){
-				pieces[i] = pionMort;
-			}
-			Board board = new Board(pieces, roi, roiInutile);
-			board.deplacerPiece("E6", "F5");
+			b.deplacerPiece("E2", "E4");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println(affichageBoard(b));
+		try{
+			b.deplacerPiece("A7", "A5");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(affichageBoard(b));
+		try{
+			b.deplacerPiece("F1", "B5");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(affichageBoard(b));
+		try{
+			b.deplacerPiece("D7", "D5");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(affichageBoard(b));
+		try{
+			b.deplacerPiece("C7", "C6");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(affichageBoard(b));
 	}
 
 }
