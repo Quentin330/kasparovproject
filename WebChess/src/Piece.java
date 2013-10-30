@@ -4,6 +4,10 @@ import java.util.Iterator;
 
 abstract public class Piece {
 
+
+	//-----------------------------------------------------------------------
+	//variables de classe----------------------------------------------------
+
 	/**
 	 * black or white 
 	 */
@@ -12,15 +16,25 @@ abstract public class Piece {
 	/**
 	 * position de la pièce en hauteur (de 1 à 8 et 0 si pièce perdue)
 	 */
-	private int heigth;
+	private int row;
 
 	/**
 	 * position de la pièce en largeur (de 1 à 8 et 0 si pièce perdue)
 	 */
-	private int width;
+	private int column;
+
+
+	//-----------------------------------------------------------------------
+	//fonctions abstraites---------------------------------------------------
 
 	protected abstract Piece clone();
-	
+
+	abstract ArrayList<Square> possibleMoves(Board board);
+
+
+	//-----------------------------------------------------------------------
+	//fonctions--------------------------------------------------------------
+
 	public boolean isBlack(){
 		return (this.color.equals("black"));
 	}
@@ -37,41 +51,41 @@ abstract public class Piece {
 		this.color = color;
 	}
 
-	public int getHeigth() {
-		return heigth;
+	public int getRow() {
+		return row;
 	}
 
-	public void setHeigth(int heigth) {
-		this.heigth = heigth;
+	public void setRow(int row) {
+		this.row = row;
 	}
 
-	public int getWidth() {
-		return width;
+	public int getColumn() {
+		return column;
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
+	public void setColumn(int column) {
+		this.column = column;
 	}
 
 	public boolean isDead(){
-		return (this.getHeigth()==0 && this.getWidth()==0);
+		return (this.getRow()==0 && this.getColumn()==0);
 	}
 
-	public boolean isOpponent(Board board, int heigth, int width){
+	public boolean isOpponent(Board board, int row, int column){
 		if (this.isBlack()){
-			return board.isWhite(heigth, width);
+			return board.isWhite(row, column);
 		}
 		else{
-			return board.isBlack(heigth, width);
+			return board.isBlack(row, column);
 		}
 	}
 
-	public boolean isSameColor(Board board, int heigth, int width){
+	public boolean isSameColor(Board board, int row, int column){
 		if (this.isBlack()){
-			return board.isBlack(heigth, width);
+			return board.isBlack(row, column);
 		}
 		else{
-			return board.isWhite(heigth, width);
+			return board.isWhite(row, column);
 		}
 	}
 
@@ -79,39 +93,43 @@ abstract public class Piece {
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		int i = 1;
 		//Mouvement en haut à droite
-		while (this.getHeigth() +i<9 && this.getWidth() +i<9 && board.isEmpty(this.getHeigth() +i, this.getWidth() +i)){
-			movesList.add(new Square(this.getHeigth()+i, this.getWidth()+i));
+		while (this.getRow() +i<9 && this.getColumn() +i<9 && 
+				board.isEmpty(this.getRow() +i, this.getColumn() +i)){
+			movesList.add(new Square(this.getRow()+i, this.getColumn()+i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth()+i, this.getWidth()+i)){
-			movesList.add(new Square(this.getHeigth()+i, this.getWidth()+i));
+		if (this.isOpponent(board, this.getRow()+i, this.getColumn()+i)){
+			movesList.add(new Square(this.getRow()+i, this.getColumn()+i));
 		}
 		i = 1;
 		//Mouvement en haut à gauche
-		while (this.getHeigth() +i<9 && this.getWidth() -i>0 && board.isEmpty(this.getHeigth() +i, this.getWidth() -i)){
-			movesList.add(new Square(this.getHeigth()+i, this.getWidth()-i));
+		while (this.getRow() +i<9 && this.getColumn() -i>0 && 
+				board.isEmpty(this.getRow() +i, this.getColumn() -i)){
+			movesList.add(new Square(this.getRow()+i, this.getColumn()-i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth()+i, this.getWidth()-i)){
-			movesList.add(new Square(this.getHeigth()+i, this.getWidth()-i));
+		if (this.isOpponent(board, this.getRow()+i, this.getColumn()-i)){
+			movesList.add(new Square(this.getRow()+i, this.getColumn()-i));
 		}
 		i = 1;
 		//Mouvement en bas à gauche
-		while (this.getHeigth() -i>0 && this.getWidth() -i>0 && board.isEmpty(this.getHeigth() -i, this.getWidth() -i)){
-			movesList.add(new Square(this.getHeigth()-i, this.getWidth()-i));
+		while (this.getRow() -i>0 && this.getColumn() -i>0 && 
+				board.isEmpty(this.getRow() -i, this.getColumn() -i)){
+			movesList.add(new Square(this.getRow()-i, this.getColumn()-i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth()-i, this.getWidth()-i)){
-			movesList.add(new Square(this.getHeigth()-i, this.getWidth()-i));
+		if (this.isOpponent(board, this.getRow()-i, this.getColumn()-i)){
+			movesList.add(new Square(this.getRow()-i, this.getColumn()-i));
 		}
 		i = 1;
 		//Mouvement en bas à droite
-		while (this.getHeigth() -i>0 && this.getWidth() +i<9 && board.isEmpty(this.getHeigth() -i, this.getWidth() +i)){
-			movesList.add(new Square(this.getHeigth()-i, this.getWidth()+i));
+		while (this.getRow() -i>0 && this.getColumn() +i<9 && 
+				board.isEmpty(this.getRow() -i, this.getColumn() +i)){
+			movesList.add(new Square(this.getRow()-i, this.getColumn()+i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth()-i, this.getWidth()+i)){
-			movesList.add(new Square(this.getHeigth()-i, this.getWidth()+i));
+		if (this.isOpponent(board, this.getRow()-i, this.getColumn()+i)){
+			movesList.add(new Square(this.getRow()-i, this.getColumn()+i));
 		}
 		return movesList;
 	}
@@ -120,39 +138,43 @@ abstract public class Piece {
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		int i = 1;
 		//Mouvement en haut
-		while (this.getHeigth() +i <9 && board.isEmpty(this.getHeigth()+i, this.getWidth())){
-			movesList.add(new Square(this.getHeigth()+i, this.getWidth()));
+		while (this.getRow() +i <9 && 
+				board.isEmpty(this.getRow()+i, this.getColumn())){
+			movesList.add(new Square(this.getRow()+i, this.getColumn()));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth()+i, this.getWidth())){
-			movesList.add(new Square(this.getHeigth()+i, this.getWidth()));
+		if (this.isOpponent(board, this.getRow()+i, this.getColumn())){
+			movesList.add(new Square(this.getRow()+i, this.getColumn()));
 		}
 		i = 1;
 		//Mouvement en bas
-		while (this.getHeigth() -i >0 && board.isEmpty(this.getHeigth()-i, this.getWidth())){
-			movesList.add(new Square(this.getHeigth()-i, this.getWidth()));
+		while (this.getRow() -i >0 && 
+				board.isEmpty(this.getRow()-i, this.getColumn())){
+			movesList.add(new Square(this.getRow()-i, this.getColumn()));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth()-i, this.getWidth())){
-			movesList.add(new Square(this.getHeigth()-i, this.getWidth()));
+		if (this.isOpponent(board, this.getRow()-i, this.getColumn())){
+			movesList.add(new Square(this.getRow()-i, this.getColumn()));
 		}
 		i = 1;
 		//Mouvement à gauche
-		while (this.getWidth()-i>0 && board.isEmpty(this.getHeigth(), this.getWidth()-i)){
-			movesList.add(new Square(this.getHeigth(), this.getWidth()-i));
+		while (this.getColumn()-i>0 && 
+				board.isEmpty(this.getRow(), this.getColumn()-i)){
+			movesList.add(new Square(this.getRow(), this.getColumn()-i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth(), this.getWidth()-i)){
-			movesList.add(new Square(this.getHeigth(), this.getWidth()-i));
+		if (this.isOpponent(board, this.getRow(), this.getColumn()-i)){
+			movesList.add(new Square(this.getRow(), this.getColumn()-i));
 		}
 		i = 1;
 		//Mouvement à droite
-		while (this.getWidth()+i<9 && board.isEmpty(this.getHeigth(), this.getWidth()+i)){
-			movesList.add(new Square(this.getHeigth(), this.getWidth()+i));
+		while (this.getColumn()+i<9 && 
+				board.isEmpty(this.getRow(), this.getColumn()+i)){
+			movesList.add(new Square(this.getRow(), this.getColumn()+i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getHeigth(), this.getWidth()+i)){
-			movesList.add(new Square(this.getHeigth(), this.getWidth()+i));
+		if (this.isOpponent(board, this.getRow(), this.getColumn()+i)){
+			movesList.add(new Square(this.getRow(), this.getColumn()+i));
 		}
 		return movesList;
 	}
@@ -165,17 +187,18 @@ abstract public class Piece {
 	}
 
 	private void estMange(){
-		this.heigth = 0;
-		this.width = 0;
+		this.row = 0;
+		this.column = 0;
 	}
 
+	public void deplacerPiece(Board board, int row, int column) 
+			throws OutOfBoardException, NonPossibleMoveException, EchecException{
 
-	public void deplacerPiece(Board board, int heigth, int width) throws OutOfBoardException, NonPossibleMoveException, EchecException{
-		int oldHeigth = this.heigth;
-		int oldWidth = this.width;
+		int oldRow = this.row;
+		int oldColumn = this.column;
 		boolean mange = false;
 		Piece pieceMange = new Pawn("blue", 0, 0);
-		if ((heigth < 1) || (heigth > 8) || (width < 1) || (width > 8)){
+		if ((row < 1) || (row > 8) || (column < 1) || (column > 8)){
 			throw new OutOfBoardException("jeu hors des limites");
 		}
 		ArrayList<Square> listeCoups = this.possibleMoves(board);
@@ -183,49 +206,50 @@ abstract public class Piece {
 		Iterator<Square> it = listeCoups.iterator();
 		while(it.hasNext()){
 			Square s = it.next();
-			if (s.isThisSquare(heigth, width)){
+			if (s.isThisSquare(row, column)){
 				peutJouer = true;
 			}
 		}
 		if (!peutJouer){
 			throw new NonPossibleMoveException("coup non possible");
 		}
-		if (board.isEmpty(heigth, width)){
-			this.heigth = heigth;
-			this.width = width;
+		if (board.isEmpty(row, column)){
+			this.row = row;
+			this.column = column;
 		}
 		else{
 			mange = true;
-			pieceMange = board.getPiece(heigth, width);
+			pieceMange = board.getPiece(row, column);
 			pieceMange.estMange();
-			this.heigth = heigth;
-			this.width = width;
+			this.row = row;
+			this.column = column;
 		}
 		if (this.color.equals("black")){
-			if (board.isEchec("black", board.getBlackKing().getHeigth(), board.getBlackKing().getWidth())){
-				this.heigth = oldHeigth;
-				this.width = oldWidth;
+			if (board.isEchec("black", 
+					board.getBlackKing().getRow(), 
+					board.getBlackKing().getColumn())){
+				this.row = oldRow;
+				this.column = oldColumn;
 				if (mange){
-					pieceMange.setHeigth(heigth);
-					pieceMange.setWidth(width);
+					pieceMange.setRow(row);
+					pieceMange.setColumn(column);
 				}
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
 		}
 		else{
-			if (board.isEchec("white", board.getWhiteKing().getHeigth(), board.getWhiteKing().getWidth())){
-				this.heigth = oldHeigth;
-				this.width = oldWidth;
+			if (board.isEchec("white", 
+					board.getWhiteKing().getRow(), 
+					board.getWhiteKing().getColumn())){
+				this.row = oldRow;
+				this.column = oldColumn;
 				if (mange){
-					pieceMange.setHeigth(heigth);
-					pieceMange.setWidth(width);
+					pieceMange.setRow(row);
+					pieceMange.setColumn(column);
 				}
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
 		}
 	}
-
-	abstract ArrayList<Square> possibleMoves(Board board);
-
 
 }

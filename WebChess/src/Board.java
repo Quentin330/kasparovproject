@@ -4,11 +4,18 @@ import java.util.Iterator;
 
 public class Board {
 	
+	//-----------------------------------------------------------------------
+	//varaible de classe-----------------------------------------------------
+	
 	//private Square[] historique_;
 	private Piece[] pieces;
 	private King blackKing;
 	private King whiteKing;
 
+	
+	//-----------------------------------------------------------------------
+	//fonctions--------------------------------------------------------------
+	
 	public Piece[] getPieces() {
 		return pieces;
 	}
@@ -68,10 +75,10 @@ public class Board {
 		this.pieces[31] = new Rook("white", 1, 8);
 	}
 	
-	public boolean isEmpty(int heigth, int width){
+	public boolean isEmpty(int row, int column){
 		for (int i=0; i<32; ++i){
-			if (this.pieces[i].getHeigth()==heigth){
-				if (this.pieces[i].getWidth()==width){
+			if (this.pieces[i].getRow()==row){
+				if (this.pieces[i].getColumn()==column){
 					return false;
 				}
 			}
@@ -79,10 +86,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean isWhite(int heigth, int width){
+	public boolean isWhite(int row, int column){
 		for (int i=0; i<32; ++i){
-			if (this.pieces[i].getHeigth()==heigth){
-				if (this.pieces[i].getWidth()==width){
+			if (this.pieces[i].getRow()==row){
+				if (this.pieces[i].getColumn()==column){
 					return this.pieces[i].isWhite();
 				}
 			}
@@ -90,10 +97,10 @@ public class Board {
 		return false;
 	}
 	
-	public boolean isBlack(int heigth, int width){
+	public boolean isBlack(int row, int column){
 		for (int i=0; i<32; ++i){
-			if (this.pieces[i].getHeigth()==heigth){
-				if (this.pieces[i].getWidth()==width){
+			if (this.pieces[i].getRow()==row){
+				if (this.pieces[i].getColumn()==column){
 					return this.pieces[i].isBlack();
 				}
 			}
@@ -120,41 +127,52 @@ public class Board {
 		return echecList;
 	}
 	
-	public boolean isEchec(String color, int heigth, int width){
+	public boolean isEchec(String color, int row, int column){
 		ArrayList<Square> echecList = this.echec(color);
-		return this.isEchec(echecList, heigth, width);
+		return this.isEchec(echecList, row, column);
 	}
 	
-	public boolean isEchec(ArrayList<Square> echecList, int heigth, int width){
+	public boolean isEchec(ArrayList<Square> echecList, int row, int column){
 		Iterator<Square> it = echecList.iterator();
 		while (it.hasNext()){
 			Square s = it.next();
-			if (s.isThisSquare(heigth, width)){
+			if (s.isThisSquare(row, column)){
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public Piece getPiece(int heigth, int width){
-		assert (!this.isEmpty(heigth, width));
+	public Piece getPiece(int row, int column){
+		assert (!this.isEmpty(row, column));
 		int i=0;
-		while(i<32 && !(this.getPieces()[i].getHeigth()== heigth && this.getPieces()[i].getWidth() == width)){
+		while(i<32 && 
+				!(this.getPieces()[i].getRow()== row && 
+				this.getPieces()[i].getColumn() == column)){
 			i++;
 		}
 		return this.getPieces()[i];
 	}
 	
-	public void deplacerPiece(int heigth1, int width1, int heigth2, int width2) throws OutOfBoardException, NonPossibleMoveException{
-		this.getPiece(heigth1, width1).deplacerPiece(this, heigth2, width2);
+	public void deplacerPiece(int row1, int column1, int row2, int column2) 
+			throws OutOfBoardException, NonPossibleMoveException{
+		this.getPiece(row1, column1).deplacerPiece(this, row2, column2);
 	}
 	
-	public void deplacerPiece(String caseDepart, String caseArrivee) throws OutOfBoardException, NonPossibleMoveException{
-		assert(!(caseDepart.charAt(0)<'A') && !(caseDepart.charAt(0)>'H') && !(caseDepart.charAt(1)<'1') && !(caseDepart.charAt(1)>'8') && !(caseArrivee.charAt(0)<'A') && !(caseArrivee.charAt(0)>'H') && !(caseArrivee.charAt(1)<'1') && !(caseArrivee.charAt(1)>'8'));
-		int width1 = caseDepart.charAt(0)-'A'+'1'-48;
-		int width2 = caseArrivee.charAt(0)-'A'+'1'-48;
-		int heigth1 = caseDepart.charAt(1)-48;
-		int heigth2 = caseArrivee.charAt(1)-48;
-		this.deplacerPiece(heigth1, width1, heigth2, width2);
+	public void deplacerPiece(String caseDepart, String caseArrivee) 
+			throws OutOfBoardException, NonPossibleMoveException{
+		assert(!(caseDepart.charAt(0)<'A') && 
+				!(caseDepart.charAt(0)>'H') && 
+				!(caseDepart.charAt(1)<'1') && 
+				!(caseDepart.charAt(1)>'8') && 
+				!(caseArrivee.charAt(0)<'A') && 
+				!(caseArrivee.charAt(0)>'H') && 
+				!(caseArrivee.charAt(1)<'1') && 
+				!(caseArrivee.charAt(1)>'8'));
+		int column1 = caseDepart.charAt(0)-'A'+'1'-48;
+		int column2 = caseArrivee.charAt(0)-'A'+'1'-48;
+		int row1 = caseDepart.charAt(1)-48;
+		int row2 = caseArrivee.charAt(1)-48;
+		this.deplacerPiece(row1, column1, row2, column2);
 	}
 }

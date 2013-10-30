@@ -6,8 +6,8 @@ public class Bishop extends Piece{
 
 		public Bishop(String color, int heigth, int width){
 			this.setColor(color);
-			this.setHeigth(heigth);
-			this.setWidth(width);
+			this.setRow(heigth);
+			this.setColumn(width);
 		}
 		
 		public ArrayList<Square> possibleMoves(Board board){
@@ -19,6 +19,6 @@ public class Bishop extends Piece{
 		}
 		
 		protected Bishop clone() {
-			return new Bishop( this.getColor(), this.getHeigth(), this.getWidth());
+			return new Bishop( this.getColor(), this.getRow(), this.getColumn());
 		}
 }

@@ -5,8 +5,8 @@ public class Knight extends Piece{
 	
 	public Knight(String color, int heigth, int width){
 		this.setColor(color);
-		this.setHeigth(heigth);
-		this.setWidth(width);
+		this.setRow(heigth);
+		this.setColumn(width);
 	}
 	
 	public ArrayList<Square> possibleMoves(Board board){
@@ -15,58 +15,58 @@ public class Knight extends Piece{
 			return movesList;
 		}
 		//Move haut haut droit
-		if (this.getHeigth()<7 && this.getWidth()<8){
-			if (!this.isSameColor(board, this.getHeigth()+2, this.getWidth()+1)){
-				movesList.add(new Square(this.getHeigth()+2, this.getWidth()+1));
+		if (this.getRow()<7 && this.getColumn()<8){
+			if (!this.isSameColor(board, this.getRow()+2, this.getColumn()+1)){
+				movesList.add(new Square(this.getRow()+2, this.getColumn()+1));
 			}
 		}
 		//Move haut haut gauche
-		if (this.getHeigth()<7 && this.getWidth()>1){
-			if (!this.isSameColor(board, this.getHeigth()+2, this.getWidth()-1)){
-				movesList.add(new Square(this.getHeigth()+2, this.getWidth()-1));
+		if (this.getRow()<7 && this.getColumn()>1){
+			if (!this.isSameColor(board, this.getRow()+2, this.getColumn()-1)){
+				movesList.add(new Square(this.getRow()+2, this.getColumn()-1));
 			}
 		}
 		//Move bas bas gauche
-		if (this.getHeigth()>2 && this.getWidth()>1){
-			if (!this.isSameColor(board, this.getHeigth()-2, this.getWidth()-1)){
-				movesList.add(new Square(this.getHeigth()-2, this.getWidth()-1));
+		if (this.getRow()>2 && this.getColumn()>1){
+			if (!this.isSameColor(board, this.getRow()-2, this.getColumn()-1)){
+				movesList.add(new Square(this.getRow()-2, this.getColumn()-1));
 			}
 		}
 		//Move bas bas droit
-		if (this.getHeigth()>2 && this.getWidth()<8){
-			if (!this.isSameColor(board, this.getHeigth()-2, this.getWidth()+1)){
-				movesList.add(new Square(this.getHeigth()-2, this.getWidth()+1));
+		if (this.getRow()>2 && this.getColumn()<8){
+			if (!this.isSameColor(board, this.getRow()-2, this.getColumn()+1)){
+				movesList.add(new Square(this.getRow()-2, this.getColumn()+1));
 			}
 		}
 		//Move droit droit haut
-		if (this.getHeigth()<8 && this.getWidth()<7){
-			if (!this.isSameColor(board, this.getHeigth()+1, this.getWidth()+2)){
-				movesList.add(new Square(this.getHeigth()+1, this.getWidth()+2));
+		if (this.getRow()<8 && this.getColumn()<7){
+			if (!this.isSameColor(board, this.getRow()+1, this.getColumn()+2)){
+				movesList.add(new Square(this.getRow()+1, this.getColumn()+2));
 			}
 		}
 		//Move droit droit bas
-		if (this.getHeigth()>1 && this.getWidth()<7){
-			if (!this.isSameColor(board, this.getHeigth()-1, this.getWidth()+2)){
-				movesList.add(new Square(this.getHeigth()-1, this.getWidth()+2));
+		if (this.getRow()>1 && this.getColumn()<7){
+			if (!this.isSameColor(board, this.getRow()-1, this.getColumn()+2)){
+				movesList.add(new Square(this.getRow()-1, this.getColumn()+2));
 			}
 		}
 		//Move gauche gauche haut
-		if (this.getHeigth()<8 && this.getWidth()>2){
-			if (!this.isSameColor(board, this.getHeigth()+1, this.getWidth()-2)){
-				movesList.add(new Square(this.getHeigth()+1, this.getWidth()-2));
+		if (this.getRow()<8 && this.getColumn()>2){
+			if (!this.isSameColor(board, this.getRow()+1, this.getColumn()-2)){
+				movesList.add(new Square(this.getRow()+1, this.getColumn()-2));
 			}
 		}
 		//Move gauche gauche bas
-		if (this.getHeigth()>1 && this.getWidth()>2){
-			if (!this.isSameColor(board, this.getHeigth()-1, this.getWidth()-2)){
-				movesList.add(new Square(this.getHeigth()-1, this.getWidth()-2));
+		if (this.getRow()>1 && this.getColumn()>2){
+			if (!this.isSameColor(board, this.getRow()-1, this.getColumn()-2)){
+				movesList.add(new Square(this.getRow()-1, this.getColumn()-2));
 			}
 		}
 		return movesList;
 	}
 
 	protected Knight clone() {
-		return new Knight( this.getColor(), this.getHeigth(), this.getWidth());
+		return new Knight( this.getColor(), this.getRow(), this.getColumn());
 	}
 
 }

@@ -5,8 +5,8 @@ public class Rook extends Piece{
 	
 	public Rook(String color, int heigth, int width){
 		this.setColor(color);
-		this.setHeigth(heigth);
-		this.setWidth(width);
+		this.setRow(heigth);
+		this.setColumn(width);
 	}
 	
 	public ArrayList<Square> possibleMoves(Board board){
@@ -18,7 +18,7 @@ public class Rook extends Piece{
 	}
 	
 	protected Rook clone() {
-		return new Rook( this.getColor(), this.getHeigth(), this.getWidth());
+		return new Rook( this.getColor(), this.getRow(), this.getColumn());
 	}
 
 }

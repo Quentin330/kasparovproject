@@ -5,8 +5,8 @@ public class Queen extends Piece{
 
 	public Queen(String color, int heigth, int width){
 		this.setColor(color);
-		this.setHeigth(heigth);
-		this.setWidth(width);
+		this.setRow(heigth);
+		this.setColumn(width);
 	}
 	
 	public ArrayList<Square> possibleMoves(Board board){
@@ -21,7 +21,7 @@ public class Queen extends Piece{
 	}
 	
 	protected Queen clone() {
-		return new Queen( this.getColor(), this.getHeigth(), this.getWidth());
+		return new Queen( this.getColor(), this.getRow(), this.getColumn());
 	}
 
 

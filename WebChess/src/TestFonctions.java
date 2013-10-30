@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 
-
+/**
+ * 
+ * @author aramdria
+ *
+ */
 public class TestFonctions {
 
 	public static String affichageBoard(Board b){
@@ -39,7 +43,7 @@ public class TestFonctions {
 		return s;
 	}
 
-	public static void main(String argv[]){
+	public static void main(String argv[]) {
 		Board b = new Board();
 		System.out.println(affichageBoard(b));
 		try{
