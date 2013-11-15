@@ -353,5 +353,27 @@ abstract public class Piece {
 			}
 		}
 	}
+	
+	public boolean isPlayable(int row, int column, Board b){
+		ArrayList<Square> possibleMoves = possibleMoves(b);
+		Iterator<Square> it = possibleMoves.iterator();
+		while(it.hasNext()){
+			Square s = it.next();
+			if (s.isThisSquare(row, column)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isPlayable(String caseJeu, Board b){
+		assert(!(caseJeu.charAt(0)<'A') && 
+				!(caseJeu.charAt(0)>'H') && 
+				!(caseJeu.charAt(1)<'1') && 
+				!(caseJeu.charAt(1)>'8'));
+		int column = caseJeu.charAt(0)-'A'+'1'-48;
+		int row = caseJeu.charAt(1)-48;
+		return this.isPlayable(row, column, b);
+	}
 
 }

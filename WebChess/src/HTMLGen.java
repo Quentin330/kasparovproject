@@ -16,7 +16,23 @@ public class HTMLGen {
 					+ "	WebChess Kasparov\n</title>\n"
 					+ "</head>\n<body>\n<form>\n<table align=center>\n	<tr>\n		<td class=\"corner\"></td>\n		<td class=\"border\">A</td>\n		<td class=\"border\">B</td>\n		<td class=\"border\">C</td>\n		<td class=\"border\">D</td>\n		<td class=\"border\">E</td>\n		<td class=\"border\">F</td>\n		<td class=\"border\">G</td>\n		<td class=\"border\">H</td>\n		<td class=\"corner\"></td>\n	</tr>\n";
 	private static String bottom = 
-			"<tr>\n		<td class=\"corner\"></td>\n		<td class=\"border\">A</td>\n		<td class=\"border\">B</td>\n		<td class=\"border\">C</td>\n		<td class=\"border\">D</td>\n		<td class=\"border\">E</td>\n		<td class=\"border\">F</td>\n		<td class=\"border\">G</td>\n		<td class=\"border\">H</td>\n		<td class=\"corner\"></td>\n	</tr>\n</table>\n</form>\n</body>\n</html>";
+			"<tr>\n"
+			+ "		<td class=\"corner\"></td>\n"
+			+ "		<td class=\"border\">A</td>\n"
+			+ "		<td class=\"border\">B</td>\n"
+			+ "		<td class=\"border\">C</td>\n"
+			+ "		<td class=\"border\">D</td>\n"
+			+ "		<td class=\"border\">E</td>\n"
+			+ "		<td class=\"border\">F</td>\n"
+			+ "		<td class=\"border\">G</td>\n"
+			+ "		<td class=\"border\">H</td>\n"
+			+ "		<td class=\"corner\"></td>\n"
+			+ "	</tr>\n"
+			+ "</table>\n"
+			+ "</form>\n"
+			+ "</body>\n"
+			+ "<center><a href=\"?NewGame\">Nouvelle Partie</a></center>"
+			+ "</html>";
 
 	public String getPage (){
 		return HTMLGen.getHead() + this.body + HTMLGen.getBottom();
@@ -60,12 +76,18 @@ public class HTMLGen {
 		}
 		Piece p = b.getPiece(row, column);
 		if (p.getColor().equals(b.getCurrentPlayer())){
-			pieceLine += "\"><input type=\"image\" name=\"" + nameCase(row, column) + "\" src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
-			return pieceLine;
+			if (nameCase(row, column).equals(b.getSelectedCase())){
+				pieceLine += "Select\"><input type=\"image\" name=\"" + nameCase(row, column) + "\" src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
+				return pieceLine;
+			}
+			else{
+				pieceLine += "\"><input type=\"image\" name=\"" + nameCase(row, column) + "\" src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
+				return pieceLine;
+			}
 		}
 		pieceLine += "\"><img src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
 		return pieceLine;
-		
+
 	}
 	
 	public String nameCase(int row, int column){

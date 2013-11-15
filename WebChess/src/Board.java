@@ -324,4 +324,14 @@ public class Board {
 		int row = caseJeu.charAt(1)-48;
 		return this.getPiece(row, column);
 	}
+	
+	public boolean isEmpty(String caseJeu){
+		assert(!(caseJeu.charAt(0)<'A') && 
+				!(caseJeu.charAt(0)>'H') && 
+				!(caseJeu.charAt(1)<'1') && 
+				!(caseJeu.charAt(1)>'8'));
+		int column = caseJeu.charAt(0)-'A'+'1'-48;
+		int row = caseJeu.charAt(1)-48;
+		return this.isEmpty(row, column);
+	}
 }

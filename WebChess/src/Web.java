@@ -63,6 +63,7 @@ public class Web {
 			Socket socket;
 			InputStream istream;
 			OutputStream ostream;
+			Board b = new Board();
 			while(true) {
 				socket = socketserver.accept();
 				istream = socket.getInputStream();
@@ -104,27 +105,92 @@ public class Web {
 					}
 					System.out.println("::: Lecture de " + fichier + " avec comme parametres : " + parametres +" :::");
 					try {
-						if (fichier.length()==0){
-							//TODO : html gen
-							
+						String content ="";
+						if (fichier.length()==0 || fichier.equals("index.html")){
+							//avec parametres
+							if (parametres.length()>0){
+								if (parametres.equals("NewGame")){
+									b = new Board();
+								}
+								//case ou l'on veut aller
+								else if (parametres.startsWith("to")){
+									if (parametres.charAt(2)<'A' || parametres.charAt(2)>'H' || parametres.charAt(3)<'1' || parametres.charAt(3)>'8'){
+										//TODO page HTML pour les tricheurs
+									}
+									else{
+										String nomCase = "";
+										nomCase += parametres.charAt(2);
+										nomCase += parametres.charAt(3);
+										try{
+											if(b.getPiece(b.getSelectedCase()).isPlayable(nomCase, b)){
+												try{
+												b.deplacerPiece(b.getSelectedCase(), nomCase);
+												b.setSelectedCase("00");
+												} catch (NonPossibleMoveException e){
+													e.printStackTrace();
+													b.nextPlayer();
+												}
+												b.nextPlayer();
+											}
+											else{
+												//TODO page HTML pour les tricheurs
+											}
+
+										}catch (Exception e){
+											e.printStackTrace();
+										}
+									}
+								}
+								//pion que l'on selectionne
+								else{
+									if (parametres.charAt(0)<'A' || parametres.charAt(0)>'H' || parametres.charAt(1)<'1' || parametres.charAt(1)>'8'){
+										//TODO page HTML pour les tricheurs
+									}
+									else{
+										String nomCase = "";
+										nomCase += parametres.charAt(0);
+										nomCase += parametres.charAt(1);
+										if(b.isEmpty(nomCase)){
+											//TODO page HTML pour les tricheurs
+										}
+										else{
+											try{
+												if(b.getPiece(nomCase).getColor().equals(b.getCurrentPlayer())){
+													b.setSelectedCase(nomCase);
+												}
+												else{
+													//TODO page HTML pour les tricheurs
+												}
+											}catch (Exception e) {
+												e.printStackTrace();
+											}
+										}
+									}
+								}
+							}
+							try{
+								HTMLGen html = new HTMLGen(b);
+								content += html.getPage();
+							}catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 						else{
-							String content ="";
 							content = lireFichier(fichier);
-							String header = "HTTP/1.1 200 OK" + 
-									"\nServer: WebChess localhost:7777" +
-									"\nContent-Length: " + content.length() +
-									"\nConnection: close" +
-									"\nContent-Type: " + getContentType(fichier) + //"; charset=UTF-8" +
-									"\n\n";
-							String output = header + content;
+						}
+						String header = "HTTP/1.1 200 OK" + 
+								"\nServer: WebChess localhost:7777" +
+								"\nContent-Length: " + content.length() +
+								"\nConnection: close" +
+								"\nContent-Type: " + getContentType(fichier) + //"; charset=UTF-8" +
+								"\n\n";
+						String output = header + content;
 
-							System.out.println(header);
+						System.out.println(header);
 
-							for(int i=0; i<output.length() ; ++i){
-								int temp = (int) output.charAt(i);
-								ostream.write(temp);
-							}
+						for(int i=0; i<output.length() ; ++i){
+							int temp = (int) output.charAt(i);
+							ostream.write(temp);
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
