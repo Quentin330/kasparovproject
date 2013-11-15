@@ -107,7 +107,7 @@ public class Board {
 	 * @param whiteKing
 	 */
 	public Board(Piece[] pieces, King blackKing, King whiteKing) {
-		this.selectedCase = "";
+		this.selectedCase = "00";
 		this.currentPlayer = "white";
 		this.pieces = new Piece[32];
 		for (int i = 0; i<32; ++i){
@@ -128,6 +128,8 @@ public class Board {
 	 * TODO
 	 */
 	public Board(){
+		this.selectedCase = "00";
+		this.currentPlayer = "white";
 		this.pieces = new Piece[32];
 		this.pieces[0] = new Rook("black", 8, 1);
 		this.pieces[1] = new Knight("black", 8, 2);

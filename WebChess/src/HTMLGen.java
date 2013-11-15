@@ -23,7 +23,7 @@ public class HTMLGen {
 	}
 	
 	public HTMLGen (Board b) throws OutOfBoardException, NonPossibleMoveException{
-		if (b.getSelectedCase().length()==2){
+		if (!b.getSelectedCase().equals("00")){
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
 		}
 		this.body = "";
@@ -48,7 +48,7 @@ public class HTMLGen {
 		else{
 			pieceLine += "odd";
 		}
-		if(b.getSelectedCase().length()==2){
+		if(!b.getSelectedCase().equals("00")){
 			if (isPlayable(row, column, b)){
 				pieceLine += "Select\"><input type=\"image\" name=\"to"+ nameCase(row, column) +"\" src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
 				return pieceLine;
@@ -60,7 +60,7 @@ public class HTMLGen {
 		}
 		Piece p = b.getPiece(row, column);
 		if (p.getColor().equals(b.getCurrentPlayer())){
-			pieceLine += "><input type=\"image\" name=\"" + nameCase(row, column) + "\" src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
+			pieceLine += "\"><input type=\"image\" name=\"" + nameCase(row, column) + "\" src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
 			return pieceLine;
 		}
 		pieceLine += "\"><img src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
@@ -71,14 +71,14 @@ public class HTMLGen {
 	public String nameCase(int row, int column){
 		String name = "";
 		switch (column){
-		case 1: name += 'A';
-		case 2: name += 'B';
-		case 3: name += 'C';
-		case 4: name += 'D';
-		case 5: name += 'E';
-		case 6: name += 'F';
-		case 7: name += 'G';
-		case 8: name += 'H';
+		case 1: name += 'A'; break;
+		case 2: name += 'B'; break;
+		case 3: name += 'C'; break;
+		case 4: name += 'D'; break;
+		case 5: name += 'E'; break;
+		case 6: name += 'F'; break;
+		case 7: name += 'G'; break;
+		case 8: name += 'H'; break;
 		}
 		name += row;
 		return name;

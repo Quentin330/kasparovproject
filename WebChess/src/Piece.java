@@ -298,7 +298,7 @@ abstract public class Piece {
 		int oldRow = this.row;
 		int oldColumn = this.column;
 		boolean mange = false;
-		board.setSelectedCase("");
+		board.setSelectedCase("00");
 		Piece pieceMange = new Pawn("blue", 0, 0);
 		if ((row < 1) || (row > 8) || (column < 1) || (column > 8)){
 			throw new OutOfBoardException("jeu hors des limites");

@@ -50,9 +50,16 @@ public class TestFonctions {
 	/**
 	 * TODO
 	 * @param argv
+	 * @throws NonPossibleMoveException 
+	 * @throws OutOfBoardException 
 	 */
-	public static void main(String argv[]) {
+	public static void main(String argv[]) throws OutOfBoardException, NonPossibleMoveException {
+
 		Board b = new Board();
+		HTMLGen html = new HTMLGen(b);
+		
+		System.out.println(html.getPage());
+		 /*
 		System.out.println(affichageBoard(b));
 		try{
 			b.deplacerPiece("E2", "E4");
@@ -89,6 +96,7 @@ public class TestFonctions {
 			e.printStackTrace();
 		}
 		System.out.println(affichageBoard(b));
+		*/
 	}
 
 }
