@@ -47,7 +47,7 @@ public class Web {
 			return "image/ico";
 		if(objet.contains(".jpg"))
 			return "image";
-		return "text/plain";		
+		return "text/html";		
 	}
 
 	/**
@@ -104,21 +104,27 @@ public class Web {
 					}
 					System.out.println("::: Lecture de " + fichier + " avec comme parametres : " + parametres +" :::");
 					try {
-						String content ="";
-						content = lireFichier(fichier);
-						String header = "HTTP/1.1 200 OK" + 
-								"\nServer: WebChess localhost:7777" +
-								"\nContent-Length: " + content.length() +
-								"\nConnection: close" +
-								"\nContent-Type: " + getContentType(fichier) + //"; charset=UTF-8" +
-								"\n\n";
-						String output = header + content;
+						if (fichier.length()==0){
+							//TODO : html gen
+							
+						}
+						else{
+							String content ="";
+							content = lireFichier(fichier);
+							String header = "HTTP/1.1 200 OK" + 
+									"\nServer: WebChess localhost:7777" +
+									"\nContent-Length: " + content.length() +
+									"\nConnection: close" +
+									"\nContent-Type: " + getContentType(fichier) + //"; charset=UTF-8" +
+									"\n\n";
+							String output = header + content;
 
-						System.out.println(header);
+							System.out.println(header);
 
-						for(int i=0; i<output.length() ; ++i){
-							int temp = (int) output.charAt(i);
-							ostream.write(temp);
+							for(int i=0; i<output.length() ; ++i){
+								int temp = (int) output.charAt(i);
+								ostream.write(temp);
+							}
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block

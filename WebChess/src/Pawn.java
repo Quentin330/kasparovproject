@@ -13,9 +13,16 @@ public class Pawn extends Piece{
 	 * @param width
 	 */
 	public Pawn(String color, int heigth, int width){
+		this.setNom("Pawn");
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
+		if (color.equals("black")){
+			this.setShortcut("p");
+		}
+		else{
+			this.setShortcut("P");
+		}
 	}
 
 	/**

@@ -13,9 +13,16 @@ public class Knight extends Piece{
 	 * @param width
 	 */
 	public Knight(String color, int heigth, int width){
+		this.setNom("Knight");
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
+		if (color.equals("black")){
+			this.setShortcut("c");
+		}
+		else{
+			this.setShortcut("C");
+		}
 	}
 	
 	/**

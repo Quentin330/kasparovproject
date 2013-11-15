@@ -14,9 +14,16 @@ public class Bishop extends Piece{
 		 * @param width
 		 */
 		public Bishop(String color, int heigth, int width){
+			this.setNom("Bishop");
 			this.setColor(color);
 			this.setRow(heigth);
 			this.setColumn(width);
+			if (color.equals("black")){
+				this.setShortcut("f");
+			}
+			else{
+				this.setShortcut("F");
+			}
 		}
 		
 		/**

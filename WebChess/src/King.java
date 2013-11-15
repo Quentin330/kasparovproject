@@ -13,9 +13,16 @@ public class King extends Piece{
 	 * @param width
 	 */
 	public King(String color, int heigth, int width){
+		this.setNom("King");
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
+		if (color.equals("black")){
+			this.setShortcut("r");
+		}
+		else{
+			this.setShortcut("R");
+		}
 	}
 	
 	/**

@@ -13,9 +13,16 @@ public class Queen extends Piece{
 	 * @param width
 	 */
 	public Queen(String color, int heigth, int width){
+		this.setNom("Queen");
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
+		if (color.equals("black")){
+			this.setShortcut("d");
+		}
+		else{
+			this.setShortcut("D");
+		}
 	}
 	
 	/**

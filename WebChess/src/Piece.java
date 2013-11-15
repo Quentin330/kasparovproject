@@ -21,7 +21,16 @@ abstract public class Piece {
 	 * position de la pièce en largeur (de 1 à 8 et 0 si pièce perdue)
 	 */
 	private int column;
-
+	
+	/**
+	 * 
+	 */
+	private String nom;
+	
+	/**
+	 * 
+	 */
+	private String shortcut;
 
 	/**
 	 * TODO
@@ -34,7 +43,22 @@ abstract public class Piece {
 	 * @return
 	 */
 	abstract ArrayList<Square> possibleMoves(Board board);
+	
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
+	public void setShortcut(String shortcut) {
+		this.shortcut = shortcut;
+	}
+
+	public String getNom(){
+		return nom;
+	}
+	
+	public String getShortcut(){
+		return shortcut;
+	}
 
 	/**
 	 * TODO
@@ -274,6 +298,7 @@ abstract public class Piece {
 		int oldRow = this.row;
 		int oldColumn = this.column;
 		boolean mange = false;
+		board.setSelectedCase("");
 		Piece pieceMange = new Pawn("blue", 0, 0);
 		if ((row < 1) || (row > 8) || (column < 1) || (column > 8)){
 			throw new OutOfBoardException("jeu hors des limites");

@@ -8,6 +8,7 @@ import java.util.Iterator;
 public class Board {
 	
 	
+
 	//private Square[] historique_;
 	/**
 	 * TODO
@@ -21,6 +22,32 @@ public class Board {
 	 * TODO
 	 */
 	private King whiteKing;
+
+	
+	/**
+	 * black or white
+	 */
+	private String currentPlayer;
+	
+	/**
+	 * TODO
+	 * @return
+	 */
+	public String getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
+	
+	private String selectedCase;
+	
+	
+	public String getSelectedCase() {
+		return selectedCase;
+	}
+
+	public void setSelectedCase(String selectedCase) {
+		this.selectedCase = selectedCase;
+	}
 
 	/**
 	 * TODO
@@ -61,6 +88,17 @@ public class Board {
 	public void setWhiteKing(King whiteKing) {
 		this.whiteKing = whiteKing;
 	}
+	
+	public void nextPlayer(){
+		if (this.currentPlayer.equals("black")){
+			this.currentPlayer = "white";
+		}
+		else{
+			this.currentPlayer = "black";
+		}
+	}
+	
+	
 
 	/**
 	 * TODO
@@ -69,6 +107,8 @@ public class Board {
 	 * @param whiteKing
 	 */
 	public Board(Piece[] pieces, King blackKing, King whiteKing) {
+		this.selectedCase = "";
+		this.currentPlayer = "white";
 		this.pieces = new Piece[32];
 		for (int i = 0; i<32; ++i){
 			this.pieces[i] = pieces[i].clone();
@@ -271,5 +311,15 @@ public class Board {
 		int row1 = caseDepart.charAt(1)-48;
 		int row2 = caseArrivee.charAt(1)-48;
 		this.deplacerPiece(row1, column1, row2, column2);
+	}
+	
+	public Piece getPiece(String caseJeu) throws OutOfBoardException, NonPossibleMoveException{
+		assert(!(caseJeu.charAt(0)<'A') && 
+				!(caseJeu.charAt(0)>'H') && 
+				!(caseJeu.charAt(1)<'1') && 
+				!(caseJeu.charAt(1)>'8'));
+		int column = caseJeu.charAt(0)-'A'+'1'-48;
+		int row = caseJeu.charAt(1)-48;
+		return this.getPiece(row, column);
 	}
 }

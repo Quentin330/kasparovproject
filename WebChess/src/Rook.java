@@ -13,9 +13,16 @@ public class Rook extends Piece{
 	 * @param width
 	 */
 	public Rook(String color, int heigth, int width){
+		this.setNom("Rook");
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
+		if (color.equals("black")){
+			this.setShortcut("t");
+		}
+		else{
+			this.setShortcut("T");
+		}
 	}
 	
 	/**
