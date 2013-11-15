@@ -14,31 +14,50 @@ public class HTMLGen {
 					+ "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"favicon.ico\">\n"
 					+ "<title>\n"
 					+ "	WebChess Kasparov\n</title>\n"
-					+ "</head>\n<body>\n<form>\n<table align=center>\n	<tr>\n		<td class=\"corner\"></td>\n		<td class=\"border\">A</td>\n		<td class=\"border\">B</td>\n		<td class=\"border\">C</td>\n		<td class=\"border\">D</td>\n		<td class=\"border\">E</td>\n		<td class=\"border\">F</td>\n		<td class=\"border\">G</td>\n		<td class=\"border\">H</td>\n		<td class=\"corner\"></td>\n	</tr>\n";
-	private static String bottom = 
+					+ "</head>\n"
+					+ "<body>\n"
+					+ "<form>\n"
+					+ "<table align=center>\n"
+					+ "	<tr>\n"
+					+ "		<td class=\"corner\"></td>\n"
+					+ "		<td class=\"border\">A</td>\n"
+					+ "		<td class=\"border\">B</td>\n"
+					+ "		<td class=\"border\">C</td>\n"
+					+ "		<td class=\"border\">D</td>\n"
+					+ "		<td class=\"border\">E</td>\n"
+					+ "		<td class=\"border\">F</td>\n"
+					+ "		<td class=\"border\">G</td>\n"
+					+ "		<td class=\"border\">H</td>\n"
+					+ "		<td class=\"corner\"></td>\n"
+					+ "	</tr>\n";
+
+	private static String bottom1 = 
 			"<tr>\n"
-			+ "		<td class=\"corner\"></td>\n"
-			+ "		<td class=\"border\">A</td>\n"
-			+ "		<td class=\"border\">B</td>\n"
-			+ "		<td class=\"border\">C</td>\n"
-			+ "		<td class=\"border\">D</td>\n"
-			+ "		<td class=\"border\">E</td>\n"
-			+ "		<td class=\"border\">F</td>\n"
-			+ "		<td class=\"border\">G</td>\n"
-			+ "		<td class=\"border\">H</td>\n"
-			+ "		<td class=\"corner\"></td>\n"
-			+ "	</tr>\n"
-			+ "</table>\n"
-			+ "</form>\n"
-			+ "</body>\n"
-			+ "<center><a href=\"?NewGame\">Nouvelle Partie</a></center>"
-			+ "</html>";
+					+ "		<td class=\"corner\"></td>\n"
+					+ "		<td class=\"border\">A</td>\n"
+					+ "		<td class=\"border\">B</td>\n"
+					+ "		<td class=\"border\">C</td>\n"
+					+ "		<td class=\"border\">D</td>\n"
+					+ "		<td class=\"border\">E</td>\n"
+					+ "		<td class=\"border\">F</td>\n"
+					+ "		<td class=\"border\">G</td>\n"
+					+ "		<td class=\"border\">H</td>\n"
+					+ "		<td class=\"corner\"></td>\n"
+					+ "	</tr>\n"
+					+ "</table>\n"
+					+ "</form>\n"
+					+ "</body>\n";
+	
+	private String options = "";
+	
+	private static String bottom2 = "</html>";
 
 	public String getPage (){
-		return HTMLGen.getHead() + this.body + HTMLGen.getBottom();
+		return HTMLGen.getHead() + this.body + HTMLGen.getBottom1() + this.options + HTMLGen.getBottom2() ;
 	}
-	
+
 	public HTMLGen (Board b) throws OutOfBoardException, NonPossibleMoveException{
+		options += "<center><a href=\"?NewGame\">Nouvelle Partie</a></center>\n";
 		if (!b.getSelectedCase().equals("00")){
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
 		}
@@ -51,10 +70,9 @@ public class HTMLGen {
 			}
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
 			this.body +=  "<tr>\n";
-
 		}
 	}
-	
+
 	public String printPiece(int row, int column, Board b){
 		String pieceLine = "<td class=\"";
 		int somme = row + column;
@@ -87,9 +105,8 @@ public class HTMLGen {
 		}
 		pieceLine += "\"><img src=\"pieces/" + getNomPiece(row, column, b) + " width=32 /></td>";
 		return pieceLine;
-
 	}
-	
+
 	public String nameCase(int row, int column){
 		String name = "";
 		switch (column){
@@ -105,7 +122,7 @@ public class HTMLGen {
 		name += row;
 		return name;
 	}
-	
+
 	// jusqu'à la fin du alt
 	public String getNomPiece(int row, int column, Board b){
 		if (b.isEmpty(row, column)){
@@ -116,9 +133,8 @@ public class HTMLGen {
 		nom += p.getColor() + p.getNom() + ".svg\" alt=\""+ p.getShortcut() +"\"";
 		return nom;
 	}
-	
-	
-	public boolean isPlayable(int row, int column, Board b){
+
+	public boolean isPlayable(int row, int column, Board b) {
 		Iterator<Square> it = this.possibleMoves.iterator();
 		while(it.hasNext()){
 			Square s = it.next();
@@ -129,12 +145,12 @@ public class HTMLGen {
 		return false;
 	}
 
-	public static String getBottom() {
-		return bottom;
+	public static String getBottom1() {
+		return bottom1;
 	}
 
-	public static void setBottom(String bottom) {
-		HTMLGen.bottom = bottom;
+	public static void setBottom1(String bottom1) {
+		HTMLGen.bottom1 = bottom1;
 	}
 
 	public static String getHead() {
@@ -143,6 +159,14 @@ public class HTMLGen {
 
 	public static void setHead(String head) {
 		HTMLGen.head = head;
+	}
+
+	public static String getBottom2() {
+		return bottom2;
+	}
+
+	public static void setBottom2(String bottom2) {
+		HTMLGen.bottom2 = bottom2;
 	}
 
 }
