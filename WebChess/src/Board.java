@@ -2,45 +2,56 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * TODO
- *
+ * Classe instanciant une partie, à savoir le plateau, 
+ * l'état et la position de l'ensemble des pièces de la partie.
  */
 public class Board {
-	
-	
 
 	//private Square[] historique_;
+
 	/**
-	 * TODO
+	 * Tableau de l'ensemble des pièces de la partie.
 	 */
 	private Piece[] pieces;
+
 	/**
-	 * TODO
+	 * Instance du Roi noir du joueur.
 	 */
 	private King blackKing;
+
 	/**
-	 * TODO
+	 * Instance du roi blanc du joueur.
 	 */
 	private King whiteKing;
 
-	
 	/**
-	 * black or white
+	 * Chaîne de caractère indiquant à qui est la main.
+	 * Ses valeurs possibles sont "Black" ou "White".
 	 */
 	private String currentPlayer;
-	
+
 	/**
-	 * TODO
-	 * @return
+	 * Chaîne de caractère décrivant la case en surbrillance,
+	 * de "A" à "H" pour les abscisses 
+	 * et de 1 à 8 pour les ordonées.
+	 */
+	private String selectedCase;
+
+
+	/**
+	 * Getteur indiquant à qui est la main.
+	 * @return	"Black" ou "White" selon à qui le tour.
 	 */
 	public String getCurrentPlayer() {
 		return currentPlayer;
 	}
-	
-	
-	private String selectedCase;
-	
-	
+
+	/**
+	 * Getteur indiquant la case en surbrillance.
+	 * @return	Chaine de caractère de la case à évaluer,
+	 * 			de "A" à "H" pour les abscisses et de 
+	 * 			1 à 8 pour les ordonées.
+	 */
 	public String getSelectedCase() {
 		return selectedCase;
 	}
@@ -56,7 +67,7 @@ public class Board {
 	public Piece[] getPieces() {
 		return pieces;
 	}
-	
+
 	/**
 	 * TODO
 	 * @return
@@ -88,7 +99,7 @@ public class Board {
 	public void setWhiteKing(King whiteKing) {
 		this.whiteKing = whiteKing;
 	}
-	
+
 	public void nextPlayer(){
 		if (this.currentPlayer.equals("black")){
 			this.currentPlayer = "white";
@@ -97,8 +108,8 @@ public class Board {
 			this.currentPlayer = "black";
 		}
 	}
-	
-	
+
+
 
 	/**
 	 * TODO
@@ -116,7 +127,7 @@ public class Board {
 		this.blackKing = blackKing.clone();
 		this.whiteKing = whiteKing.clone();
 	}
-	
+
 	/**
 	 * TODO
 	 */
@@ -154,7 +165,7 @@ public class Board {
 		this.pieces[30] = new Knight("white", 1, 7);
 		this.pieces[31] = new Rook("white", 1, 8);
 	}
-	
+
 	/**
 	 * TODO
 	 * @param row
@@ -171,7 +182,7 @@ public class Board {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * TODO
 	 * @param row
@@ -188,7 +199,7 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * TODO
 	 * @param row
@@ -229,7 +240,7 @@ public class Board {
 		}
 		return echecList;
 	}
-	
+
 	/**
 	 * TODO
 	 * @param color
@@ -241,7 +252,7 @@ public class Board {
 		ArrayList<Square> echecList = this.echec(color);
 		return this.isEchec(echecList, row, column);
 	}
-	
+
 	/**
 	 * TODO
 	 * @param echecList
@@ -259,7 +270,7 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * TODO
 	 * @param row
@@ -276,7 +287,7 @@ public class Board {
 		}
 		return this.getPieces()[i];
 	}
-	
+
 	/**
 	 * TODO
 	 * @param row1
@@ -290,7 +301,7 @@ public class Board {
 			throws OutOfBoardException, NonPossibleMoveException{
 		this.getPiece(row1, column1).deplacerPiece(this, row2, column2);
 	}
-	
+
 	/**
 	 * TODO
 	 * @param caseDepart
@@ -314,7 +325,7 @@ public class Board {
 		int row2 = caseArrivee.charAt(1)-48;
 		this.deplacerPiece(row1, column1, row2, column2);
 	}
-	
+
 	public Piece getPiece(String caseJeu) throws OutOfBoardException, NonPossibleMoveException{
 		assert(!(caseJeu.charAt(0)<'A') && 
 				!(caseJeu.charAt(0)>'H') && 
@@ -324,7 +335,7 @@ public class Board {
 		int row = caseJeu.charAt(1)-48;
 		return this.getPiece(row, column);
 	}
-	
+
 	public boolean isEmpty(String caseJeu){
 		assert(!(caseJeu.charAt(0)<'A') && 
 				!(caseJeu.charAt(0)>'H') && 

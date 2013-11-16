@@ -12,7 +12,8 @@ public class Rook extends Piece{
 	 * @param heigth
 	 * @param width
 	 */
-	public Rook(String color, int heigth, int width){
+	public Rook(String color, int heigth, int width) {
+		this.moveOnce(false);
 		this.setNom("Rook");
 		this.setColor(color);
 		this.setRow(heigth);

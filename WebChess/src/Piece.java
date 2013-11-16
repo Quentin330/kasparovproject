@@ -2,371 +2,439 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * TODO
- *
+ * Classe instanciant une piece.
+ * Elle comprend en variable de classe sa couleur, sa position, et son type (en chaine de caractère).
  */
 abstract public class Piece {
 
 	/**
-	 * black or white 
+	 * Couleur de la piece ("black" ou "white").
 	 */
 	private String color;
 
 	/**
-	 * position de la pièce en hauteur (de 1 à 8 et 0 si pièce perdue)
+	 * Position de la pièce en hauteur (de 1 à 8 et 0 si pièce perdue).
 	 */
 	private int row;
 
 	/**
-	 * position de la pièce en largeur (de 1 à 8 et 0 si pièce perdue)
+	 * Position de la pièce en largeur (de 1 à 8 et 0 si pièce perdue).
 	 */
 	private int column;
-	
+
 	/**
-	 * 
+	 * Chaine de caractère du type la pièce.
 	 */
 	private String nom;
-	
+
 	/**
-	 * 
+	 * Caractère identifiant la pièce.
 	 */
 	private String shortcut;
 
 	/**
-	 * TODO
+	 * Booleen indiquant si la piece s'est deplacée au moins une fois dans la partie.
+	 */
+	private boolean hasMovedOnce;
+
+	/**
+	 * Renvoie un clone de la pièce.
 	 */
 	protected abstract Piece clone();
 
 	/**
-	 * TODO
-	 * @param board
-	 * @return
+	 * Retourne la liste des cases où la liste peut jouer, 
+	 * (sans prendre en compte en compte les cases mettant se mettant en échec).
+	 * @param	board 
+	 * 				La partie en cours.
+	 * @return	Un tableau de cases.
 	 */
 	abstract ArrayList<Square> possibleMoves(Board board);
-	
+
+	/**
+	 * Setteur du nom de la pièce.
+	 * @param	nom 
+	 * 				Nom de la pièce.
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * Setteur du caractère identifiant la pièce.
+	 * @param	shortcut
+	 * 				Caractère identifiant la pièce.
+	 */
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
 	}
-
-	public String getNom(){
+	
+	/**
+	 * Getteur du nom de la pièce.
+	 * @return	Le nom de la pièce
+	 */
+	public String getNom() {
 		return nom;
 	}
-	
-	public String getShortcut(){
+
+	/**
+	 * Getteur du caractère identifiant la pièce.
+	 * @return	Le caractère identifiant la pièce.
+	 */
+	public String getShortcut() {
 		return shortcut;
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Retourne vrai si la pièce est noire, faux sinon.
+	 * @return	un booleen indiquant si la pièce est noire.
 	 */
-	public boolean isBlack(){
+	public boolean isBlack() {
 		return (this.color.equals("black"));
 	}
 	
 	/**
-	 * TODO
-	 * @return
+	 * Retourne vrai si la pièce est blanche, faux sinon.
+	 * @return	un booleen indiquant si la pièce est blanche.
 	 */
-	public boolean isWhite(){
+	public boolean isWhite() {
 		return (this.color.equals("white"));
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Getteur de la couleur de la pièce.
+	 * @return	La couleur de la pièce.
 	 */
 	public String getColor() {
 		return color;
 	}
 
 	/**
-	 * TODO
-	 * @param color
+	 * Setteur de la couleur de la pièce.
+	 * @param	color 
+	 * 				La couleur de la pièce.
 	 */
 	public void setColor(String color) {
 		this.color = color;
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Getteur de la valeur en ordonnée de la pièce.
+	 * @return	La valeur en ordonnée de la pièce.
 	 */
 	public int getRow() {
 		return row;
 	}
 
 	/**
-	 * TODO
-	 * @param row
+	 * Setteur de la valeur en ordonnée de la pièce.
+	 * @param	row
+	 * 				La valeur en ordonnée de la pièce.	
 	 */
 	public void setRow(int row) {
 		this.row = row;
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Getteur de la valeur en abscisse de la pièce.
+	 * @return	La valeur en abscisse de la pièce.
 	 */
 	public int getColumn() {
 		return column;
 	}
 
 	/**
-	 * TODO
-	 * @param column
+	 * Setteur de la valeur en abscisse de la pièce.
+	 * @param	column
+	 * 				La valeur en absisse de la pièce.
 	 */
 	public void setColumn(int column) {
 		this.column = column;
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Setteur du booleen indiquant si la pièce a bougé au moins une fois durant la partie.
+	 * @param	b
+	 * 				Le booleen true ou false. 
 	 */
-	public boolean isDead(){
-		return (this.getRow()==0 && this.getColumn()==0);
+	public void moveOnce(boolean b) {
+		this.hasMovedOnce = b;
 	}
 
 	/**
-	 * TODO
-	 * @param board
-	 * @param row
-	 * @param column
-	 * @return
+	 * Retourne vrai si la pièce a bougé au moins une fois durant la partie, faux sinon.
+	 * @return 	Le booleen indiquant si la pièce a bougé au moins une fois durant la partie.
 	 */
-	public boolean isOpponent(Board board, int row, int column){
-		if (this.isBlack()){
+	public boolean hasMovedOnce() {
+		return this.hasMovedOnce;
+	}
+
+	/**
+	 * Retourne vrai si la pièce est prise faux sinon.
+	 * @return 	Le booleen indiquant si la pièce est prise.
+	 */
+	public boolean isDead() {
+		return ((this.getRow() == 0) && (this.getColumn() == 0));
+	}
+
+	/**
+	 * Retourne vrai si la case décrite par les paramètres 
+	 * "row" et "column contient une pièce adverse.
+	 * @param	board 
+	 * 				La partie en cours.
+	 * @param	row
+	 * 				La valeur en ordonnée de la case à évaluer.
+	 * @param	column
+	 * 				La valeur en abscisse de la case à évaluer.
+	 * @return	Le booleen indiquant si la case décrite 
+	 * 			contient une adverse.
+	 */
+	public boolean isOpponent(Board board, int row, int column) {
+		if (this.isBlack())
 			return board.isWhite(row, column);
-		}
-		else{
+		else
 			return board.isBlack(row, column);
-		}
 	}
 
 	/**
-	 * TODO
-	 * @param board
-	 * @param row
-	 * @param column
-	 * @return
+	 * Retourne vrai si la case décrite par les paramètres 
+	 * "row" et "column contient une pièce alliée.
+	 * @param	board
+	 * 				La partie en cours.
+	 * @param	row
+	 * 				La valeur en ordonnée de la case à évaluer.
+	 * @param	column
+	 * 				La valeur en abscisse de la case à évaluer.
+	 * @return	Le booleen indiquant si la case décrite 
+	 * 			contient une pièce alliée.
 	 */
-	public boolean isSameColor(Board board, int row, int column){
-		if (this.isBlack()){
+	public boolean isSameColor(Board board, int row, int column) {
+		if (this.isBlack())
 			return board.isBlack(row, column);
-		}
-		else{
+		else
 			return board.isWhite(row, column);
-		}
 	}
 
 	/**
-	 * TODO
-	 * @param board
-	 * @return
+	 * Retourne la liste des cases jouables en diagonales
+	 * jusqu'à la rencontre d'un obstacle.
+	 * @param	board
+	 * 				La partie en cours.
+	 * @return	La liste des cases jouables en diagonales.
 	 */
-	public ArrayList<Square> possibleMovesDiagonale(Board board){
+	public ArrayList<Square> possibleMovesDiagonale(Board board) {
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		int i = 1;
 		//Mouvement en haut à droite
-		while (this.getRow() +i<9 && this.getColumn() +i<9 && 
-				board.isEmpty(this.getRow() +i, this.getColumn() +i)){
+		while ((this.getRow()+i < 9) && (this.getColumn()+i < 9) && 
+				board.isEmpty(this.getRow() +i, this.getColumn() +i)) {
 			movesList.add(new Square(this.getRow()+i, this.getColumn()+i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow()+i, this.getColumn()+i)){
+		if (this.isOpponent(board, this.getRow()+i, this.getColumn()+i))
 			movesList.add(new Square(this.getRow()+i, this.getColumn()+i));
-		}
 		i = 1;
 		//Mouvement en haut à gauche
-		while (this.getRow() +i<9 && this.getColumn() -i>0 && 
-				board.isEmpty(this.getRow() +i, this.getColumn() -i)){
+		while ((this.getRow()+i < 9) && (this.getColumn()-i > 0) && 
+				(board.isEmpty(this.getRow()+i, this.getColumn()-i))) {
 			movesList.add(new Square(this.getRow()+i, this.getColumn()-i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow()+i, this.getColumn()-i)){
+		if (this.isOpponent(board, this.getRow()+i, this.getColumn()-i))
 			movesList.add(new Square(this.getRow()+i, this.getColumn()-i));
-		}
 		i = 1;
 		//Mouvement en bas à gauche
-		while (this.getRow() -i>0 && this.getColumn() -i>0 && 
-				board.isEmpty(this.getRow() -i, this.getColumn() -i)){
+		while ((this.getRow()-i > 0) && (this.getColumn()-i > 0) && 
+				(board.isEmpty(this.getRow()-i, this.getColumn()-i))) {
 			movesList.add(new Square(this.getRow()-i, this.getColumn()-i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow()-i, this.getColumn()-i)){
+		if (this.isOpponent(board, this.getRow()-i, this.getColumn()-i))
 			movesList.add(new Square(this.getRow()-i, this.getColumn()-i));
-		}
 		i = 1;
 		//Mouvement en bas à droite
-		while (this.getRow() -i>0 && this.getColumn() +i<9 && 
-				board.isEmpty(this.getRow() -i, this.getColumn() +i)){
+		while ((this.getRow()-i > 0) && (this.getColumn()+i < 9) && 
+				(board.isEmpty(this.getRow()-i, this.getColumn()+i))) {
 			movesList.add(new Square(this.getRow()-i, this.getColumn()+i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow()-i, this.getColumn()+i)){
+		if (this.isOpponent(board, this.getRow()-i, this.getColumn()+i))
 			movesList.add(new Square(this.getRow()-i, this.getColumn()+i));
-		}
 		return movesList;
 	}
-
 	/**
-	 * TODO
-	 * @param board
-	 * @return
+	 * Retourne la liste des cases jouables en lignes droites
+	 * jusqu'à la rencontre d'un obstacle.
+	 * @param	board
+	 * 				La partie en cours.
+	 * @return	La liste des cases jouables en lignes droites.
 	 */
-	public ArrayList<Square> possibleMovesDroit(Board board){
+	public ArrayList<Square> possibleMovesDroit(Board board) {
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		int i = 1;
 		//Mouvement en haut
-		while (this.getRow() +i <9 && 
-				board.isEmpty(this.getRow()+i, this.getColumn())){
+		while ((this.getRow()+i < 9) && 
+				(board.isEmpty(this.getRow()+i, this.getColumn()))) {
 			movesList.add(new Square(this.getRow()+i, this.getColumn()));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow()+i, this.getColumn())){
+		if (this.isOpponent(board, this.getRow()+i, this.getColumn()))
 			movesList.add(new Square(this.getRow()+i, this.getColumn()));
-		}
 		i = 1;
 		//Mouvement en bas
-		while (this.getRow() -i >0 && 
-				board.isEmpty(this.getRow()-i, this.getColumn())){
+		while ((this.getRow()-i > 0) && 
+				(board.isEmpty(this.getRow()-i, this.getColumn()))) {
 			movesList.add(new Square(this.getRow()-i, this.getColumn()));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow()-i, this.getColumn())){
+		if (this.isOpponent(board, this.getRow()-i, this.getColumn()))
 			movesList.add(new Square(this.getRow()-i, this.getColumn()));
-		}
 		i = 1;
 		//Mouvement à gauche
-		while (this.getColumn()-i>0 && 
-				board.isEmpty(this.getRow(), this.getColumn()-i)){
+		while ((this.getColumn()-i > 0) && 
+				(board.isEmpty(this.getRow(), this.getColumn()-i))) {
 			movesList.add(new Square(this.getRow(), this.getColumn()-i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow(), this.getColumn()-i)){
+		if (this.isOpponent(board, this.getRow(), this.getColumn()-i))
 			movesList.add(new Square(this.getRow(), this.getColumn()-i));
-		}
 		i = 1;
 		//Mouvement à droite
-		while (this.getColumn()+i<9 && 
-				board.isEmpty(this.getRow(), this.getColumn()+i)){
+		while ((this.getColumn()+i < 9) && 
+				(board.isEmpty(this.getRow(), this.getColumn()+i))) {
 			movesList.add(new Square(this.getRow(), this.getColumn()+i));
 			i++;
 		}
-		if (this.isOpponent(board, this.getRow(), this.getColumn()+i)){
+		if (this.isOpponent(board, this.getRow(), this.getColumn()+i))
 			movesList.add(new Square(this.getRow(), this.getColumn()+i));
-		}
 		return movesList;
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Retourne vrai si la pièce est de soustype "Roi".
+	 * @return	un booleen indiquant si la pièce est de sous-type "Roi".
 	 */
-	public boolean isKing(){
-		if (this instanceof King){
+	public boolean isKing() {
+		if (this instanceof King)
 			return true;
-		}
 		return false;
 	}
 
 	/**
-	 * TODO
+	 * Affecte la valeur 0 aux coordonnées de la pièce, indiquant qu'elle est mangé. 
 	 */
-	private void estMange(){
+	private void isBeingEaten() {
 		this.row = 0;
 		this.column = 0;
 	}
 
 	/**
-	 * TODO
-	 * @param board
-	 * @param row
-	 * @param column
+	 * Déplace la pièce de la partie "board", depuis ses coordonnées initiales (de ses
+	 * variables de classes) vers les coordonnées "row" et "column".
+	 * @param 	board
+	 * 				La partie en cours.
+	 * @param 	row
+	 * 				Valeur en ordonnées de la case vers laquelle déplacer la pièce.
+	 * @param 	column
+	 * 				Valeur en abscisse de la case vers laquelle déplacer la pièce.
 	 * @throws OutOfBoardException
 	 * @throws NonPossibleMoveException
 	 * @throws EchecException
 	 */
 	public void deplacerPiece(Board board, int row, int column) 
-			throws OutOfBoardException, NonPossibleMoveException, EchecException{
-
+			throws OutOfBoardException, NonPossibleMoveException, EchecException {
 		int oldRow = this.row;
 		int oldColumn = this.column;
 		boolean mange = false;
 		board.setSelectedCase("00");
 		Piece pieceMange = new Pawn("blue", 0, 0);
-		if ((row < 1) || (row > 8) || (column < 1) || (column > 8)){
+		if ((row < 1) || (row > 8) || (column < 1) || (column > 8))
 			throw new OutOfBoardException("jeu hors des limites");
-		}
 		ArrayList<Square> listeCoups = this.possibleMoves(board);
 		boolean peutJouer = false;
 		Iterator<Square> it = listeCoups.iterator();
-		while(it.hasNext()){
+		while(it.hasNext()) {
 			Square s = it.next();
-			if (s.isThisSquare(row, column)){
+			if (s.isThisSquare(row, column))
 				peutJouer = true;
-			}
 		}
-		if (!peutJouer){
+		if (!peutJouer)
 			throw new NonPossibleMoveException("coup non possible");
-		}
-		if (board.isEmpty(row, column)){
+		if (board.isEmpty(row, column)) {
 			this.row = row;
 			this.column = column;
 		}
-		else{
+		else {
 			mange = true;
 			pieceMange = board.getPiece(row, column);
-			pieceMange.estMange();
+			pieceMange.isBeingEaten();
 			this.row = row;
 			this.column = column;
 		}
-		if (this.color.equals("black")){
+		if (this.color.equals("black")) {
 			if (board.isEchec("black", 
 					board.getBlackKing().getRow(), 
 					board.getBlackKing().getColumn())){
 				this.row = oldRow;
 				this.column = oldColumn;
-				if (mange){
+				if (mange) {
 					pieceMange.setRow(row);
 					pieceMange.setColumn(column);
 				}
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
 		}
-		else{
+		else {
 			if (board.isEchec("white", 
 					board.getWhiteKing().getRow(), 
-					board.getWhiteKing().getColumn())){
+					board.getWhiteKing().getColumn())) {
 				this.row = oldRow;
 				this.column = oldColumn;
-				if (mange){
+				if (mange) {
 					pieceMange.setRow(row);
 					pieceMange.setColumn(column);
 				}
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
 		}
+		if ((this instanceof Rook) || (this instanceof King))
+			this.hasMovedOnce = true;
 	}
-	
-	public boolean isPlayable(int row, int column, Board b){
+
+	/**
+	 * Retourne vrai si la case de la partie "b" décrite par les 
+	 * coordonnées "column" et "row" est jouable par la pièce.
+	 * @param 	row
+	 * 				La valeur en ordonnées de la case à évaluer.
+	 * @param 	column
+	 * 				La valuer en abscisse de la case à évaluer.
+	 * @param 	b
+	 * 				La partie en cours.
+	 * @return	Le booleen indiquant si la cas décrite est jouable par la pièce.
+	 */
+	public boolean isPlayable(int row, int column, Board b) {
 		ArrayList<Square> possibleMoves = possibleMoves(b);
 		Iterator<Square> it = possibleMoves.iterator();
 		while(it.hasNext()){
 			Square s = it.next();
-			if (s.isThisSquare(row, column)){
+			if (s.isThisSquare(row, column))
 				return true;
-			}
 		}
 		return false;
 	}
 	
-	public boolean isPlayable(String caseJeu, Board b){
+	/**
+	 * Retourne vrai si la case de la partie "b" décrite par la 
+	 * chaine de caractère "caseJeu" est jouable par la pièce.
+	 * @param 	row
+	 * 				Chaine de caractère de la case à évaluer,
+	 * 				de "A" à "H" pour les abscisses et de 
+	 * 				1 à 8 pour les ordonées.
+	 * @param 	b
+	 * 				La partie en cours.
+	 * @return 	Le booleen indiquant si la cas décrite est jouable par la pièce.
+	 */
+	public boolean isPlayable(String caseJeu, Board b) {
 		assert(!(caseJeu.charAt(0)<'A') && 
 				!(caseJeu.charAt(0)>'H') && 
 				!(caseJeu.charAt(1)<'1') && 

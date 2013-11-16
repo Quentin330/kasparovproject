@@ -13,6 +13,7 @@ public class King extends Piece{
 	 * @param width
 	 */
 	public King(String color, int heigth, int width){
+		this.moveOnce(false);
 		this.setNom("King");
 		this.setColor(color);
 		this.setRow(heigth);
@@ -76,6 +77,24 @@ public class King extends Piece{
 		if (this.getRow()!=1 && this.getColumn()!=1){
 			if (!this.isSameColor(board, this.getRow()-1, this.getColumn()-1)){
 				movesList.add(new Square(this.getRow()-1, this.getColumn()-1));
+			}
+		}
+		//petit roque
+		if (!this.hasMovedOnce()) { 
+			if (this.isSameColor(board, 1, 8) && !board.getPiece(1, 8).hasMovedOnce()) {
+				movesList.add(new Square(this.getRow(), this.getColumn()+2));
+			} 
+			if (this.isSameColor(board, 8, 8) && !board.getPiece(8, 8).hasMovedOnce()) {
+				movesList.add(new Square(this.getRow(), this.getColumn()+2));
+			}
+		}
+		//grand roque
+		if (!this.hasMovedOnce()) { 
+			if (this.isSameColor(board, 1, 1) && !board.getPiece(1, 1).hasMovedOnce()) {
+				movesList.add(new Square(this.getRow(), this.getColumn()-2));
+			} 
+			if (this.isSameColor(board, 8, 1) && !board.getPiece(8, 1).hasMovedOnce()) {
+				movesList.add(new Square(this.getRow()-2, this.getColumn()-2));
 			}
 		}
 		return movesList;
