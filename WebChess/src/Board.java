@@ -50,12 +50,18 @@ public class Board {
 	 * Getteur indiquant la case en surbrillance.
 	 * @return	Chaine de caractère de la case à évaluer,
 	 * 			de "A" à "H" pour les abscisses et de 
-	 * 			1 à 8 pour les ordonées.
+	 * 			1 à 8 pour les ordonnées.
 	 */
 	public String getSelectedCase() {
 		return selectedCase;
 	}
 
+	/**
+	 * Setteur indiquant la case en surbrillance.
+	 * @param 	Chaine de caractère de la case,
+	 * 			de "A" à "H" pour les abscisses et de 
+	 * 			1 à 8 pour les ordonnées.
+	 */
 	public void setSelectedCase(String selectedCase) {
 		this.selectedCase = selectedCase;
 	}
@@ -100,16 +106,15 @@ public class Board {
 		this.whiteKing = whiteKing;
 	}
 
-	public void nextPlayer(){
-		if (this.currentPlayer.equals("black")){
+	/**
+	 * TODO
+	 */
+	public void nextPlayer() {
+		if (this.currentPlayer.equals("black"))
 			this.currentPlayer = "white";
-		}
-		else{
+		else
 			this.currentPlayer = "black";
-		}
 	}
-
-
 
 	/**
 	 * TODO
@@ -121,9 +126,8 @@ public class Board {
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
 		this.pieces = new Piece[32];
-		for (int i = 0; i<32; ++i){
+		for (int i = 0; i < 32; ++i)
 			this.pieces[i] = pieces[i].clone();
-		}
 		this.blackKing = blackKing.clone();
 		this.whiteKing = whiteKing.clone();
 	}
@@ -141,29 +145,29 @@ public class Board {
 	public Board(){
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
+		this.blackKing 	= new King	("black", 8, 5);
+		this.whiteKing 	= new King	("white", 1, 5);
 		this.pieces = new Piece[32];
-		this.pieces[0] = new Rook("black", 8, 1);
-		this.pieces[1] = new Knight("black", 8, 2);
-		this.pieces[2] = new Bishop("black", 8, 3);
-		this.pieces[3] = new Queen("black", 8, 4);
-		this.blackKing = new King("black", 8, 5);
+		this.pieces[0] = new Rook	("black", 8, 1);
+		this.pieces[1] = new Knight	("black", 8, 2);
+		this.pieces[2] = new Bishop	("black", 8, 3);
+		this.pieces[3] = new Queen	("black", 8, 4);
 		this.pieces[4] = this.blackKing;
-		this.pieces[5] = new Bishop("black", 8, 6);
-		this.pieces[6] = new Knight("black", 8, 7);
-		this.pieces[7] = new Rook("black", 8, 8);
-		for (int i = 0; i<8; ++i){
-			this.pieces[i+8] = new Pawn("black", 7, i+1);
-			this.pieces[i+16] = new Pawn("white", 2, i+1);
+		this.pieces[5] = new Bishop	("black", 8, 6);
+		this.pieces[6] = new Knight	("black", 8, 7);
+		this.pieces[7] = new Rook	("black", 8, 8);
+		for (int i = 0; i<8; ++i) {
+			this.pieces[i+8] 	= new Pawn("black", 7, i+1);
+			this.pieces[i+16] 	= new Pawn("white", 2, i+1);
 		}
-		this.pieces[24] = new Rook("white", 1, 1);
+		this.pieces[24] = new Rook	("white", 1, 1);
 		this.pieces[25] = new Knight("white", 1, 2);
 		this.pieces[26] = new Bishop("white", 1, 3);
-		this.pieces[27] = new Queen("white", 1, 4);
-		this.whiteKing = new King("white", 1, 5);
+		this.pieces[27] = new Queen	("white", 1, 4);
 		this.pieces[28] = this.whiteKing;
 		this.pieces[29] = new Bishop("white", 1, 6);
 		this.pieces[30] = new Knight("white", 1, 7);
-		this.pieces[31] = new Rook("white", 1, 8);
+		this.pieces[31] = new Rook	("white", 1, 8);
 	}
 
 	/**
@@ -190,13 +194,9 @@ public class Board {
 	 * @return
 	 */
 	public boolean isWhite(int row, int column){
-		for (int i=0; i<32; ++i){
-			if (this.pieces[i].getRow()==row){
-				if (this.pieces[i].getColumn()==column){
-					return this.pieces[i].isWhite();
-				}
-			}
-		}
+		for (int i=0; i<32; ++i)
+			if (this.pieces[i].getRow()==row && this.pieces[i].getColumn()==column)
+				return this.pieces[i].isWhite();
 		return false;
 	}
 
@@ -207,13 +207,9 @@ public class Board {
 	 * @return
 	 */
 	public boolean isBlack(int row, int column){
-		for (int i=0; i<32; ++i){
-			if (this.pieces[i].getRow()==row){
-				if (this.pieces[i].getColumn()==column){
-					return this.pieces[i].isBlack();
-				}
-			}
-		}
+		for (int i=0; i<32; ++i)
+			if (this.pieces[i].getRow()==row && this.pieces[i].getColumn()==column)
+				return this.pieces[i].isBlack();
 		return false;
 	}
 
@@ -224,20 +220,14 @@ public class Board {
 	 */
 	public ArrayList<Square> echec(String color){
 		ArrayList<Square> echecList = new ArrayList<Square>();
-		if (color.equals("black")){
-			for (int i=0; i<32; ++i){
-				if (this.pieces[i].isWhite()){
+		if (color.equals("black"))
+			for (int i=0; i<32; ++i)
+				if (this.pieces[i].isWhite())
 					echecList.addAll(this.pieces[i].possibleMoves(this));
-				}
-			}
-		}
-		if (color.equals("white")){
-			for (int i=0; i<32; ++i){
-				if (this.pieces[i].isBlack()){
+		if (color.equals("white"))
+			for (int i=0; i<32; ++i)
+				if (this.pieces[i].isBlack())
 					echecList.addAll(this.pieces[i].possibleMoves(this));
-				}
-			}
-		}
 		return echecList;
 	}
 
@@ -260,13 +250,12 @@ public class Board {
 	 * @param column
 	 * @return
 	 */
-	public boolean isEchec(ArrayList<Square> echecList, int row, int column){
+	public boolean isEchec(ArrayList<Square> echecList, int row, int column) {
 		Iterator<Square> it = echecList.iterator();
 		while (it.hasNext()){
 			Square s = it.next();
-			if (s.isThisSquare(row, column)){
+			if (s.isThisSquare(row, column))
 				return true;
-			}
 		}
 		return false;
 	}
@@ -277,14 +266,13 @@ public class Board {
 	 * @param column
 	 * @return
 	 */
-	public Piece getPiece(int row, int column){
+	public Piece getPiece(int row, int column) {
 		assert (!this.isEmpty(row, column));
-		int i=0;
+		int i = 0;
 		while(i<32 && 
 				!(this.getPieces()[i].getRow()== row && 
-				this.getPieces()[i].getColumn() == column)){
+				this.getPieces()[i].getColumn() == column))
 			i++;
-		}
 		return this.getPieces()[i];
 	}
 
@@ -326,6 +314,13 @@ public class Board {
 		this.deplacerPiece(row1, column1, row2, column2);
 	}
 
+	/**
+	 * TODO
+	 * @param caseJeu
+	 * @return
+	 * @throws OutOfBoardException
+	 * @throws NonPossibleMoveException
+	 */
 	public Piece getPiece(String caseJeu) throws OutOfBoardException, NonPossibleMoveException{
 		assert(!(caseJeu.charAt(0)<'A') && 
 				!(caseJeu.charAt(0)>'H') && 
@@ -336,6 +331,11 @@ public class Board {
 		return this.getPiece(row, column);
 	}
 
+	/**
+	 * TODO
+	 * @param caseJeu
+	 * @return
+	 */
 	public boolean isEmpty(String caseJeu){
 		assert(!(caseJeu.charAt(0)<'A') && 
 				!(caseJeu.charAt(0)>'H') && 

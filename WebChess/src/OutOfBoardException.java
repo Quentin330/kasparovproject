@@ -2,7 +2,7 @@
  * TODO
  *
  */
-public class OutOfBoardException extends NonPossibleMoveException{
+public class OutOfBoardException extends NonPossibleMoveException {
 
 	/**
 	 * TODO
@@ -13,7 +13,7 @@ public class OutOfBoardException extends NonPossibleMoveException{
 	 * TODO
 	 * @param s
 	 */
-	public OutOfBoardException(String s){
+	public OutOfBoardException(String s) {
 		super(s);
 	}
 

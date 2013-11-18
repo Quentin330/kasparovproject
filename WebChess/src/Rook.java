@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * TODO
  *
  */
-public class Rook extends Piece{
+public class Rook extends Piece {
 	
 	/**
 	 * TODO
@@ -18,18 +18,16 @@ public class Rook extends Piece{
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
-		if (color.equals("black")){
+		if (color.equals("black"))
 			this.setShortcut("t");
-		}
-		else{
+		else
 			this.setShortcut("T");
-		}
 	}
 	
 	/**
 	 * TODO
 	 */
-	public ArrayList<Square> possibleMoves(Board board){
+	public ArrayList<Square> possibleMoves(Board board) {
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		if (this.isDead()){
 			return movesList;

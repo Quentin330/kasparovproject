@@ -4,31 +4,29 @@ import java.util.ArrayList;
  * TODO
  *
  */
-public class Pawn extends Piece{
-	
+public class Pawn extends Piece {
+
 	/**
 	 * TODO
 	 * @param color
 	 * @param heigth
 	 * @param width
 	 */
-	public Pawn(String color, int heigth, int width){
+	public Pawn(String color, int heigth, int width) {
 		this.setNom("Pawn");
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
-		if (color.equals("black")){
+		if (color.equals("black"))
 			this.setShortcut("p");
-		}
-		else{
+		else
 			this.setShortcut("P");
-		}
 	}
 
 	/**
 	 * TODO
 	 */
-	public ArrayList<Square> possibleMoves(Board board){
+	public ArrayList<Square> possibleMoves(Board board) {
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		if (this.isDead()){
 			return movesList;
@@ -89,7 +87,7 @@ public class Pawn extends Piece{
 		}
 		return movesList;
 	}
-	
+
 	/**
 	 * TODO
 	 */

@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * TODO
  *
  */
-public class King extends Piece{
+public class King extends Piece {
 	
 	/**
 	 * TODO
@@ -12,24 +12,22 @@ public class King extends Piece{
 	 * @param heigth
 	 * @param width
 	 */
-	public King(String color, int heigth, int width){
+	public King(String color, int heigth, int width) {
 		this.moveOnce(false);
 		this.setNom("King");
 		this.setColor(color);
 		this.setRow(heigth);
 		this.setColumn(width);
-		if (color.equals("black")){
+		if (color.equals("black"))
 			this.setShortcut("r");
-		}
-		else{
+		else
 			this.setShortcut("R");
-		}
 	}
 	
 	/**
 	 * TODO
 	 */
-	public ArrayList<Square> possibleMoves(Board board){
+	public ArrayList<Square> possibleMoves(Board board) {
 		ArrayList<Square> movesList = new ArrayList<Square>();
 		//haut
 		if (this.getRow()!=8){
@@ -81,20 +79,24 @@ public class King extends Piece{
 		}
 		//petit roque
 		if (!this.hasMovedOnce()) { 
-			if (this.isSameColor(board, 1, 8) && !board.getPiece(1, 8).hasMovedOnce()) {
-				movesList.add(new Square(this.getRow(), this.getColumn()+2));
+			if (this.isSameColor(board, 1, 8) && !board.getPiece(1, 8).hasMovedOnce()
+					&& board.isEmpty(1, 6) && board.isEmpty(1, 7)) {
+				movesList.add(new Square(1, 7));
 			} 
-			if (this.isSameColor(board, 8, 8) && !board.getPiece(8, 8).hasMovedOnce()) {
-				movesList.add(new Square(this.getRow(), this.getColumn()+2));
+			if (this.isSameColor(board, 8, 8) && !board.getPiece(8, 8).hasMovedOnce()
+					&& board.isEmpty(8, 6) && board.isEmpty(8, 7)) {
+				movesList.add(new Square(8, 7));
 			}
 		}
 		//grand roque
 		if (!this.hasMovedOnce()) { 
-			if (this.isSameColor(board, 1, 1) && !board.getPiece(1, 1).hasMovedOnce()) {
-				movesList.add(new Square(this.getRow(), this.getColumn()-2));
+			if (this.isSameColor(board, 1, 1) && !board.getPiece(1, 1).hasMovedOnce()
+					&& board.isEmpty(1, 4) && board.isEmpty(1, 3) && board.isEmpty(1, 2)) {
+				movesList.add(new Square(1, 3));
 			} 
-			if (this.isSameColor(board, 8, 1) && !board.getPiece(8, 1).hasMovedOnce()) {
-				movesList.add(new Square(this.getRow()-2, this.getColumn()-2));
+			if (this.isSameColor(board, 8, 1) && !board.getPiece(8, 1).hasMovedOnce()
+					&& board.isEmpty(8, 4) && board.isEmpty(8, 3) && board.isEmpty(8, 2)) {
+				movesList.add(new Square(8, 3));
 			}
 		}
 		return movesList;

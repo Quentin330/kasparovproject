@@ -1,12 +1,25 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
+/**
+ * TODO
+ *
+ */
 public class HTMLGen {
 
+	/**
+	 * TODO
+	 */
 	private String body;
+	
+	/**
+	 * TODO
+	 */
 	private ArrayList<Square> possibleMoves;
 
+	/**
+	 * TODO
+	 */
 	private static String head = "<html>\n"
 			+ "<head>\n"
 			+ "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" />\n"
@@ -31,6 +44,9 @@ public class HTMLGen {
 			+ "		<td class=\"corner\"></td>\n"
 			+ "	</tr>\n";
 
+	/**
+	 * TODO
+	 */
 	private static String bottom1 = "<tr>\n"
 			+ "		<td class=\"corner\"></td>\n"
 			+ "		<td class=\"border\">A</td>\n"
@@ -47,10 +63,20 @@ public class HTMLGen {
 			+ "</form>\n"
 			+ "</body>\n";
 
+	/**
+	 * TODO
+	 */
 	private String options = "";
 
+	/**
+	 * TODO
+	 */
 	private static String bottom2 = "</html>";
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public String getPage() {
 		return HTMLGen.getHead()
 				+ this.body
@@ -59,6 +85,12 @@ public class HTMLGen {
 				+ HTMLGen.getBottom2();
 	}
 
+	/**
+	 * TODO
+	 * @param b
+	 * @throws OutOfBoardException
+	 * @throws NonPossibleMoveException
+	 */
 	public HTMLGen(Board b) throws OutOfBoardException, NonPossibleMoveException {
 		//options += "<center><a href=\"?NewGame\">Nouvelle Partie</a></center>\n";
 		if (!b.getSelectedCase().equals("00")) {
@@ -75,6 +107,13 @@ public class HTMLGen {
 		}
 	}
 
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @param b
+	 * @return
+	 */
 	public String printPiece(int row, int column, Board b) {
 		String pieceLine = "<td class=\"";
 		int somme = row + column;
@@ -121,6 +160,12 @@ public class HTMLGen {
 		return pieceLine;
 	}
 
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public String nameCase(int row, int column){
 		String name = "";
 		switch (column) {
@@ -137,6 +182,13 @@ public class HTMLGen {
 		return name;
 	}
 
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @param b
+	 * @return
+	 */
 	public String getNomPiece(int row, int column, Board b) {
 		if (b.isEmpty(row, column))
 			return "blank.svg\" alt=\" \"";
@@ -150,6 +202,13 @@ public class HTMLGen {
 		return nom;
 	}
 
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @param b
+	 * @return
+	 */
 	public boolean isPlayable(int row, int column, Board b) {
 		Iterator<Square> it = this.possibleMoves.iterator();
 		while(it.hasNext()) {
@@ -160,26 +219,50 @@ public class HTMLGen {
 		return false;
 	}
 	
+	/**
+	 * TODO
+	 * @return
+	 */
 	public static String getHead() {
 		return head;
 	}
 
+	/**
+	 * TODO
+	 * @param head
+	 */
 	public static void setHead(String head) {
 		HTMLGen.head = head;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public static String getBottom1() {
 		return bottom1;
 	}
 
+	/**
+	 * TODO
+	 * @param bottom1
+	 */
 	public static void setBottom1(String bottom1) {
 		HTMLGen.bottom1 = bottom1;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public static String getBottom2() {
 		return bottom2;
 	}
 
+	/**
+	 * TODO
+	 * @param bottom2
+	 */
 	public static void setBottom2(String bottom2) {
 		HTMLGen.bottom2 = bottom2;
 	}

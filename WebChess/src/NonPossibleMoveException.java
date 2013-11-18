@@ -2,8 +2,7 @@
  * TODO
  *
  */
-public class NonPossibleMoveException extends Exception{
-	
+public class NonPossibleMoveException extends Exception {
 	
 	/**
 	 * TODO

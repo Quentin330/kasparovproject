@@ -1,8 +1,9 @@
 /**
  * TODO
+ * 
  */
-public class EchecException extends NonPossibleMoveException{
-	
+public class EchecException extends NonPossibleMoveException {
+
 	/**
 	 * TODO
 	 */
@@ -12,7 +13,7 @@ public class EchecException extends NonPossibleMoveException{
 	 * TODO
 	 * @param s
 	 */
-	public EchecException(String s){
+	public EchecException(String s) {
 		super(s);
 	}
 
