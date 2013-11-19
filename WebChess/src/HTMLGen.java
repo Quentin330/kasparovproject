@@ -67,6 +67,8 @@ public class HTMLGen {
 	 * TODO
 	 */
 	private String options = "";
+	
+	private String listeCoups = "";
 
 	/**
 	 * TODO
@@ -82,6 +84,7 @@ public class HTMLGen {
 				+ this.body
 				+ HTMLGen.getBottom1()
 				+ this.options
+				+ this.listeCoups
 				+ HTMLGen.getBottom2();
 	}
 
@@ -92,7 +95,8 @@ public class HTMLGen {
 	 * @throws NonPossibleMoveException
 	 */
 	public HTMLGen(Board b) throws OutOfBoardException, NonPossibleMoveException {
-		options += "<center><a href=\"?NewGame\">Nouvelle Partie</a></center>\n";
+		this.remplirOptions(b);
+		this.remplirListe(b);
 		if (!b.getSelectedCase().equals("00")) {
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
 		}
@@ -265,6 +269,53 @@ public class HTMLGen {
 	 */
 	public static void setBottom2(String bottom2) {
 		HTMLGen.bottom2 = bottom2;
+	}
+	
+	public void remplirListe(Board b){
+		this.listeCoups += "<center>";
+		String debutFont = "<font color =\"black\">";
+		String finFont = "</font>";
+		for (int i=1; i<b.getNumeroCoupMax(); ++i){
+			if (i>=b.getNumeroCoup()){
+				debutFont = "<font color =\"grey\">";
+			}
+			if (i%2 == 0){
+				this.listeCoups += " " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont + "<BR>";
+			}
+			else{
+				this.listeCoups += i+1/2 + ". " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont;			
+			}
+		}
+		this.listeCoups += "</center>";
+	}
+	
+	public void remplirOptions(Board b){
+		this.options += "<center>";
+		String player = b.getCurrentPlayer();
+		Piece roi = b.getWhiteKing();
+		if (player.equals("black")){
+			roi = b.getBlackKing();
+		}
+		if (b.isEchec(player, roi.getRow(), roi.getColumn())){
+			this.options += "/!\\ Roi en Echec /!\\ <BR>";
+		}
+		else{
+			this.options += "<BR>";
+		}
+		if (b.getNumeroCoup()>1){
+			this.options += "<a href=\"?Undo\">Annuler Coup</a><BR>";
+		}
+		else{
+			this.options += "Annuler Coup<BR>";
+		}
+		if (b.getNumeroCoup()<b.getNumeroCoupMax()){
+			this.options += "<a href=\"?Redo\">Retablir Coup</a><BR>";
+		}
+		else{
+			this.options += "Retablir Coup<BR>";
+		}
+		this.options += "<a href=\"?NewGame\">Nouvelle Partie</a><BR>";
+		this.options += "</center><BR><BR>";
 	}
 
 }

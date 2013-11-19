@@ -26,7 +26,7 @@ public class Web {
 		while ((ligne = lecteurAvecBuffer.readLine()) != null)
 			fileContent+=ligne +"\n";
 		lecteurAvecBuffer.close();
-		System.out.println("::: Fichier lu :::");
+		//System.out.println("::: Fichier lu :::");
 		return fileContent;
 	}
 
@@ -68,13 +68,13 @@ public class Web {
 				byte[] buffer = new byte[1024]; 
 				int nb = -1;
 				String input = "";
-				System.out.println("====================== Nouvelle requete ====================\n");
+				//System.out.println("====================== Nouvelle requete ====================\n");
 				do {
 					nb = istream.read(buffer);
 					String tmp = new String(buffer,"UTF-8");
 					input += tmp;
 				} while(nb == 1024);
-				System.out.println(input);
+				//System.out.println(input);
 				if (input.startsWith("GET ")) {
 					String objet = "";
 					int j = 5;
@@ -92,7 +92,7 @@ public class Web {
 							passe=true;
 						else
 							fichier += objet.charAt(i);
-					System.out.println("::: Lecture de " + fichier + " avec comme parametres : " + parametres +" :::");
+					//System.out.println("::: Lecture de " + fichier + " avec comme parametres : " + parametres +" :::");
 					try {
 						String content = "";
 						if (fichier.length()==0 || fichier.equals("index.html")) {
@@ -100,6 +100,24 @@ public class Web {
 							if (parametres.length()>0) {
 								if (parametres.equals("NewGame"))
 									b = new Board();
+								else if (parametres.equals("Undo"))
+									if (b.getNumeroCoup()>1){
+										b.annulerCoup();
+									}
+									else {
+										//TODO Message d'erreur "annulation Impossible" (page html)
+									}
+								else if (parametres.equals("Redo"))
+										if (b.getNumeroCoup()<b.getNumeroCoupMax()){
+											try{
+											b.retablirCoup();
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+										}
+										else {
+											//TODO Message d'erreur "Redo Impossible" (page html)
+										}
 								//case ou l'on veut aller
 								else if (parametres.startsWith("to")){
 									if ( (parametres.charAt(2) < 'A')
@@ -177,7 +195,7 @@ public class Web {
 								"\n\n";
 						String output = header + content;
 
-						System.out.println(header);
+						//System.out.println(header);
 
 						for(int i=0; i<output.length() ; ++i){
 							int temp = (int) output.charAt(i);

@@ -343,6 +343,13 @@ abstract public class Piece {
 	 */
 	public void deplacerPiece(Board board, int row, int column) 
 			throws OutOfBoardException, NonPossibleMoveException, EchecException {
+		Coup coup = new Coup();
+		coup.setMovedPiece(this);
+		coup.setNumeroCoup(board.getNumeroCoup());
+		Square caseDepart = new Square(this.row, this.column);
+		coup.setCaseDepart(caseDepart);
+		Square caseArrivee = new Square(row, column);
+		coup.setCaseArrivee(caseArrivee);
 		int oldRow = this.row;
 		int oldColumn = this.column;
 		boolean mange = false;
@@ -366,7 +373,9 @@ abstract public class Piece {
 		}
 		else {
 			mange = true;
+			coup.setHasEaten(mange);
 			pieceMange = board.getPiece(row, column);
+			coup.setEatenPiece(pieceMange);
 			pieceMange.isBeingEaten();
 			this.row = row;
 			this.column = column;
@@ -397,6 +406,7 @@ abstract public class Piece {
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
 		}
+		board.ajouterCoup(coup);
 		if ((this instanceof Rook) || (this instanceof King)) {
 			if (this instanceof King) {
 				if (!this.hasMovedOnce() && row == 1 && column == 7)

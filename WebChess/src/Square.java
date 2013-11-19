@@ -17,7 +17,7 @@ public class Square {
 	 * TODO
 	 * @return
 	 */
-	public int getWidth() {
+	public int getRow() {
 		return row;
 	}
 	
@@ -25,28 +25,28 @@ public class Square {
 	 * TODO
 	 * @return
 	 */
-	public int getHeigth() {
+	public int getColumn() {
 		return column;
 	}
 	
 	/**
 	 * TODO
-	 * @param heigth
-	 * @param width
+	 * @param Column
+	 * @param row
 	 */
-	public Square(int heigth, int width) {
-		this.row = width;
-		this.column = heigth;
+	public Square(int row, int column) {
+		this.row = row;
+		this.column = column;
 	}
 	
 	/**
 	 * TODO
-	 * @param heigth
-	 * @param width
+	 * @param column
+	 * @param row
 	 * @return
 	 */
-	public boolean isThisSquare(int heigth, int width) {
-		return (heigth == this.getHeigth() && width == this.row);
+	public boolean isThisSquare(int row, int column) {
+		return (column == this.getColumn() && row == this.row);
 	}
 	
 	/**
@@ -55,23 +55,23 @@ public class Square {
 	 */
 	public String getNomCase() {
 		String nom = new String();
-		if (this.getWidth()==1)
+		if (this.getColumn()==1)
 			nom += "A";
-		else if (this.getWidth()==2)
+		else if (this.getColumn()==2)
 			nom += "B";
-		else if (this.getWidth()==3)
+		else if (this.getColumn()==3)
 			nom += "C";
-		else if (this.getWidth()==4)
+		else if (this.getColumn()==4)
 			nom += "D";
-		else if (this.getWidth()==5)
+		else if (this.getColumn()==5)
 			nom += "E";
-		else if (this.getWidth()==6)
+		else if (this.getColumn()==6)
 			nom += "F";
-		else if (this.getWidth()==7)
+		else if (this.getColumn()==7)
 			nom += "G";
-		else if (this.getWidth()==8)
+		else if (this.getColumn()==8)
 			nom += "H";
-		nom += Integer.toString(this.getHeigth());
+		nom += Integer.toString(this.getRow());
 		return nom;
 	}
 

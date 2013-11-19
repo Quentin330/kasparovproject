@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -36,7 +37,61 @@ public class Board {
 	 * et de 1 à 8 pour les ordonées.
 	 */
 	private String selectedCase;
+	
+	private int numeroCoup;
+	
+	private int numeroCoupMax;
+	
+	private HashMap<Integer, Coup> listeCoups;
+	
+	public HashMap<Integer, Coup> getListeCoups() {
+		return listeCoups;
+	}
 
+	public void ajouterCoup (Coup coup){
+		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
+			listeCoups.remove(i);
+		}
+		listeCoups.put(this.numeroCoup, coup);
+		this.coupSuivant();
+	}
+	
+	public void annulerCoup(){
+		this.numeroCoup --;
+		this.annulerCoup(this.listeCoups.get(this.numeroCoup));
+		this.nextPlayer();
+	}
+	
+	private void annulerCoup(Coup coup){
+		if (coup.getHasEaten()){
+			coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
+			coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
+		}
+		coup.getMovedPiece().setRow(coup.getCaseDepart().getRow());
+		coup.getMovedPiece().setColumn(coup.getCaseDepart().getColumn());
+	}
+	
+	public void coupSuivant(){
+		this.numeroCoup += 1;
+		this.numeroCoupMax = this.numeroCoup;
+	}
+	
+	public void coupPrecedent(){
+		this.numeroCoup -= 1;
+	}
+
+
+	public int getNumeroCoup() {
+		return numeroCoup;
+	}
+	
+	public int getNumeroCoupMax() {
+		return numeroCoupMax;
+	}
+
+	public void setNumeroCoup(int numeroCoup) {
+		this.numeroCoup = numeroCoup;
+	}
 
 	/**
 	 * Getteur indiquant à qui est la main.
@@ -123,6 +178,8 @@ public class Board {
 	 * @param whiteKing
 	 */
 	public Board(Piece[] pieces, King blackKing, King whiteKing) {
+		this.listeCoups = new HashMap<Integer, Coup>();
+		this.numeroCoup = 1;
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
 		this.pieces = new Piece[32];
@@ -143,6 +200,8 @@ public class Board {
 	 * TODO
 	 */
 	public Board(){
+		this.listeCoups = new HashMap<Integer, Coup>();
+		this.numeroCoup = 1;
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
 		this.blackKing 	= new King	("black", 8, 5);
@@ -288,6 +347,19 @@ public class Board {
 	public void deplacerPiece(int row1, int column1, int row2, int column2) 
 			throws OutOfBoardException, NonPossibleMoveException{
 		this.getPiece(row1, column1).deplacerPiece(this, row2, column2);
+	}
+	
+	public void retablirCoup() throws OutOfBoardException, NonPossibleMoveException{
+		int max = this.numeroCoupMax;
+		HashMap<Integer, Coup> hash = new HashMap<Integer, Coup>();
+		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
+			hash.put(i, this.listeCoups.get(i));
+		}
+		this.deplacerPiece(this.listeCoups.get(this.numeroCoup).getCaseDepart().getNomCase(), this.listeCoups.get(this.numeroCoup).getCaseArrivee().getNomCase());
+		this.numeroCoupMax = max;
+		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
+			this.listeCoups.put(i, hash.get(i));
+		}
 	}
 
 	/**
