@@ -13,6 +13,7 @@ public class Pawn extends Piece {
 	 * @param width
 	 */
 	public Pawn(String color, int heigth, int width) {
+		this.setMangeableEnPrisePassant(0);
 		this.setNom("Pawn");
 		this.setColor(color);
 		this.setRow(heigth);
@@ -85,6 +86,38 @@ public class Pawn extends Piece {
 				}
 			}
 		}
+		if ((this.getColor().equals("black") && this.getRow()==4) || (this.getColor().equals("white") && this.getRow()==5)){
+			if (this.getColumn()!=1){
+				if (!board.isEmpty(this.getRow(), this.getColumn()-1)){
+					Piece p = board.getPiece(this.getRow(), this.getColumn()-1);
+					if(p instanceof Pawn){
+						if(p.getMangeableEnPrisePassant()==board.getNumeroCoup()){
+							if (this.getColor().equals("black") && board.isEmpty(3, this.getColumn()-1)){
+								movesList.add(new Square (3, this.getColumn()-1));
+							}
+							else if (this.getColor().equals("white") && board.isEmpty(6, this.getColumn()-1)){
+								movesList.add(new Square (6, this.getColumn()-1));
+							}
+						}
+					}
+				}
+			}
+				if (this.getColumn()!=8){
+					if (!board.isEmpty(this.getRow(), this.getColumn()+1)){
+						Piece p = board.getPiece(this.getRow(), this.getColumn()+1);
+						if(p instanceof Pawn){
+							if(p.getMangeableEnPrisePassant()==board.getNumeroCoup()){
+								if (this.getColor().equals("black") && board.isEmpty(3, this.getColumn()+1)){
+									movesList.add(new Square (3, this.getColumn()+1));
+								}
+								else if (this.getColor().equals("white") && board.isEmpty(6, this.getColumn()+1)){
+									movesList.add(new Square (6, this.getColumn()+1));
+								}
+							}
+						}
+					}
+				}
+			}
 		return movesList;
 	}
 

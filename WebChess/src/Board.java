@@ -37,13 +37,13 @@ public class Board {
 	 * et de 1 à 8 pour les ordonées.
 	 */
 	private String selectedCase;
-	
+
 	private int numeroCoup;
-	
+
 	private int numeroCoupMax;
-	
+
 	private HashMap<Integer, Coup> listeCoups;
-	
+
 	public HashMap<Integer, Coup> getListeCoups() {
 		return listeCoups;
 	}
@@ -55,13 +55,13 @@ public class Board {
 		listeCoups.put(this.numeroCoup, coup);
 		this.coupSuivant();
 	}
-	
+
 	public void annulerCoup(){
 		this.numeroCoup --;
 		this.annulerCoup(this.listeCoups.get(this.numeroCoup));
 		this.nextPlayer();
 	}
-	
+
 	private void annulerCoup(Coup coup){
 		if (coup.getIsGrandRoque() || coup.getIsPetitRoque()){
 			if (coup.getIsGrandRoque()){
@@ -74,7 +74,12 @@ public class Board {
 			coup.getMovedPiece().moveOnce(false);
 		}
 		else if (coup.getHasEaten()){
-			coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
+			if (coup.getIsPriseEnPassant()){
+				coup.getEatenPiece().setRow(coup.getCaseDepart().getRow());
+			}
+			else{
+				coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
+			}
 			coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
 		}
 		coup.getMovedPiece().setRow(coup.getCaseDepart().getRow());
@@ -358,7 +363,7 @@ public class Board {
 			throws OutOfBoardException, NonPossibleMoveException{
 		this.getPiece(row1, column1).deplacerPiece(this, row2, column2);
 	}
-	
+
 	public void retablirCoup() throws OutOfBoardException, NonPossibleMoveException{
 		int max = this.numeroCoupMax;
 		HashMap<Integer, Coup> hash = new HashMap<Integer, Coup>();

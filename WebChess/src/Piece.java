@@ -38,6 +38,19 @@ abstract public class Piece {
 	private boolean hasMovedOnce;
 
 	/**
+	 * Numero du coup pour lequel un pion peut être mangé en prise en passant
+	 */
+	private int mangeableEnPrisePassant;
+
+	public int getMangeableEnPrisePassant() {
+		return mangeableEnPrisePassant;
+	}
+
+	public void setMangeableEnPrisePassant(int mangeableEnPrisePassant) {
+		this.mangeableEnPrisePassant = mangeableEnPrisePassant;
+	}
+
+	/**
 	 * Renvoie un clone de la pièce.
 	 */
 	protected abstract Piece clone();
@@ -68,7 +81,7 @@ abstract public class Piece {
 	public void setShortcut(String shortcut) {
 		this.shortcut = shortcut;
 	}
-	
+
 	/**
 	 * Getteur du nom de la pièce.
 	 * @return	Le nom de la pièce
@@ -92,7 +105,7 @@ abstract public class Piece {
 	public boolean isBlack() {
 		return (this.color.equals("black"));
 	}
-	
+
 	/**
 	 * Retourne vrai si la pièce est blanche, faux sinon.
 	 * @return	un booleen indiquant si la pièce est blanche.
@@ -343,7 +356,16 @@ abstract public class Piece {
 	 */
 	public void deplacerPiece(Board board, int row, int column) 
 			throws OutOfBoardException, NonPossibleMoveException, EchecException {
+		Boolean priseEnPassant = false;
+		if (this instanceof Pawn){
+			if (board.isEmpty(row, column)){
+				if (this.column!=column){
+					priseEnPassant = true;
+				}
+			}
+		}
 		Coup coup = new Coup();
+		coup.setIsPriseEnPassant(priseEnPassant);
 		coup.setMovedPiece(this);
 		coup.setNumeroCoup(board.getNumeroCoup());
 		Square caseDepart = new Square(this.row, this.column);
@@ -367,14 +389,20 @@ abstract public class Piece {
 		}
 		if (!peutJouer)
 			throw new NonPossibleMoveException("coup non possible");
-		if (board.isEmpty(row, column)) {
+
+		if (board.isEmpty(row, column)&&!priseEnPassant) {
 			this.row = row;
 			this.column = column;
 		}
 		else {
 			mange = true;
 			coup.setHasEaten(mange);
-			pieceMange = board.getPiece(row, column);
+			if (priseEnPassant){
+				pieceMange = board.getPiece(oldRow, column);
+			}
+			else{
+				pieceMange = board.getPiece(row, column);
+			}
 			coup.setEatenPiece(pieceMange);
 			pieceMange.isBeingEaten();
 			this.row = row;
@@ -387,8 +415,14 @@ abstract public class Piece {
 				this.row = oldRow;
 				this.column = oldColumn;
 				if (mange) {
-					pieceMange.setRow(row);
-					pieceMange.setColumn(column);
+					if (priseEnPassant){
+						pieceMange.setRow(oldRow);
+						pieceMange.setColumn(column);
+					}
+					else{
+						pieceMange.setRow(row);
+						pieceMange.setColumn(column);
+					}
 				}
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
@@ -400,10 +434,21 @@ abstract public class Piece {
 				this.row = oldRow;
 				this.column = oldColumn;
 				if (mange) {
-					pieceMange.setRow(row);
-					pieceMange.setColumn(column);
+					if (priseEnPassant){
+						pieceMange.setRow(oldRow);
+						pieceMange.setColumn(column);
+					}
+					else{
+						pieceMange.setRow(row);
+						pieceMange.setColumn(column);
+					}
 				}
 				throw new EchecException("Ce mouvement met votre roi en echec");
+			}
+		}
+		if (this instanceof Pawn){
+			if (oldRow-row == 2 || row-oldRow==2){
+				this.setMangeableEnPrisePassant(board.getNumeroCoup()+1);
 			}
 		}
 		board.ajouterCoup(coup);
@@ -459,7 +504,7 @@ abstract public class Piece {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Retourne vrai si la case de la partie "b" décrite par la 
 	 * chaine de caractère "caseJeu" est jouable par la pièce.

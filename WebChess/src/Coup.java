@@ -9,6 +9,7 @@ public class Coup {
 	private Square caseDepart;
 	private Square caseArrivee;
 	private int numeroCoup;
+	private Boolean isPriseEnPassant;
 	
 	public Piece getMovedPiece() {
 		return movedPiece;
@@ -59,7 +60,14 @@ public class Coup {
 		this.numeroCoup = numeroCoup;
 	}	
 	
+	public Boolean getIsPriseEnPassant() {
+		return isPriseEnPassant;
+	}
+	public void setIsPriseEnPassant(Boolean isPriseEnPassant) {
+		this.isPriseEnPassant = isPriseEnPassant;
+	}
 	public Coup(){
+		this.isPriseEnPassant = false;
 		this.hasEaten = false;
 		this.isGrandRoque = false;
 		this.isPetitRoque = false;
@@ -82,20 +90,6 @@ public class Coup {
 		}
 		s += this.caseArrivee.getNomCase();
 		return s;
-	}
-	
-	public Coup(Piece p, String s){
-		assert (p instanceof King);
-		this.hasEaten = false;
-		this.isGrandRoque = false;
-		this.isPetitRoque = false;
-		if (s.equals("petit roque")){
-			this.isPetitRoque = true;
-		}
-		else{
-			this.isGrandRoque = true;
-		}
-		
 	}
 	
 }

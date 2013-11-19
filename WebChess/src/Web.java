@@ -74,7 +74,7 @@ public class Web {
 					String tmp = new String(buffer,"UTF-8");
 					input += tmp;
 				} while(nb == 1024);
-				//System.out.println(input);
+				System.out.println(input);
 				if (input.startsWith("GET ")) {
 					String objet = "";
 					int j = 5;
@@ -191,8 +191,11 @@ public class Web {
 								"\nServer: WebChess localhost:7777" +
 								"\nContent-Length: " + content.length() +
 								"\nConnection: close" +
-								"\nContent-Type: " + getContentType(fichier) + "; charset=UTF-8" +
-								"\n\n";
+								"\nContent-Type: " + getContentType(fichier) + "; charset=UTF-8";
+								if (getContentType(fichier).contains("image")){
+									header += "Last-Modified: Tue, 19 Nov 2013 20:35:08 GMT";
+								}
+								header += "\n\n";
 						String output = header + content;
 
 						//System.out.println(header);
