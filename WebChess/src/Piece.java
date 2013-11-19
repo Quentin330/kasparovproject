@@ -409,14 +409,30 @@ abstract public class Piece {
 		board.ajouterCoup(coup);
 		if ((this instanceof Rook) || (this instanceof King)) {
 			if (this instanceof King) {
-				if (!this.hasMovedOnce() && row == 1 && column == 7)
-					board.getPiece(1, 8).setColumn(6);
-				if (!this.hasMovedOnce() && row == 8 && column == 7)
-					board.getPiece(8, 8).setColumn(6);
-				if (!this.hasMovedOnce() && row == 1 && column == 3)
-					board.getPiece(1, 1).setColumn(4);
-				if (!this.hasMovedOnce() && row == 8 && column == 3)
-					board.getPiece(8, 1).setColumn(4);
+				if (!this.hasMovedOnce() && row == 1 && column == 7){
+					Piece rook = board.getPiece(1, 8);
+					coup.setEatenPiece(rook);
+					rook.setColumn(6);
+					coup.setIsPetitRoque(true);
+				}
+				if (!this.hasMovedOnce() && row == 8 && column == 7){
+					Piece rook = board.getPiece(8, 8);
+					coup.setEatenPiece(rook);
+					rook.setColumn(6);
+					coup.setIsPetitRoque(true);
+				}
+				if (!this.hasMovedOnce() && row == 1 && column == 3){
+					Piece rook = board.getPiece(1, 1);
+					coup.setEatenPiece(rook);
+					rook.setColumn(4);
+					coup.setIsGrandRoque(true);
+				}
+				if (!this.hasMovedOnce() && row == 8 && column == 3){
+					Piece rook = board.getPiece(8, 1);
+					coup.setEatenPiece(rook);
+					rook.setColumn(4);
+					coup.setIsGrandRoque(true);
+				}
 			}
 			this.hasMovedOnce = true;
 		}

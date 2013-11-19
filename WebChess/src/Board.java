@@ -63,19 +63,29 @@ public class Board {
 	}
 	
 	private void annulerCoup(Coup coup){
-		if (coup.getHasEaten()){
+		if (coup.getIsGrandRoque() || coup.getIsPetitRoque()){
+			if (coup.getIsGrandRoque()){
+				coup.getEatenPiece().setColumn(1);
+			}
+			else if (coup.getIsPetitRoque()){
+				coup.getEatenPiece().setColumn(8);		
+			}
+			coup.getEatenPiece().moveOnce(false);
+			
+		}
+		else if (coup.getHasEaten()){
 			coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
 			coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
 		}
 		coup.getMovedPiece().setRow(coup.getCaseDepart().getRow());
 		coup.getMovedPiece().setColumn(coup.getCaseDepart().getColumn());
 	}
-	
+
 	public void coupSuivant(){
 		this.numeroCoup += 1;
 		this.numeroCoupMax = this.numeroCoup;
 	}
-	
+
 	public void coupPrecedent(){
 		this.numeroCoup -= 1;
 	}
@@ -84,7 +94,7 @@ public class Board {
 	public int getNumeroCoup() {
 		return numeroCoup;
 	}
-	
+
 	public int getNumeroCoupMax() {
 		return numeroCoupMax;
 	}
