@@ -71,7 +71,7 @@ public class Board {
 				coup.getEatenPiece().setColumn(8);		
 			}
 			coup.getEatenPiece().moveOnce(false);
-			
+			coup.getMovedPiece().moveOnce(false);
 		}
 		else if (coup.getHasEaten()){
 			coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
