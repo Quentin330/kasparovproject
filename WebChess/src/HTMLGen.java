@@ -92,7 +92,7 @@ public class HTMLGen {
 	 * @throws NonPossibleMoveException
 	 */
 	public HTMLGen(Board b) throws OutOfBoardException, NonPossibleMoveException {
-		//options += "<center><a href=\"?NewGame\">Nouvelle Partie</a></center>\n";
+		options += "<center><a href=\"?NewGame\">Nouvelle Partie</a></center>\n";
 		if (!b.getSelectedCase().equals("00")) {
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
 		}
