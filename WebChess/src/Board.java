@@ -198,10 +198,17 @@ public class Board {
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
 		this.pieces = new Piece[32];
-		for (int i = 0; i < 32; ++i)
+		for (int i = 0; i < 32; ++i){
 			this.pieces[i] = pieces[i].clone();
-		this.blackKing = blackKing.clone();
-		this.whiteKing = whiteKing.clone();
+			if (this.pieces[i] instanceof King){
+				if (this.pieces[i].getColor().equals("black")){
+					this.blackKing =(King) this.pieces[i];
+				}
+				else{
+					this.whiteKing =(King) this.pieces[i];
+				}
+			}
+		}
 	}
 
 	/**
@@ -307,7 +314,26 @@ public class Board {
 	
 
 	public boolean isEchecEtMat(String color) throws OutOfBoardException, NonPossibleMoveException{
-		return false;
+		int k=0;
+		int l=0;
+		for (int i=0; i<32; i++){
+			if (this.pieces[i].getColor().equals(color)){
+				ArrayList<Square> coupsPossibles = this.pieces[i].possibleMoves(this);
+				Iterator<Square> it = coupsPossibles.iterator();
+				while (it.hasNext()){
+					Square s = it.next();
+					Board b = this.clone();
+					l++;
+					try {
+					b.pieces[i].deplacerPiece(b, s.getRow(), s.getColumn());
+					} catch (EchecException e){
+						k++;
+					}
+
+				}
+			}
+		}
+		return (l==k);
 	}
 
 	/**
