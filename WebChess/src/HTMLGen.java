@@ -283,7 +283,7 @@ public class HTMLGen {
 				this.listeCoups += " " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont + "<BR>";
 			}
 			else{
-				this.listeCoups += i+1/2 + ". " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont;			
+				this.listeCoups += (i+1)/2 + ". " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont;			
 			}
 		}
 		this.listeCoups += "</center>";
