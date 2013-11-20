@@ -74,7 +74,7 @@ public class Web {
 					String tmp = new String(buffer,"UTF-8");
 					input += tmp;
 				} while(nb == 1024);
-				System.out.println(input);
+				//System.out.println(input);
 				if (input.startsWith("GET ")) {
 					String objet = "";
 					int j = 5;

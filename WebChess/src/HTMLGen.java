@@ -11,7 +11,7 @@ public class HTMLGen {
 	 * TODO
 	 */
 	private String body;
-	
+
 	/**
 	 * TODO
 	 */
@@ -67,7 +67,7 @@ public class HTMLGen {
 	 * TODO
 	 */
 	private String options = "";
-	
+
 	private String listeCoups = "";
 
 	/**
@@ -222,7 +222,7 @@ public class HTMLGen {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * TODO
 	 * @return
@@ -270,7 +270,7 @@ public class HTMLGen {
 	public static void setBottom2(String bottom2) {
 		HTMLGen.bottom2 = bottom2;
 	}
-	
+
 	public void remplirListe(Board b){
 		this.listeCoups += "<center>";
 		String debutFont = "<font color =\"black\">";
@@ -288,16 +288,26 @@ public class HTMLGen {
 		}
 		this.listeCoups += "</center>";
 	}
-	
+
 	public void remplirOptions(Board b){
 		this.options += "<center>";
 		String player = b.getCurrentPlayer();
 		Piece roi = b.getWhiteKing();
+		String colorEnFrancais = "blanc";
 		if (player.equals("black")){
 			roi = b.getBlackKing();
+			colorEnFrancais = "noir";
 		}
 		if (b.isEchec(player, roi.getRow(), roi.getColumn())){
-			this.options += "/!\\ Roi en Echec /!\\ <BR>";
+			this.options += "<font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
+			try {
+				if (b.isEchecEtMat(player)){
+					this.options += "et Mat ";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			this.options += "/!\\ <BR></font>";
 		}
 		else{
 			this.options += "<BR>";

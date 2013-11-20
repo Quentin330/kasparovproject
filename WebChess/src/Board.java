@@ -304,6 +304,11 @@ public class Board {
 					echecList.addAll(this.pieces[i].possibleMoves(this));
 		return echecList;
 	}
+	
+
+	public boolean isEchecEtMat(String color) throws OutOfBoardException, NonPossibleMoveException{
+		return false;
+	}
 
 	/**
 	 * TODO
@@ -316,6 +321,7 @@ public class Board {
 		ArrayList<Square> echecList = this.echec(color);
 		return this.isEchec(echecList, row, column);
 	}
+	
 
 	/**
 	 * TODO

@@ -67,10 +67,10 @@ public class Pawn extends Piece {
 						movesList.add(new Square(4, this.getColumn()));
 					}
 				}
-				if (this.getColumn()!= 1 && board.isBlack(2, this.getColumn()-1)){
+				if (this.getColumn()!= 1 && board.isBlack(3, this.getColumn()-1)){
 					movesList.add(new Square(2, this.getColumn()-1));
 				}
-				if (this.getColumn()!= 8 && board.isBlack(2, this.getColumn()+1)){
+				if (this.getColumn()!= 8 && board.isBlack(3, this.getColumn()+1)){
 					movesList.add(new Square(2, this.getColumn()+1));
 				}
 			}
