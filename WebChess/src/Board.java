@@ -76,7 +76,7 @@ public class Board {
 		listeCoups.put(this.numeroCoup, coup);
 		this.coupSuivant();
 	}
-	
+
 	public void piecesNonMangees(){
 		for (int i = whiteEatenPieces.size() - 1 ; i >= 0 ; i--) {
 			if (!whiteEatenPieces.get(i).isDead()){
@@ -248,7 +248,7 @@ public class Board {
 			this.currentPlayer = "black";
 	}
 
-	
+
 	public ArrayList<Piece> cloneListe(ArrayList<Piece> liste){
 		ArrayList<Piece> clone = new ArrayList<Piece>();
 		for (int i=0; i<liste.size(); ++i){
@@ -256,8 +256,8 @@ public class Board {
 		}
 		return clone;
 	}
-	
-	
+
+
 	/**
 	 * TODO
 	 * @param pieces
@@ -369,6 +369,43 @@ public class Board {
 				return this.pieces[i].isBlack();
 		return false;
 	}
+	
+	public ArrayList<Square> arroundSquares (Piece p){
+		ArrayList<Square> arround = new ArrayList<Square>();
+		Square haut = new Square(p.getRow()+1, p.getColumn());
+		if (haut.isRealSquare()){
+			arround.add(haut);
+		}
+		Square bas = new Square(p.getRow()-1, p.getColumn());
+		if (bas.isRealSquare()){
+			arround.add(bas);
+		}
+		Square droite = new Square(p.getRow(), p.getColumn()+1);
+		if (droite.isRealSquare()){
+			arround.add(droite);
+		}
+		Square gauche = new Square(p.getRow(), p.getColumn()-1);
+		if (gauche.isRealSquare()){
+			arround.add(gauche);
+		}
+		Square hautdroite = new Square(p.getRow()+1, p.getColumn()+1);
+		if (hautdroite.isRealSquare()){
+			arround.add(hautdroite);
+		}
+		Square hautgauche = new Square(p.getRow()+1, p.getColumn()-1);
+		if (hautgauche.isRealSquare()){
+			arround.add(hautgauche);
+		}
+		Square basdroite = new Square(p.getRow()-1, p.getColumn()+1);
+		if (basdroite.isRealSquare()){
+			arround.add(basdroite);
+		}
+		Square basgauche = new Square(p.getRow()-1, p.getColumn()-1);
+		if (basgauche.isRealSquare()){
+			arround.add(basgauche);
+		}
+		return arround;
+	}
 
 	/**
 	 * TODO
@@ -380,11 +417,21 @@ public class Board {
 		if (color.equals("black"))
 			for (int i=0; i<32; ++i)
 				if (this.pieces[i].isWhite())
-					echecList.addAll(this.pieces[i].possibleMoves(this));
+					if (this.pieces[i] instanceof King){
+						echecList.addAll(this.arroundSquares(this.pieces[i]));
+					}
+					else{
+						echecList.addAll(this.pieces[i].possibleMoves(this));
+					}
 		if (color.equals("white"))
 			for (int i=0; i<32; ++i)
 				if (this.pieces[i].isBlack())
-					echecList.addAll(this.pieces[i].possibleMoves(this));
+					if (this.pieces[i] instanceof King){
+						echecList.addAll(this.arroundSquares(this.pieces[i]));
+					}
+					else{
+						echecList.addAll(this.pieces[i].possibleMoves(this));
+					}
 		return echecList;
 	}
 

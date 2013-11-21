@@ -39,6 +39,10 @@ public class Square {
 		this.column = column;
 	}
 	
+	public Boolean isRealSquare(){
+		return (this.row>0 && this.row<9 && this.column>0 && this.column<9);
+	}
+	
 	/**
 	 * TODO
 	 * @param column
