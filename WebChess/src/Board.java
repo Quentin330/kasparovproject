@@ -93,6 +93,7 @@ public class Board {
 	public void annulerCoup(){
 		this.numeroCoup --;
 		this.annulerCoup(this.listeCoups.get(this.numeroCoup));
+		this.selectedCase = "00";
 		this.nextPlayer();
 		/*Iterator<Piece> whiteIt = whiteEatenPieces.iterator();
 		while (whiteIt.hasNext()){
