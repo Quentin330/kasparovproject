@@ -248,6 +248,16 @@ public class Board {
 			this.currentPlayer = "black";
 	}
 
+	
+	public ArrayList<Piece> cloneListe(ArrayList<Piece> liste){
+		ArrayList<Piece> clone = new ArrayList<Piece>();
+		for (int i=0; i<liste.size(); ++i){
+			clone.add(liste.get(i));
+		}
+		return clone;
+	}
+	
+	
 	/**
 	 * TODO
 	 * @param pieces
@@ -259,8 +269,8 @@ public class Board {
 		this.numeroCoup = 1;
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
-		this.whiteEatenPieces = (ArrayList<Piece>) whiteEatenPieces.clone();
-		this.blackEatenPieces = (ArrayList<Piece>) blackEatenPieces.clone();
+		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
+		this.blackEatenPieces = this.cloneListe(blackEatenPieces);
 		this.pieces = new Piece[32];
 		for (int i = 0; i < 32; ++i){
 			this.pieces[i] = pieces[i].clone();
