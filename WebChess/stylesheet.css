@@ -1,3 +1,22 @@
+div#bandeau {
+	background-color: black;
+	}
+	
+div#menu {
+	float:left;
+	width:100px;
+	background-color: black;
+	text-color: white;
+	}
+	
+.button {
+	width:256px;
+	height:40px;
+	align:center;
+	background-color: lightgrey;
+	border-radius: 10px;
+}
+
 body {
 	background: lightgrey;
 }

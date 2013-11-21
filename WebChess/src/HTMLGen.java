@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
+// Pour creer des menus sur les cotés, voir http://pbnaigeon.developpez.com/tutoriel/CSS-HTML/mise-en-page-CSS/
+// Faire un menu sur la droite séparé en 2 horizontalement pour les pieces mangées blanches et les pieces mangées noires.
+
 /**
  * TODO
  *
@@ -28,40 +32,12 @@ public class HTMLGen {
 			+ "<title>\n"
 			+ "	WebChess Kasparov\n</title>\n"
 			+ "</head>\n"
-			+ "<body>\n"
-			+ "<form>\n"
-			+ "<table align=center>\n"
-			+ "	<tr>\n"
-			+ "		<td class=\"corner\"></td>\n"
-			+ "		<td class=\"border\">A</td>\n"
-			+ "		<td class=\"border\">B</td>\n"
-			+ "		<td class=\"border\">C</td>\n"
-			+ "		<td class=\"border\">D</td>\n"
-			+ "		<td class=\"border\">E</td>\n"
-			+ "		<td class=\"border\">F</td>\n"
-			+ "		<td class=\"border\">G</td>\n"
-			+ "		<td class=\"border\">H</td>\n"
-			+ "		<td class=\"corner\"></td>\n"
-			+ "	</tr>\n";
+			+ "<body>\n";
 
 	/**
 	 * TODO
 	 */
-	private static String bottom1 = "<tr>\n"
-			+ "		<td class=\"corner\"></td>\n"
-			+ "		<td class=\"border\">A</td>\n"
-			+ "		<td class=\"border\">B</td>\n"
-			+ "		<td class=\"border\">C</td>\n"
-			+ "		<td class=\"border\">D</td>\n"
-			+ "		<td class=\"border\">E</td>\n"
-			+ "		<td class=\"border\">F</td>\n"
-			+ "		<td class=\"border\">G</td>\n"
-			+ "		<td class=\"border\">H</td>\n"
-			+ "		<td class=\"corner\"></td>\n"
-			+ "	</tr>\n"
-			+ "</table>\n"
-			+ "</form>\n"
-			+ "</body>\n";
+	private static String bottom1 = "</body>\n";
 
 	/**
 	 * TODO
@@ -81,9 +57,9 @@ public class HTMLGen {
 	 */
 	public String getPage() {
 		return HTMLGen.getHead()
+				+ this.options
 				+ this.body
 				+ HTMLGen.getBottom1()
-				+ this.options
 				+ this.listeCoups
 				+ HTMLGen.getBottom2();
 	}
@@ -107,7 +83,20 @@ public class HTMLGen {
 		if (!b.getSelectedCase().equals("00")) {
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
 		}
-		this.body = "";
+		this.body = "<form>\n"
+				+ "<table align=center>\n"
+				+ "	<tr>\n"
+				+ "		<td class=\"corner\"></td>\n"
+				+ "		<td class=\"border\">A</td>\n"
+				+ "		<td class=\"border\">B</td>\n"
+				+ "		<td class=\"border\">C</td>\n"
+				+ "		<td class=\"border\">D</td>\n"
+				+ "		<td class=\"border\">E</td>\n"
+				+ "		<td class=\"border\">F</td>\n"
+				+ "		<td class=\"border\">G</td>\n"
+				+ "		<td class=\"border\">H</td>\n"
+				+ "		<td class=\"corner\"></td>\n"
+				+ "	</tr>\n";
 		for (int i = 8; i > 0; --i) {
 			this.body += "</tr>\n";
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
@@ -116,6 +105,21 @@ public class HTMLGen {
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
 			this.body += "<tr>\n";
 		}
+		this.body += "<tr>\n"
+				+ "		<td class=\"corner\"></td>\n"
+				+ "		<td class=\"border\">A</td>\n"
+				+ "		<td class=\"border\">B</td>\n"
+				+ "		<td class=\"border\">C</td>\n"
+				+ "		<td class=\"border\">D</td>\n"
+				+ "		<td class=\"border\">E</td>\n"
+				+ "		<td class=\"border\">F</td>\n"
+				+ "		<td class=\"border\">G</td>\n"
+				+ "		<td class=\"border\">H</td>\n"
+				+ "		<td class=\"corner\"></td>\n"
+				+ "	</tr>\n"
+				+ "</table>\n"
+				+ "</form>\n";
+
 	}
 
 	/**
@@ -279,7 +283,7 @@ public class HTMLGen {
 	}
 
 	public void remplirListe(Board b){
-		this.listeCoups += "<center>";
+		this.listeCoups += "<div id=\"menu\"><center>";
 		String debutFont = "<font color =\"black\">";
 		String finFont = "</font>";
 		for (int i=1; i<b.getNumeroCoupMax(); ++i){
@@ -293,11 +297,12 @@ public class HTMLGen {
 				this.listeCoups += (i+1)/2 + ". " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont;			
 			}
 		}
-		this.listeCoups += "</center>";
+		this.listeCoups += "</center></div>";
 	}
 
 	public void remplirOptions(Board b, Boolean promotion){
-		this.options += "<center>";
+		this.options += "<div id=\"bandeau\"><table align=center>";
+		// <td class=\"button\"></td>
 		String player = b.getCurrentPlayer();
 		Piece roi = b.getWhiteKing();
 		String colorEnFrancais = "blanc";
@@ -307,14 +312,34 @@ public class HTMLGen {
 			adversaire = "white";
 			colorEnFrancais = "noir";
 		}
+
+		this.options += "<td class=\"button\"><a href=\"?NewGame\">Nouvelle Partie</a></td>";
+		this.options += "<td class=\"button\">";
+		if (b.getNumeroCoup()>1 && !promotion){
+			this.options += "<a href=\"?Undo\">Annuler Coup</a>";
+		}
+		else{
+			this.options += "Annuler Coup";
+		}
+		this.options += "</td>";
+		this.options += "<td class=\"button\">";
+		if (b.getNumeroCoup()<b.getNumeroCoupMax() && !promotion){
+			this.options += "<a href=\"?Redo\">Retablir Coup</a>";
+		}
+		else{
+			this.options += "Retablir Coup";
+		}
+		this.options += "</td>";
+		this.options += "</table></div><BR>\n\n";
+		this.options += "<center>";
 		if (promotion){
-			this.options += "<a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
+			this.options += "<td class=\"button\"><a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
 					+ "<a href=\"?Knight\"><img src=\"pieces/" + adversaire + "Knight.svg\" alt=\"C\" width=32 /></a>\n"
 					+ "<a href=\"?Bishop\"><img src=\"pieces/" + adversaire + "Bishop.svg\" alt=\"F\" width=32 /></a>\n"
-					+ "<a href=\"?Queen\"><img src=\"pieces/" + adversaire + "Queen.svg\"  alt=\"D\" width=32 /></a>\n<BR>";
+					+ "<a href=\"?Queen\"><img src=\"pieces/" + adversaire + "Queen.svg\"  alt=\"D\" width=32 /></a>\n</td>";
 		}
 		else if (b.isEchec(player, roi.getRow(), roi.getColumn())){
-			this.options += "<font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
+			this.options += "<td class=\"button\"><font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
 			try {
 				if (b.isEchecEtMat(player)){
 					this.options += "et Mat ";
@@ -322,25 +347,12 @@ public class HTMLGen {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			this.options += "/!\\ <BR></font>";
+			this.options += "/!\\ </font></td>";
 		}
 		else{
 			this.options += "<BR>";
 		}
-		if (b.getNumeroCoup()>1 && !promotion){
-			this.options += "<a href=\"?Undo\">Annuler Coup</a><BR>";
-		}
-		else{
-			this.options += "Annuler Coup<BR>";
-		}
-		if (b.getNumeroCoup()<b.getNumeroCoupMax() && !promotion){
-			this.options += "<a href=\"?Redo\">Retablir Coup</a><BR>";
-		}
-		else{
-			this.options += "Retablir Coup<BR>";
-		}
-		this.options += "<a href=\"?NewGame\">Nouvelle Partie</a><BR>";
-		this.options += "</center><BR><BR>";
+		this.options += "</center><BR>";
 	}
 
 }
