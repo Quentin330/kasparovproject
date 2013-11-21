@@ -425,6 +425,7 @@ abstract public class Piece {
 						pieceMange.setColumn(column);
 					}
 				}
+				board.piecesNonMangees();
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
 		}
@@ -444,9 +445,11 @@ abstract public class Piece {
 						pieceMange.setColumn(column);
 					}
 				}
+				board.piecesNonMangees();
 				throw new EchecException("Ce mouvement met votre roi en echec");
 			}
 		}
+		board.piecesNonMangees();
 		if (this instanceof Pawn){
 			if (oldRow-row == 2 || row-oldRow==2){
 				this.setMangeableEnPrisePassant(board.getNumeroCoup()+1);

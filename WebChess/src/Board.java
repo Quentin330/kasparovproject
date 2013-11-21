@@ -76,6 +76,19 @@ public class Board {
 		listeCoups.put(this.numeroCoup, coup);
 		this.coupSuivant();
 	}
+	
+	public void piecesNonMangees(){
+		for (int i = whiteEatenPieces.size() - 1 ; i >= 0 ; i--) {
+			if (!whiteEatenPieces.get(i).isDead()){
+				whiteEatenPieces.remove(whiteEatenPieces.get(i));
+			}
+		}
+		for (int i = blackEatenPieces.size() - 1 ; i >= 0 ; i--) {
+			if (!blackEatenPieces.get(i).isDead()){
+				blackEatenPieces.remove(blackEatenPieces.get(i));
+			}
+		}
+	}
 
 	public void annulerCoup(){
 		this.numeroCoup --;
@@ -91,16 +104,7 @@ public class Board {
 		Ceci est impossible Exception in thread "main" java.util.ConcurrentModificationException
 		solution trouvée sur http://www.developpez.net/forums/d763054/java/general-java/debuter/probleme-type-java-util-concurrentmodificationexception-lors-suppression/
 		 */
-		for (int i = whiteEatenPieces.size() - 1 ; i >= 0 ; i--) {
-			if (!whiteEatenPieces.get(i).isDead()){
-				whiteEatenPieces.remove(whiteEatenPieces.get(i));
-			}
-		}
-		for (int i = blackEatenPieces.size() - 1 ; i >= 0 ; i--) {
-			if (!blackEatenPieces.get(i).isDead()){
-				blackEatenPieces.remove(blackEatenPieces.get(i));
-			}
-		}
+		this.piecesNonMangees();
 	}
 
 	private void annulerCoup(Coup coup){
