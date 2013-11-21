@@ -63,27 +63,40 @@ public class Board {
 	}
 
 	private void annulerCoup(Coup coup){
-		if (coup.getIsGrandRoque() || coup.getIsPetitRoque()){
-			if (coup.getIsGrandRoque()){
-				coup.getEatenPiece().setColumn(1);
+		if (coup.getIsPromotion()){
+			int pion = 0;
+			for (int i=0; i<32; ++i){
+				if (this.pieces[i].equals(coup.getMovedPiece())){
+					pion = i;
+					break;
+				}
 			}
-			else if (coup.getIsPetitRoque()){
-				coup.getEatenPiece().setColumn(8);		
-			}
-			coup.getEatenPiece().moveOnce(false);
-			coup.getMovedPiece().moveOnce(false);
+			this.pieces[pion] = coup.getEatenPiece();
+			this.pieces[pion].setRow(coup.getCaseDepart().getRow());
 		}
-		else if (coup.getHasEaten()){
-			if (coup.getIsPriseEnPassant()){
-				coup.getEatenPiece().setRow(coup.getCaseDepart().getRow());
+		else{
+			if (coup.getIsGrandRoque() || coup.getIsPetitRoque()){
+				if (coup.getIsGrandRoque()){
+					coup.getEatenPiece().setColumn(1);
+				}
+				else if (coup.getIsPetitRoque()){
+					coup.getEatenPiece().setColumn(8);		
+				}
+				coup.getEatenPiece().moveOnce(false);
+				coup.getMovedPiece().moveOnce(false);
 			}
-			else{
-				coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
+			else if (coup.getHasEaten()){
+				if (coup.getIsPriseEnPassant()){
+					coup.getEatenPiece().setRow(coup.getCaseDepart().getRow());
+				}
+				else{
+					coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
+				}
+				coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
 			}
-			coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
+			coup.getMovedPiece().setRow(coup.getCaseDepart().getRow());
+			coup.getMovedPiece().setColumn(coup.getCaseDepart().getColumn());
 		}
-		coup.getMovedPiece().setRow(coup.getCaseDepart().getRow());
-		coup.getMovedPiece().setColumn(coup.getCaseDepart().getColumn());
 	}
 
 	public void coupSuivant(){
@@ -311,7 +324,7 @@ public class Board {
 					echecList.addAll(this.pieces[i].possibleMoves(this));
 		return echecList;
 	}
-	
+
 
 	public boolean isEchecEtMat(String color) throws OutOfBoardException, NonPossibleMoveException{
 		int k=0;
@@ -325,7 +338,7 @@ public class Board {
 					Board b = this.clone();
 					l++;
 					try {
-					b.pieces[i].deplacerPiece(b, s.getRow(), s.getColumn());
+						b.pieces[i].deplacerPiece(b, s.getRow(), s.getColumn());
 					} catch (EchecException e){
 						k++;
 					}
@@ -347,7 +360,7 @@ public class Board {
 		ArrayList<Square> echecList = this.echec(color);
 		return this.isEchec(echecList, row, column);
 	}
-	
+
 
 	/**
 	 * TODO
@@ -396,13 +409,59 @@ public class Board {
 		this.getPiece(row1, column1).deplacerPiece(this, row2, column2);
 	}
 
+	public void setPromotion(String piece){
+		Boolean promotion = false;
+		Coup c = this.getListeCoups().get(this.getNumeroCoup());
+		if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn){
+			promotion = true;
+		}
+		assert (promotion);
+		Piece pion = c.getMovedPiece();
+		Piece p;
+		if (piece.equals("Rook")){
+			p = new Rook(pion.getColor(), pion.getRow(), pion.getColumn());
+		}
+		else if (piece.equals("Knight")){
+			p = new Knight(pion.getColor(), pion.getRow(), pion.getColumn());
+		}
+		else if (piece.equals("Bishop")){
+			p = new Bishop(pion.getColor(), pion.getRow(), pion.getColumn());
+		}
+		else{
+			p = new Queen(pion.getColor(), pion.getRow(), pion.getColumn());
+		}
+		int numPiece = 0;
+		for (int i=0; i<32; ++i){
+			if (this.pieces[i].equals(c.getMovedPiece())){
+				numPiece = i;
+				break;
+			}
+		}
+		this.pieces[numPiece] = p;
+		c.setMovedPiece(p);
+		this.coupSuivant();
+	}
+
 	public void retablirCoup() throws OutOfBoardException, NonPossibleMoveException{
 		int max = this.numeroCoupMax;
 		HashMap<Integer, Coup> hash = new HashMap<Integer, Coup>();
 		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
 			hash.put(i, this.listeCoups.get(i));
 		}
-		this.deplacerPiece(this.listeCoups.get(this.numeroCoup).getCaseDepart().getNomCase(), this.listeCoups.get(this.numeroCoup).getCaseArrivee().getNomCase());
+		Coup c = this.listeCoups.get(this.numeroCoup);
+		Piece saveNewPiece = c.getMovedPiece();
+		this.deplacerPiece(c.getCaseDepart().getNomCase(), c.getCaseArrivee().getNomCase());
+		if (c.getIsPromotion()){
+			int piece = 0;
+			for(int i=0; i<32; ++i){
+				if (this.pieces[i].getRow() == c.getCaseArrivee().getRow() && this.pieces[i].getColumn() == c.getCaseArrivee().getColumn()){
+					piece = i;
+					break;
+				}
+			}
+			c.setMovedPiece(saveNewPiece);
+			this.pieces[piece] = c.getMovedPiece();
+		}
 		this.numeroCoupMax = max;
 		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
 			this.listeCoups.put(i, hash.get(i));

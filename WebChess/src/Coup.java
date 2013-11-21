@@ -10,7 +10,16 @@ public class Coup {
 	private Square caseArrivee;
 	private int numeroCoup;
 	private Boolean isPriseEnPassant;
+	private Boolean isPromotion;
 	
+	//dans le cas d'une promotion le pion devient eatenPiece et la nouvelle piece devient movedPiece
+	
+	public Boolean getIsPromotion() {
+		return isPromotion;
+	}
+	public void setIsPromotion(Boolean isPromotion) {
+		this.isPromotion = isPromotion;
+	}
 	public Piece getMovedPiece() {
 		return movedPiece;
 	}
@@ -67,6 +76,7 @@ public class Coup {
 		this.isPriseEnPassant = isPriseEnPassant;
 	}
 	public Coup(){
+		this.isPromotion = false;
 		this.isPriseEnPassant = false;
 		this.hasEaten = false;
 		this.isGrandRoque = false;
@@ -89,6 +99,9 @@ public class Coup {
 			s += "-";
 		}
 		s += this.caseArrivee.getNomCase();
+		if (this.isPromotion){
+			s += "=" + this.movedPiece.getShortcut();
+		}
 		return s;
 	}
 	

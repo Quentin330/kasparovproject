@@ -98,7 +98,22 @@ public class Web {
 						if (fichier.length()==0 || fichier.equals("index.html")) {
 							//avec parametres
 							if (parametres.length()>0) {
-								if (parametres.equals("NewGame"))
+								if (parametres.equals("Rook") || parametres.equals("Knight") || parametres.equals("Bishop") || parametres.equals("Queen")){
+									Boolean promotion = false;
+									if (b.getNumeroCoupMax() > b.getNumeroCoup()){
+										Coup c = b.getListeCoups().get(b.getNumeroCoup());
+										if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn){
+											promotion = true;
+										}
+									}
+									if (promotion){
+										b.setPromotion(parametres);
+									}
+									else {
+										//TODO page HTML pour les tricheurs
+									}
+								}
+								else if (parametres.equals("NewGame"))
 									b = new Board();
 								else if (parametres.equals("Undo"))
 									if (b.getNumeroCoup()>1){

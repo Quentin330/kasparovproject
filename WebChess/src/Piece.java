@@ -450,8 +450,15 @@ abstract public class Piece {
 			if (oldRow-row == 2 || row-oldRow==2){
 				this.setMangeableEnPrisePassant(board.getNumeroCoup()+1);
 			}
+			else if (row == 1 || row == 8){
+				coup.setIsPromotion(true);
+				coup.setEatenPiece(this);
+			}
 		}
 		board.ajouterCoup(coup);
+		if (coup.getIsPromotion()){
+			board.setNumeroCoup(board.getNumeroCoup()-1);
+		}
 		if ((this instanceof Rook) || (this instanceof King)) {
 			if (this instanceof King) {
 				if (!this.hasMovedOnce() && row == 1 && column == 7){

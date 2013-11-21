@@ -95,7 +95,14 @@ public class HTMLGen {
 	 * @throws NonPossibleMoveException
 	 */
 	public HTMLGen(Board b) throws OutOfBoardException, NonPossibleMoveException {
-		this.remplirOptions(b);
+		Boolean promotion = false;
+		if (b.getNumeroCoupMax() > b.getNumeroCoup()){
+			Coup c = b.getListeCoups().get(b.getNumeroCoup());
+			if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn){
+				promotion = true;
+			}
+		}
+		this.remplirOptions(b, promotion);
 		this.remplirListe(b);
 		if (!b.getSelectedCase().equals("00")) {
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
@@ -105,7 +112,7 @@ public class HTMLGen {
 			this.body += "</tr>\n";
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
 			for (int j = 1; j < 9; ++j)
-				this.body += printPiece(i, j, b) + "\n";
+				this.body += printPiece(i, j, b, promotion) + "\n";
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
 			this.body += "<tr>\n";
 		}
@@ -118,7 +125,7 @@ public class HTMLGen {
 	 * @param b
 	 * @return
 	 */
-	public String printPiece(int row, int column, Board b) {
+	public String printPiece(int row, int column, Board b, Boolean promotion) {
 		String pieceLine = "<td class=\"";
 		int somme = row + column;
 		if (somme % 2 == 1)
@@ -126,7 +133,7 @@ public class HTMLGen {
 		else
 			pieceLine += "odd";
 		if (!b.getSelectedCase().equals("00")) {
-			if (isPlayable(row, column, b)) {
+			if (isPlayable(row, column, b) && !promotion) {
 				pieceLine += "Select\"><input type=\"image\" name=\"to"
 						+ nameCase(row, column)
 						+"\" src=\"pieces/"
@@ -140,7 +147,7 @@ public class HTMLGen {
 			return pieceLine;
 		}
 		Piece p = b.getPiece(row, column);
-		if (p.getColor().equals(b.getCurrentPlayer())) {
+		if (p.getColor().equals(b.getCurrentPlayer()) && !promotion) {
 			if (nameCase(row, column).equals(b.getSelectedCase())) {
 				pieceLine += "Select\"><input type=\"image\" name=\""
 						+ nameCase(row, column)
@@ -289,16 +296,24 @@ public class HTMLGen {
 		this.listeCoups += "</center>";
 	}
 
-	public void remplirOptions(Board b){
+	public void remplirOptions(Board b, Boolean promotion){
 		this.options += "<center>";
 		String player = b.getCurrentPlayer();
 		Piece roi = b.getWhiteKing();
 		String colorEnFrancais = "blanc";
+		String adversaire = "black";
 		if (player.equals("black")){
 			roi = b.getBlackKing();
+			adversaire = "white";
 			colorEnFrancais = "noir";
 		}
-		if (b.isEchec(player, roi.getRow(), roi.getColumn())){
+		if (promotion){
+			this.options += "<a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
+					+ "<a href=\"?Knight\"><img src=\"pieces/" + adversaire + "Knight.svg\" alt=\"C\" width=32 /></a>\n"
+					+ "<a href=\"?Bishop\"><img src=\"pieces/" + adversaire + "Bishop.svg\" alt=\"F\" width=32 /></a>\n"
+					+ "<a href=\"?Queen\"><img src=\"pieces/" + adversaire + "Queen.svg\"  alt=\"D\" width=32 /></a>\n<BR>";
+		}
+		else if (b.isEchec(player, roi.getRow(), roi.getColumn())){
 			this.options += "<font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
 			try {
 				if (b.isEchecEtMat(player)){
@@ -312,13 +327,13 @@ public class HTMLGen {
 		else{
 			this.options += "<BR>";
 		}
-		if (b.getNumeroCoup()>1){
+		if (b.getNumeroCoup()>1 && !promotion){
 			this.options += "<a href=\"?Undo\">Annuler Coup</a><BR>";
 		}
 		else{
 			this.options += "Annuler Coup<BR>";
 		}
-		if (b.getNumeroCoup()<b.getNumeroCoupMax()){
+		if (b.getNumeroCoup()<b.getNumeroCoupMax() && !promotion){
 			this.options += "<a href=\"?Redo\">Retablir Coup</a><BR>";
 		}
 		else{
