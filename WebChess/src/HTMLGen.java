@@ -43,8 +43,12 @@ public class HTMLGen {
 	 * TODO
 	 */
 	private String options = "";
+	
+	private String options2 = "";
 
 	private String listeCoups = "";
+	
+	private String eatenPieces = "";
 
 	/**
 	 * TODO
@@ -58,9 +62,11 @@ public class HTMLGen {
 	public String getPage() {
 		return HTMLGen.getHead()
 				+ this.options
+				+ this.listeCoups
+				+ this.eatenPieces
+				+ this.options2
 				+ this.body
 				+ HTMLGen.getBottom1()
-				+ this.listeCoups
 				+ HTMLGen.getBottom2();
 	}
 
@@ -80,6 +86,7 @@ public class HTMLGen {
 		}
 		this.remplirOptions(b, promotion);
 		this.remplirListe(b);
+		this.remplirEatenPieces(b);
 		if (!b.getSelectedCase().equals("00")) {
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
 		}
@@ -208,6 +215,10 @@ public class HTMLGen {
 		if (b.isEmpty(row, column))
 			return "blank.svg\" alt=\" \"";
 		Piece p = b.getPiece(row, column);
+		return getNomPiece(p);
+	}
+	
+	public String getNomPiece(Piece p){
 		String nom = "";
 		nom += p.getColor()
 				+ p.getNom()
@@ -283,9 +294,9 @@ public class HTMLGen {
 	}
 
 	public void remplirListe(Board b){
-		this.listeCoups += "<div id=\"menu\"><center>";
-		String debutFont = "<font color =\"black\">";
+		String debutFont = "<font color =\"white\">";
 		String finFont = "</font>";
+		this.listeCoups += "<div id=\"menu\"><BR><BR>" + debutFont +"Liste des coups :<BR>" + finFont;
 		for (int i=1; i<b.getNumeroCoupMax(); ++i){
 			if (i>=b.getNumeroCoup()){
 				debutFont = "<font color =\"grey\">";
@@ -297,7 +308,7 @@ public class HTMLGen {
 				this.listeCoups += (i+1)/2 + ". " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont;			
 			}
 		}
-		this.listeCoups += "</center></div>";
+		this.listeCoups += "</div>";
 	}
 
 	public void remplirOptions(Board b, Boolean promotion){
@@ -330,29 +341,93 @@ public class HTMLGen {
 			this.options += "Retablir Coup";
 		}
 		this.options += "</td>";
-		this.options += "</table></div><BR>\n\n";
-		this.options += "<center>";
+		this.options += "</table></div>";
+		this.options2 += "<BR>\n\n";
+		this.options2 += "<center>";
 		if (promotion){
-			this.options += "<td class=\"button\"><a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
+			this.options2 += "<td class=\"button\"><a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
 					+ "<a href=\"?Knight\"><img src=\"pieces/" + adversaire + "Knight.svg\" alt=\"C\" width=32 /></a>\n"
 					+ "<a href=\"?Bishop\"><img src=\"pieces/" + adversaire + "Bishop.svg\" alt=\"F\" width=32 /></a>\n"
 					+ "<a href=\"?Queen\"><img src=\"pieces/" + adversaire + "Queen.svg\"  alt=\"D\" width=32 /></a>\n</td>";
 		}
 		else if (b.isEchec(player, roi.getRow(), roi.getColumn())){
-			this.options += "<td class=\"button\"><font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
+			this.options2 += "<td class=\"button\"><font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
 			try {
 				if (b.isEchecEtMat(player)){
-					this.options += "et Mat ";
+					this.options2 += "et Mat ";
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			this.options += "/!\\ </font></td>";
+			this.options2 += "/!\\ </font></td>";
 		}
 		else{
-			this.options += "<BR>";
+			this.options2 += "<BR>";
 		}
-		this.options += "</center><BR>";
+		this.options2 += "</center><BR>";
+	}
+	
+	public void remplirEatenPieces(Board b){
+		this.eatenPieces += "<div id=\"menuright\">\n";
+		this.eatenPieces += "<div id=\"menuhaut\">\n";
+		this.eatenPieces += "<font color = \"black\">Pieces mangées noires :<BR>\n";
+		this.eatenPieces += "<table align=\"center\">";
+		ArrayList<Piece> blackEatenPieces = b.getBlackEatenPieces();
+		Iterator<Piece> blackIt = blackEatenPieces.iterator();
+		int tr = 0;
+		while (blackIt.hasNext()){
+			if (tr==3){
+				this.eatenPieces += "</tr>\n";
+				tr = 0;
+			}
+			else{
+				if (tr==0){
+					this.eatenPieces += "<tr>\n";
+				}
+				Piece p = blackIt.next();
+				this.eatenPieces += "<td><img src=\"pieces/"
+				+ getNomPiece(p)
+				+ " width=32 /></td>\n";
+				tr++;
+			}
+		}
+		if (tr != 0){
+			this.eatenPieces += "</tr>\n";
+			tr = 0;
+		}
+		this.eatenPieces += "</table>";
+		this.eatenPieces += "</font>\n";
+		this.eatenPieces += "</div>\n";
+		this.eatenPieces += "<div id=\"menubas\">\n";
+		this.eatenPieces += "<font color = \"white\">Pieces mangées blanches :<BR>\n";
+		this.eatenPieces += "<table align=\"center\">";
+		ArrayList<Piece> whiteEatenPieces = b.getWhiteEatenPieces();
+		Iterator<Piece> whiteIt = whiteEatenPieces.iterator();
+		this.eatenPieces += "</tr>\n";
+		while (whiteIt.hasNext()){
+			if (tr==3){
+				this.eatenPieces += "</tr>\n";
+				tr = 0;
+			}
+			else{
+				if (tr==0){
+					this.eatenPieces += "<tr>\n";
+				}
+				Piece p = whiteIt.next();
+				this.eatenPieces += "<td><img src=\"pieces/"
+				+ getNomPiece(p)
+				+ " width=32 /></td>\n";
+				tr++;
+			}
+		}
+		if (tr != 0){
+			this.eatenPieces += "</tr>\n";
+			tr = 0;
+		}
+		this.eatenPieces += "</table>";
+		this.eatenPieces += "</font>\n";
+		this.eatenPieces += "</div>\n";		
+		this.eatenPieces += "</div>\n";
 	}
 
 }

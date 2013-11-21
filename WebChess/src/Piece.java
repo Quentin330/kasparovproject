@@ -405,6 +405,7 @@ abstract public class Piece {
 			}
 			coup.setEatenPiece(pieceMange);
 			pieceMange.isBeingEaten();
+			board.estMangee(pieceMange, pieceMange.getColor());
 			this.row = row;
 			this.column = column;
 		}

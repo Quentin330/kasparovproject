@@ -4,9 +4,27 @@ div#bandeau {
 	
 div#menu {
 	float:left;
-	width:100px;
+	width:200px;
+	height:100%;
+	text-align : center;
 	background-color: black;
-	text-color: white;
+	}
+	
+div#menuright {
+	float:right;
+	width:200px;
+	height:100%;
+	text-align : center;
+	background-color: black;
+	}
+	
+div#menuhaut {
+	height:50%;
+	background-color:white;
+	}
+div#menubas {
+	height:50%;
+	background-color:black;
 	}
 	
 .button {

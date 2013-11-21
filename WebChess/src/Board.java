@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
+// annuler coup ne marche pas si un pion a mang� pour sa promotion
 /**
  * Classe instanciant une partie, à savoir le plateau, 
  * l'état et la position de l'ensemble des pièces de la partie.
@@ -14,6 +14,10 @@ public class Board {
 	 * Tableau de l'ensemble des pièces de la partie.
 	 */
 	private Piece[] pieces;
+
+	private ArrayList<Piece> whiteEatenPieces;
+
+	private ArrayList<Piece> blackEatenPieces;
 
 	/**
 	 * Instance du Roi noir du joueur.
@@ -44,6 +48,23 @@ public class Board {
 
 	private HashMap<Integer, Coup> listeCoups;
 
+	public ArrayList<Piece> getWhiteEatenPieces() {
+		return whiteEatenPieces;
+	}
+
+	public ArrayList<Piece> getBlackEatenPieces() {
+		return blackEatenPieces;
+	}
+
+	public void estMangee (Piece p, String color){
+		if (color.equals("white")){
+			this.whiteEatenPieces.add(p);
+		}
+		else{
+			this.blackEatenPieces.add(p);
+		}
+	}
+
 	public HashMap<Integer, Coup> getListeCoups() {
 		return listeCoups;
 	}
@@ -60,6 +81,26 @@ public class Board {
 		this.numeroCoup --;
 		this.annulerCoup(this.listeCoups.get(this.numeroCoup));
 		this.nextPlayer();
+		/*Iterator<Piece> whiteIt = whiteEatenPieces.iterator();
+		while (whiteIt.hasNext()){
+			Piece p = whiteIt.next();
+			if (!p.isDead()){
+				whiteEatenPieces.remove(p);
+			}
+		}
+		Ceci est impossible Exception in thread "main" java.util.ConcurrentModificationException
+		solution trouv�e sur http://www.developpez.net/forums/d763054/java/general-java/debuter/probleme-type-java-util-concurrentmodificationexception-lors-suppression/
+		 */
+		for (int i = whiteEatenPieces.size() - 1 ; i >= 0 ; i--) {
+			if (!whiteEatenPieces.get(i).isDead()){
+				whiteEatenPieces.remove(whiteEatenPieces.get(i));
+			}
+		}
+		for (int i = blackEatenPieces.size() - 1 ; i >= 0 ; i--) {
+			if (!blackEatenPieces.get(i).isDead()){
+				blackEatenPieces.remove(blackEatenPieces.get(i));
+			}
+		}
 	}
 
 	private void annulerCoup(Coup coup){
@@ -235,6 +276,8 @@ public class Board {
 	 * TODO
 	 */
 	public Board(){
+		this.whiteEatenPieces = new ArrayList<Piece>() ;
+		this.blackEatenPieces = new ArrayList<Piece>() ;
 		this.listeCoups = new HashMap<Integer, Coup>();
 		this.numeroCoup = 1;
 		this.selectedCase = "00";
