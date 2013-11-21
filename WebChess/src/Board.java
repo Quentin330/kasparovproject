@@ -116,8 +116,11 @@ public class Board {
 					break;
 				}
 			}
-			this.pieces[pion] = coup.getEatenPiece();
+			this.pieces[pion] = coup.getOldPiece();
+			coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
+			coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
 			this.pieces[pion].setRow(coup.getCaseDepart().getRow());
+			this.pieces[pion].setColumn(coup.getCaseDepart().getColumn());
 		}
 		else{
 			if (coup.getIsGrandRoque() || coup.getIsPetitRoque()){

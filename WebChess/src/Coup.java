@@ -2,6 +2,7 @@
 public class Coup {
 	
 	private Piece movedPiece;
+	private Piece oldPiece;
 	private Boolean hasEaten;
 	private Boolean isPetitRoque;
 	private Boolean isGrandRoque;
@@ -25,6 +26,12 @@ public class Coup {
 	}
 	public void setMovedPiece(Piece movedPiece) {
 		this.movedPiece = movedPiece;
+	}
+	public Piece getOldPiece() {
+		return oldPiece;
+	}
+	public void setOldPiece(Piece oldPiece) {
+		this.oldPiece = oldPiece;
 	}
 	public Boolean getHasEaten() {
 		return hasEaten;

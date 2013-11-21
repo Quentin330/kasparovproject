@@ -456,7 +456,7 @@ abstract public class Piece {
 			}
 			else if (row == 1 || row == 8){
 				coup.setIsPromotion(true);
-				coup.setEatenPiece(this);
+				coup.setOldPiece(this);
 			}
 		}
 		board.ajouterCoup(coup);
