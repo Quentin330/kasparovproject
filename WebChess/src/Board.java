@@ -254,11 +254,13 @@ public class Board {
 	 * @param blackKing
 	 * @param whiteKing
 	 */
-	public Board(Piece[] pieces, King blackKing, King whiteKing) {
+	public Board(Piece[] pieces, King blackKing, King whiteKing, ArrayList<Piece> whiteEatenPieces, ArrayList<Piece> blackEatenPieces) {
 		this.listeCoups = new HashMap<Integer, Coup>();
 		this.numeroCoup = 1;
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
+		this.whiteEatenPieces = (ArrayList<Piece>) whiteEatenPieces.clone();
+		this.blackEatenPieces = (ArrayList<Piece>) blackEatenPieces.clone();
 		this.pieces = new Piece[32];
 		for (int i = 0; i < 32; ++i){
 			this.pieces[i] = pieces[i].clone();
@@ -277,7 +279,7 @@ public class Board {
 	 * TODO
 	 */
 	public Board clone(){
-		return new Board(this.pieces, this.blackKing, this.whiteKing);
+		return new Board(this.pieces, this.blackKing, this.whiteKing, this.whiteEatenPieces, this.blackEatenPieces);
 	}
 
 	/**
