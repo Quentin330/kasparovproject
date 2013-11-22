@@ -1,22 +1,70 @@
-div#bandeau {
+/*div#bandeau {
 	background-color: black;
+	}*/
+	
+#bandeau:hover
+{opacity:1;
+margin-top:0px;}
+	
+div#bandeau {
+	width:100%;
+	position:fixed;
+	left:0px;
+	right:0px;
+	top:0px;
+	opacity:0.6;
+	margin-top:-30px;
+	background-color: black;
+	-webkit-transition: all 0.7s ease-in-out;
+	-moz-transition: all 0.7s ease-in-out;
+	-o-transition: all 0.7s ease-in-out;
 	}
 	
 div#menu {
-	float:left;
-	width:200px;
+	width:300px;
 	height:100%;
-	text-align : center;
+	position:fixed;
+	left:0px;
+	top:0px;
+	opacity:0.6;
+	margin-left:-275px;
 	background-color: black;
+	text-align : center;
+	-webkit-transition: all 0.7s ease-in-out;
+	-moz-transition: all 0.7s ease-in-out;
+	-o-transition: all 0.7s ease-in-out;
 	}
 	
-div#menuright {
+#menu:hover
+{opacity:1;
+margin-left:0px;}
+	
+/*div#menuright {
 	float:right;
-	width:200px;
+	width:300px;
 	height:100%;
 	text-align : center;
 	background-color: black;
+	}*/
+	
+div#menuright {
+	width:300px;
+	height:100%;
+	position:fixed;
+	right:0px;
+	top:0px;
+	opacity:0.6;
+	margin-right:-275px;
+	background-color: black;
+	text-align : center;
+	-webkit-transition: all 0.7s ease-in-out;
+	-moz-transition: all 0.7s ease-in-out;
+	-o-transition: all 0.7s ease-in-out;
 	}
+	
+#menuright:hover
+{opacity:1;
+margin-right:0px;}
 	
 div#menuhaut {
 	height:50%;
