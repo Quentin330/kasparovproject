@@ -64,8 +64,8 @@ public class HTMLGen {
 				+ this.options
 				+ this.listeCoups
 				+ this.eatenPieces
-				+ this.options2
 				+ this.body
+				+ this.options2
 				+ HTMLGen.getBottom1()
 				+ HTMLGen.getBottom2();
 	}
@@ -91,7 +91,8 @@ public class HTMLGen {
 		if (!b.getSelectedCase().equals("00")) {
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
 		}
-		this.body = "<form>\n"
+		this.body = "<BR><BR><BR><BR><BR><BR><BR>"
+				+ "<form>\n"
 				+ "<table align=center>\n"
 				+ "	<tr>\n"
 				+ "		<td class=\"corner\"></td>\n"
@@ -330,21 +331,21 @@ public class HTMLGen {
 			colorEnFrancais = "noir";
 		}
 
-		this.options += "<td class=\"button\"><a href=\"?NewGame\">Nouvelle Partie</a></td>";
-		this.options += "<td class=\"button\">";
+		this.options += "<td><a href=\"?NewGame\" class=\"button\">Nouvelle Partie</a></td>";
+		this.options += "<td>";
 		if (b.getNumeroCoup()>1 && !promotion){
-			this.options += "<a href=\"?Undo\">Annuler Coup</a>";
+			this.options += "<a href=\"?Undo\" class=\"button\">Annuler Coup</a>";
 		}
 		else{
-			this.options += "Annuler Coup";
+			this.options += "<a class=\"unclickablebutton\">Annuler Coup</a>";
 		}
 		this.options += "</td>";
-		this.options += "<td class=\"button\">";
+		this.options += "<td>";
 		if (b.getNumeroCoup()<b.getNumeroCoupMax() && !promotion){
-			this.options += "<a href=\"?Redo\">Retablir Coup</a>";
+			this.options += "<a href=\"?Redo\" class=\"button\">Retablir Coup</a>";
 		}
 		else{
-			this.options += "Retablir Coup";
+			this.options += "<a class=\"unclickablebutton\">Retablir Coup</a>";
 		}
 		this.options += "</td>";
 		this.options += "</table></div>";
