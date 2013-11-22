@@ -214,11 +214,13 @@ public class Web {
 						String output = header + content;
 
 						//System.out.println(header);
-
-						for(int i=0; i<output.length() ; ++i){
+						
+						byte[] temp = output.getBytes();
+						ostream.write(temp);
+						/*for(int i=0; i<output.length() ; ++i){
 							int temp = (int) output.charAt(i);
 							ostream.write(temp);
-						}
+						}*/
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

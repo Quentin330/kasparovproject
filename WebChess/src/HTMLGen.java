@@ -370,7 +370,7 @@ public class HTMLGen {
 	public void remplirEatenPieces(Board b){
 		this.eatenPieces += "<div id=\"menuright\">\n";
 		this.eatenPieces += "<div id=\"menuhaut\">\n";
-		this.eatenPieces += "<font color = \"black\">Pieces mangées noires :<BR>\n";
+		this.eatenPieces += "<font color = \"black\">Pieces mangÃ©es noires :<BR>\n";
 		this.eatenPieces += "<table align=\"center\">";
 		ArrayList<Piece> blackEatenPieces = b.getBlackEatenPieces();
 		Iterator<Piece> blackIt = blackEatenPieces.iterator();
@@ -399,7 +399,7 @@ public class HTMLGen {
 		this.eatenPieces += "</font>\n";
 		this.eatenPieces += "</div>\n";
 		this.eatenPieces += "<div id=\"menubas\">\n";
-		this.eatenPieces += "<font color = \"white\">Pieces mangées blanches :<BR>\n";
+		this.eatenPieces += "<font color = \"white\">Pieces mangÃ©es blanches :<BR>\n";
 		this.eatenPieces += "<table align=\"center\">";
 		ArrayList<Piece> whiteEatenPieces = b.getWhiteEatenPieces();
 		Iterator<Piece> whiteIt = whiteEatenPieces.iterator();
