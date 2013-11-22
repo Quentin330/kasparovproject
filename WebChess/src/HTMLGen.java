@@ -84,7 +84,8 @@ public class HTMLGen {
 				promotion = true;
 			}
 		}
-		this.remplirOptions(b, promotion);
+		Boolean finPartie =	this.remplirOptions(b, promotion);
+		Boolean nonCliquable = (finPartie || promotion);
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
 		if (!b.getSelectedCase().equals("00")) {
@@ -108,7 +109,7 @@ public class HTMLGen {
 			this.body += "</tr>\n";
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
 			for (int j = 1; j < 9; ++j)
-				this.body += printPiece(i, j, b, promotion) + "\n";
+				this.body += printPiece(i, j, b, nonCliquable) + "\n";
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
 			this.body += "<tr>\n";
 		}
@@ -294,7 +295,7 @@ public class HTMLGen {
 	}
 
 	public void remplirListe(Board b){
-		String debutFont = "<font color =\"white\">";
+		String debutFont = "<font color =\"white\" face=\"courier\">";
 		String finFont = "</font>";
 		this.listeCoups += "<div id=\"menu\"><BR><BR>" + debutFont +"Liste des coups :<BR>" + finFont;
 		for (int i=1; i<b.getNumeroCoupMax(); ++i){
@@ -302,16 +303,21 @@ public class HTMLGen {
 				debutFont = "<font color =\"grey\">";
 			}
 			if (i%2 == 0){
-				this.listeCoups += " " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont + "<BR>";
+				this.listeCoups += debutFont + " - " + b.getListeCoups().get(i).afficherCoup() + finFont + "<BR>";
 			}
 			else{
-				this.listeCoups += (i+1)/2 + ". " + debutFont + b.getListeCoups().get(i).afficherCoup() + finFont;			
+				this.listeCoups += debutFont;
+				if ((i+1)/2 < 10){
+					this.listeCoups += "0";
+				}
+				this.listeCoups += (i+1)/2 + ". " + b.getListeCoups().get(i).afficherCoup() + finFont;			
 			}
 		}
 		this.listeCoups += "</div>";
 	}
 
-	public void remplirOptions(Board b, Boolean promotion){
+	public Boolean remplirOptions(Board b, Boolean promotion){
+		Boolean finPartie = false;
 		this.options += "<div id=\"bandeau\"><table align=center>";
 		// <td class=\"button\"></td>
 		String player = b.getCurrentPlayer();
@@ -355,16 +361,22 @@ public class HTMLGen {
 			try {
 				if (b.isEchecEtMat(player)){
 					this.options2 += "et Mat ";
+					finPartie = true;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			this.options2 += "/!\\ </font></td>";
 		}
+		else if (b.isPat()){
+			this.options2 += "<td class=\"button\"> Egalité par Pat </td>";
+			finPartie = true;
+		}
 		else{
 			this.options2 += "<BR>";
 		}
 		this.options2 += "</center><BR>";
+		return finPartie;
 	}
 	
 	public void remplirEatenPieces(Board b){

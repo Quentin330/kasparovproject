@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-// annuler coup ne marche pas si un pion a mangé pour sa promotion
+// annuler coup ne marche pas si un pion a mangï¿½ pour sa promotion
 /**
  * Classe instanciant une partie, Ã  savoir le plateau, 
  * l'Ã©tat et la position de l'ensemble des piÃ¨ces de la partie.
@@ -103,7 +103,7 @@ public class Board {
 			}
 		}
 		Ceci est impossible Exception in thread "main" java.util.ConcurrentModificationException
-		solution trouvée sur http://www.developpez.net/forums/d763054/java/general-java/debuter/probleme-type-java-util-concurrentmodificationexception-lors-suppression/
+		solution trouvï¿½e sur http://www.developpez.net/forums/d763054/java/general-java/debuter/probleme-type-java-util-concurrentmodificationexception-lors-suppression/
 		 */
 		this.piecesNonMangees();
 	}
@@ -118,8 +118,10 @@ public class Board {
 				}
 			}
 			this.pieces[pion] = coup.getOldPiece();
-			coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
-			coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
+			if (coup.getHasEaten()){
+				coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
+				coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
+			}
 			this.pieces[pion].setRow(coup.getCaseDepart().getRow());
 			this.pieces[pion].setColumn(coup.getCaseDepart().getColumn());
 		}
@@ -369,7 +371,7 @@ public class Board {
 				return this.pieces[i].isBlack();
 		return false;
 	}
-	
+
 	public ArrayList<Square> arroundSquares (Piece p){
 		ArrayList<Square> arround = new ArrayList<Square>();
 		Square haut = new Square(p.getRow()+1, p.getColumn());
@@ -562,15 +564,19 @@ public class Board {
 		Piece saveNewPiece = c.getMovedPiece();
 		this.deplacerPiece(c.getCaseDepart().getNomCase(), c.getCaseArrivee().getNomCase());
 		if (c.getIsPromotion()){
-			int piece = 0;
-			for(int i=0; i<32; ++i){
-				if (this.pieces[i].getRow() == c.getCaseArrivee().getRow() && this.pieces[i].getColumn() == c.getCaseArrivee().getColumn()){
-					piece = i;
-					break;
-				}
+			if (saveNewPiece instanceof Rook){
+				this.setPromotion("Rook");
 			}
-			c.setMovedPiece(saveNewPiece);
-			this.pieces[piece] = c.getMovedPiece();
+			else if (saveNewPiece instanceof Knight){
+				this.setPromotion("Knight");
+			}
+			else if (saveNewPiece instanceof Bishop){
+				this.setPromotion("Bishop");
+			}
+			else{
+				this.setPromotion("Queen");
+			}
+
 		}
 		this.numeroCoupMax = max;
 		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
@@ -600,6 +606,34 @@ public class Board {
 		int row1 = caseDepart.charAt(1)-48;
 		int row2 = caseArrivee.charAt(1)-48;
 		this.deplacerPiece(row1, column1, row2, column2);
+	}
+
+	public Boolean isPat(){
+		for (int i=0; i<32; ++i){
+			if (this.pieces[i].getColor().equals(this.currentPlayer)){
+				if(this.pieces[i] instanceof King){
+					if (this.isEchec(this.pieces[i].getColor(), this.pieces[i].getRow(), this.pieces[i].getColumn())){
+						return false;
+					}
+					ArrayList<Square> coups = this.pieces[i].possibleMoves(this);
+					Iterator<Square> it = coups.iterator();
+					while(it.hasNext()){
+						Square s = it.next();
+						if (!this.isEchec(this.pieces[i].getColor(), s.getRow(), s.getColumn())){
+							return false;
+						}
+					}
+				}
+				else{
+					ArrayList<Square> coups = this.pieces[i].possibleMoves(this);
+					if (coups.size() > 0){
+						return false;
+					}
+				}
+
+			}
+		}
+		return true;
 	}
 
 	/**
