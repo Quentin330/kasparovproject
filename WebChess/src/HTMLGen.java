@@ -89,7 +89,7 @@ public class HTMLGen {
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
 		if (!b.getSelectedCase().equals("00")) {
-			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMoves(b);
+			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMovesSE(b);
 		}
 		this.body = "<BR><BR><BR><BR><BR><BR><BR>"
 				+ "<form>\n"

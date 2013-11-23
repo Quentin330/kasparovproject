@@ -536,4 +536,57 @@ abstract public class Piece {
 		return this.isPlayable(row, column, b);
 	}
 
+	public ArrayList<Square> possibleMovesSE(Board board) {
+		Board boardSimu;
+		ArrayList<Square> movesList = new ArrayList<>();
+		for(int i = 1; i <= 8; i++) {
+			for(int j = 1; j <= 8; j++) {
+				if (this.isPlayable(i, j, board)) {
+					try {
+						boardSimu = board.clone();
+						boardSimu.deplacerPiece(this.getRow(), this.getColumn(), i, j);
+
+						if (this.color == "black"){
+							ArrayList<Square> echecList = boardSimu.echec("White");
+							int row = boardSimu.getWhiteKing().getRow();
+							int column = boardSimu.getWhiteKing().getColumn();
+							boolean isEchec = false;
+							Iterator<Square> it = echecList.iterator();
+							while (it.hasNext()){
+								Square s = it.next();
+								if (s.isThisSquare(row, column))
+									isEchec = true;
+							}
+							if (!isEchec)
+								movesList.add(new Square (i, j));
+						}
+						else {
+							ArrayList<Square> echecList = boardSimu.echec("Black");
+							int row = boardSimu.getBlackKing().getRow();
+							int column = boardSimu.getBlackKing().getColumn();
+							boolean isEchec = false;
+							Iterator<Square> it = echecList.iterator();
+							while (it.hasNext()){
+								Square s = it.next();
+								if (s.isThisSquare(row, column))
+									isEchec = true;
+							}
+							if (!isEchec)
+								movesList.add(new Square (i, j));
+						}
+					} catch (OutOfBoardException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NonPossibleMoveException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}
+		return movesList;
+	}
+	
+	
 }

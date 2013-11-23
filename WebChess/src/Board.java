@@ -287,11 +287,52 @@ public class Board {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public Board(Piece[] pieces,
+			King blackKing,
+			King whiteKing,
+			ArrayList<Piece> whiteEatenPieces,
+			ArrayList<Piece> blackEatenPieces,
+			String currentPlayer,
+			String selectedCase,
+			int numeroCoup,
+			int numeroCoupMax,
+			HashMap<Integer, Coup> lC) {
+		this.listeCoups = (HashMap<Integer, Coup>) lC.clone();
+		this.numeroCoup = numeroCoup;
+		this.numeroCoupMax = numeroCoupMax;
+		this.selectedCase = selectedCase;
+		this.currentPlayer = currentPlayer;
+		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
+		this.blackEatenPieces = this.cloneListe(blackEatenPieces);
+		this.pieces = new Piece[32];
+		for (int i = 0; i < 32; ++i){
+			this.pieces[i] = pieces[i].clone();
+			if (this.pieces[i] instanceof King){
+				if (this.pieces[i].getColor().equals("black")){
+					this.blackKing =(King) this.pieces[i];
+				}
+				else{
+					this.whiteKing =(King) this.pieces[i];
+				}
+			}
+		}
+	}
+	
 	/**
 	 * TODO
 	 */
 	public Board clone(){
-		return new Board(this.pieces, this.blackKing, this.whiteKing, this.whiteEatenPieces, this.blackEatenPieces);
+		return new Board(this.pieces,
+				this.blackKing,
+				this.whiteKing,
+				this.whiteEatenPieces,
+				this.blackEatenPieces,
+				this.currentPlayer,
+				this.selectedCase,
+				this.numeroCoup,
+				this.numeroCoupMax,
+				this.listeCoups);
 	}
 
 	/**
