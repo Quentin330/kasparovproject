@@ -546,8 +546,8 @@ abstract public class Piece {
 						boardSimu = board.clone();
 						boardSimu.deplacerPiece(this.getRow(), this.getColumn(), i, j);
 
-						if (this.color == "black"){
-							ArrayList<Square> echecList = boardSimu.echec("White");
+						if (this.color == "white"){
+							ArrayList<Square> echecList = boardSimu.echec("white");
 							int row = boardSimu.getWhiteKing().getRow();
 							int column = boardSimu.getWhiteKing().getColumn();
 							boolean isEchec = false;
@@ -561,7 +561,7 @@ abstract public class Piece {
 								movesList.add(new Square (i, j));
 						}
 						else {
-							ArrayList<Square> echecList = boardSimu.echec("Black");
+							ArrayList<Square> echecList = boardSimu.echec("black");
 							int row = boardSimu.getBlackKing().getRow();
 							int column = boardSimu.getBlackKing().getColumn();
 							boolean isEchec = false;

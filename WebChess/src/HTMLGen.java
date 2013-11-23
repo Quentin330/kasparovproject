@@ -141,10 +141,19 @@ public class HTMLGen {
 	public String printPiece(int row, int column, Board b, Boolean promotion) {
 		String pieceLine = "<td class=\"";
 		int somme = row + column;
-		if (somme % 2 == 1)
-			pieceLine += "even";
-		else
-			pieceLine += "odd";
+		if ((b.isEchec("white", b.getWhiteKing().getRow(), b.getWhiteKing().getColumn()) &&
+				row == b.getWhiteKing().getRow() &&
+				column == b.getWhiteKing().getColumn()) ||
+				(b.isEchec("black", b.getBlackKing().getRow(), b.getBlackKing().getColumn()) &&
+				row ==  b.getBlackKing().getRow() &&
+				column == b.getBlackKing().getColumn()))
+			pieceLine += "echec";
+		else {
+			if (somme % 2 == 1)
+				pieceLine += "even";
+			else
+				pieceLine += "odd";
+		}
 		if (!b.getSelectedCase().equals("00")) {
 			if (isPlayable(row, column, b) && !promotion) {
 				pieceLine += "Select\"><input type=\"image\" name=\"to"
@@ -361,7 +370,7 @@ public class HTMLGen {
 			this.options2 += "<td class=\"button\"><font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
 			try {
 				if (b.isEchecEtMat(player)){
-					this.options2 += "et Mat ";
+					this.options2 += "Echec et Mat ";
 					finPartie = true;
 				}
 			} catch (Exception e) {
