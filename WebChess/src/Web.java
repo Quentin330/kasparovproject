@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -63,6 +65,7 @@ public class Web {
 			OutputStream ostream;
 			Board b = new Board();
 			while(true) {
+				Boolean notModified = false;
 				socket = socketserver.accept();
 				istream = socket.getInputStream();
 				ostream = socket.getOutputStream();
@@ -75,7 +78,7 @@ public class Web {
 					String tmp = new String(buffer,"UTF-8");
 					input += tmp;
 				} while(nb == 1024);
-				System.out.println(input);
+				//System.out.println(input);
 				if (input.startsWith("GET ")) {
 					String objet = "";
 					int j = 5;
@@ -124,17 +127,17 @@ public class Web {
 										//TODO Message d'erreur "annulation Impossible" (page html)
 									}
 								else if (parametres.equals("Redo"))
-										if (b.getNumeroCoup()<b.getNumeroCoupMax()){
-											try{
+									if (b.getNumeroCoup()<b.getNumeroCoupMax()){
+										try{
 											b.retablirCoup();
 											b.nextPlayer();
-											} catch (Exception e) {
-												e.printStackTrace();
-											}
+										} catch (Exception e) {
+											e.printStackTrace();
 										}
-										else {
-											//TODO Message d'erreur "Redo Impossible" (page html)
-										}
+									}
+									else {
+										//TODO Message d'erreur "Redo Impossible" (page html)
+									}
 								//case ou l'on veut aller
 								else if (parametres.startsWith("to")){
 									if ( (parametres.charAt(2) < 'A')
@@ -150,8 +153,8 @@ public class Web {
 										try {
 											if(b.getPiece(b.getSelectedCase()).isPlayable(nomCase, b)){
 												try {
-												b.deplacerPiece(b.getSelectedCase(), nomCase);
-												b.setSelectedCase("00");
+													b.deplacerPiece(b.getSelectedCase(), nomCase);
+													b.setSelectedCase("00");
 												} catch (NonPossibleMoveException e){
 													e.printStackTrace();
 													b.nextPlayer();
@@ -202,26 +205,61 @@ public class Web {
 								e.printStackTrace();
 							}
 						}
-						else
-							content = lireFichier(fichier);
-						String header = "HTTP/1.1 200 OK" +
-								"\nServer: WebChess localhost:7777" +
-								"\nContent-Length: " + content.length() +
-								"\nConnection: close" +
-								"\nContent-Type: " + getContentType(fichier) + "; charset=UTF-8";
-								header += "\nLast-Modified: ";
-								if (getContentType(fichier).contains("image")){
-									header += "Tue, 19 Nov 2013 20:35:08 GMT";
+						else{
+							if (input.contains("If-Modified-Since")){
+								String input2 = new String(input);
+								while (!input2.startsWith("If-Modified-Since")){
+									input2 = input2.substring(1);
 								}
-								else {
-									Date date = new Date();
-									header += date;
+								input2 = input2.substring(19, 47);
+								System.out.println("\n------------------\n" + input2 + "\n------------------\n");
+								// trouvé sur http://stackoverflow.com/questions/1930158/how-to-parse-date-from-http-last-modified-header
+								SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+								try {
+									Date d = format.parse(input2);
+									Date fileDate = new Date();
+									if (getContentType(fichier).contains("image")){
+										String dateImage = "Tue Nov 19 20:35:08 CET 2013";
+										fileDate = format.parse(dateImage);
+									}
+									if (fileDate.before(d)){
+										notModified = true;
+									}
+								} catch (ParseException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
 								}
-								header += "\n\n";
-						String output = header + content;
+							}
+							if (!notModified){
+								content = lireFichier(fichier);
+							}
+						}
+						String header = "";
+						String output = "";
+						if (notModified){
+							header = "HTTP/1.1 304 OK";
+							output = header;
+						}
+						else{
+							header = "HTTP/1.1 200 OK" +
+									"\nServer: WebChess localhost:7777" +
+									"\nContent-Length: " + content.length() +
+									"\nConnection: close" +
+									"\nContent-Type: " + getContentType(fichier) + "; charset=UTF-8";
+							header += "\nLast-Modified: ";
+							if (getContentType(fichier).contains("image")){
+								header += "Tue, 19 Nov 2013 20:35:08 GMT";
+							}
+							else {
+								Date date = new Date();
+								header += date;
+							}
+							header += "\n\n";
 
+							output = header + content;
+						}
 						System.out.println(header);
-						
+
 						byte[] temp = output.getBytes();
 						ostream.write(temp);
 						/*for(int i=0; i<output.length() ; ++i){
