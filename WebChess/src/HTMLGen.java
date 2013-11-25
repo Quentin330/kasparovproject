@@ -26,11 +26,10 @@ public class HTMLGen {
 	 */
 	private static String head = "<html>\n"
 			+ "<head>\n"
-			+ "<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" />\n"
-			+ "<link rel=\"stylesheet\" href=\"stylesheet.css\" type=\"text/css\" />\n"
-			+ "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"favicon.ico\">\n"
-			+ "<title>\n"
-			+ "	WebChess Kasparov\n</title>\n"
+			+ "	<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\" />\n"
+			+ "	<link rel=\"stylesheet\" href=\"stylesheet.css\" type=\"text/css\" />\n"
+			+ "	<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"favicon.ico\">\n"
+			+ "	<title>WebChess Kasparov</title>\n"
 			+ "</head>\n"
 			+ "<body>\n";
 
@@ -55,21 +54,8 @@ public class HTMLGen {
 	 */
 	private static String bottom2 = "</html>";
 
-	/**
-	 * TODO
-	 * @return
-	 */
-	public String getPage() {
-		return HTMLGen.getHead()
-				+ this.options
-				+ this.listeCoups
-				+ this.eatenPieces
-				+ this.body
-				+ this.options2
-				+ HTMLGen.getBottom1()
-				+ HTMLGen.getBottom2();
-	}
-
+	private String left = "";
+	
 	/**
 	 * TODO
 	 * @param b
@@ -84,14 +70,15 @@ public class HTMLGen {
 				promotion = true;
 			}
 		}
-		Boolean finPartie =	this.remplirOptions(b, promotion);
+		Boolean finPartie = this.remplirOptions(b, promotion);
+		this.getLeft(b);
 		Boolean nonCliquable = (finPartie || promotion);
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
 		if (!b.getSelectedCase().equals("00")) {
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMovesSE(b);
 		}
-		this.body = "<BR><BR><BR><BR><BR><BR><BR>"
+		this.body = "<BR><BR>"
 				+ "<form>\n"
 				+ "<table align=center>\n"
 				+ "	<tr>\n"
@@ -128,7 +115,95 @@ public class HTMLGen {
 				+ "	</tr>\n"
 				+ "</table>\n"
 				+ "</form>\n";
+	
+	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
+	public static String getHead() {
+		return head;
+	}
+
+	/**
+	 * TODO
+	 * @param head
+	 */
+	public static void setHead(String head) {
+		HTMLGen.head = head;
+	}
+
+	/**
+	 * TODO
+	 * @return
+	 */
+	public static String getBottom1() {
+		return bottom1;
+	}
+
+	/**
+	 * TODO
+	 * @param bottom1
+	 */
+	public static void setBottom1(String bottom1) {
+		HTMLGen.bottom1 = bottom1;
+	}
+
+	/**
+	 * TODO
+	 * @return
+	 */
+	public static String getBottom2() {
+		return bottom2;
+	}
+
+	/**
+	 * TODO
+	 * @param bottom2
+	 */
+	public static void setBottom2(String bottom2) {
+		HTMLGen.bottom2 = bottom2;
+	}
+
+	/**
+	 * TODO
+	 * @return
+	 */
+	public String getPage() {
+		return HTMLGen.getHead()
+				+ this.options
+				//+ this.listeCoups
+				//+ this.eatenPieces
+				+ this.left
+				+ this.body
+				+ this.options2
+				+ HTMLGen.getBottom1()
+				+ HTMLGen.getBottom2();
+	}
+
+	/**
+	 * TODO
+	 * @param row
+	 * @param column
+	 * @param b
+	 * @return
+	 */
+	public String getNomPiece(int row, int column, Board b) {
+		if (b.isEmpty(row, column))
+			return "blank.svg\" alt=\" \"";
+		Piece p = b.getPiece(row, column);
+		return getNomPiece(p);
+	}
+
+	public String getNomPiece(Piece p){
+		String nom = "";
+		nom += p.getColor()
+				+ p.getNom()
+				+ ".svg\" alt=\""
+				+ p.getShortcut()
+				+ "\"";
+		return nom;
 	}
 
 	/**
@@ -222,30 +297,6 @@ public class HTMLGen {
 	 * @param b
 	 * @return
 	 */
-	public String getNomPiece(int row, int column, Board b) {
-		if (b.isEmpty(row, column))
-			return "blank.svg\" alt=\" \"";
-		Piece p = b.getPiece(row, column);
-		return getNomPiece(p);
-	}
-	
-	public String getNomPiece(Piece p){
-		String nom = "";
-		nom += p.getColor()
-				+ p.getNom()
-				+ ".svg\" alt=\""
-				+ p.getShortcut()
-				+ "\"";
-		return nom;
-	}
-
-	/**
-	 * TODO
-	 * @param row
-	 * @param column
-	 * @param b
-	 * @return
-	 */
 	public boolean isPlayable(int row, int column, Board b) {
 		Iterator<Square> it = this.possibleMoves.iterator();
 		while(it.hasNext()) {
@@ -256,61 +307,16 @@ public class HTMLGen {
 		return false;
 	}
 
-	/**
-	 * TODO
-	 * @return
-	 */
-	public static String getHead() {
-		return head;
-	}
-
-	/**
-	 * TODO
-	 * @param head
-	 */
-	public static void setHead(String head) {
-		HTMLGen.head = head;
-	}
-
-	/**
-	 * TODO
-	 * @return
-	 */
-	public static String getBottom1() {
-		return bottom1;
-	}
-
-	/**
-	 * TODO
-	 * @param bottom1
-	 */
-	public static void setBottom1(String bottom1) {
-		HTMLGen.bottom1 = bottom1;
-	}
-
-	/**
-	 * TODO
-	 * @return
-	 */
-	public static String getBottom2() {
-		return bottom2;
-	}
-
-	/**
-	 * TODO
-	 * @param bottom2
-	 */
-	public static void setBottom2(String bottom2) {
-		HTMLGen.bottom2 = bottom2;
-	}
-
 	public void remplirListe(Board b){
-		String debutFont = "<font color =\"white\" face=\"courier\">";
-		String finFont = "</font>";
-		this.listeCoups += "<div id=\"menu\"><BR><BR>" + debutFont +"Liste des coups :<BR>" + finFont;
-		for (int i=1; i<b.getNumeroCoupMax(); ++i){
+		String debut = "<td class=\"bouton\">\n";
+		String fin = "</td>\n";
+		String debutFont = "<font color =\"white\">\n";
+		String finFont = "</font>\n";
+		
+		this.listeCoups += debut ;
+		for (int i=1; i<b.getNumeroCoupMax(); ++i) {
 			if (i>=b.getNumeroCoup()){
-				debutFont = "<font color =\"grey\">";
+				debutFont = "<font color =\"grey\">\n";
 			}
 			if (i%2 == 0){
 				this.listeCoups += debutFont + " - " + b.getListeCoups().get(i).afficherCoup() + finFont + "<BR>";
@@ -323,13 +329,11 @@ public class HTMLGen {
 				this.listeCoups += (i+1)/2 + ". " + b.getListeCoups().get(i).afficherCoup() + finFont;			
 			}
 		}
-		this.listeCoups += "</div>";
+		this.listeCoups += fin;
 	}
 
 	public Boolean remplirOptions(Board b, Boolean promotion){
 		Boolean finPartie = false;
-		this.options += "<div id=\"bandeau\"><table align=center>";
-		// <td class=\"button\"></td>
 		String player = b.getCurrentPlayer();
 		Piece roi = b.getWhiteKing();
 		String colorEnFrancais = "blanc";
@@ -340,24 +344,16 @@ public class HTMLGen {
 			colorEnFrancais = "noir";
 		}
 
-		this.options += "<td><a href=\"?NewGame\" class=\"button\">Nouvelle Partie</a></td>";
-		this.options += "<td>";
-		if (b.getNumeroCoup()>1 && !promotion){
-			this.options += "<a href=\"?Undo\" class=\"button\">Annuler Coup</a>";
-		}
-		else{
-			this.options += "<a class=\"unclickablebutton\">Annuler Coup</a>";
-		}
-		this.options += "</td>";
-		this.options += "<td>";
-		if (b.getNumeroCoup()<b.getNumeroCoupMax() && !promotion){
-			this.options += "<a href=\"?Redo\" class=\"button\">Retablir Coup</a>";
-		}
-		else{
-			this.options += "<a class=\"unclickablebutton\">Retablir Coup</a>";
-		}
-		this.options += "</td>";
-		this.options += "</table></div>";
+		this.options += "<center>\n";
+		if (b.getNumeroCoup()>1 && !promotion)
+			this.options += "<a href=\"?Undo\" class=\"boutonpage\">UNDO</a>\n";
+		else
+			this.options += "<a class=\"boutonpagegris\">UNDO</a>\n";
+		if (b.getNumeroCoup()<b.getNumeroCoupMax() && !promotion)
+			this.options += "<a href=\"?Redo\" class=\"boutonpage\">REDO</a>\n";
+		else
+			this.options += "<a class=\"boutonpagegris\">REDO</a>\n";
+		this.options += "</center>\n";
 		this.options2 += "<BR>\n\n";
 		this.options2 += "<center>";
 		if (promotion){
@@ -451,5 +447,28 @@ public class HTMLGen {
 		this.eatenPieces += "</div>\n";		
 		this.eatenPieces += "</div>\n";
 	}
-
+	
+	public void getLeft(Board b) {
+		this.left += "<div id=\"menu\">\n";
+		this.left += "<a class= \"bouton\" href= \"?NewGame\">NEW GAME</a>\n";
+		this.left += "<a class= \"boutongris\">SAVE GAME</a>\n";
+		this.left += "<a class= \"boutongris\">LOAD GAME</a>\n";
+		
+		this.remplirListe(b);
+		this.remplirEatenPieces(b);
+		
+		this.left += "<a class= \"lC\">\nMOVE LIST<BR>\n";
+		//this.left += this.listeCoups;
+		this.left += "</a>\n";
+		
+		this.left += "<a class= \"lC\">\nCIMETERY\n";
+		//this.left += eatenPieces1;
+		this.left += "</a>\n";
+		
+		this.left += "<a class= \"lC\">\nHEAVEN\n";
+		//this.left += eatenPieces2;
+		this.left += "</a>\n";
+		
+		this.left += "</div>\n";
+	}
 }
