@@ -3,6 +3,7 @@ import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * TODO
@@ -63,6 +64,9 @@ public class Web {
 			Socket socket;
 			InputStream istream;
 			OutputStream ostream;
+			// trouvé sur http://stackoverflow.com/questions/1930158/how-to-parse-date-from-http-last-modified-header
+			SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+			SimpleDateFormat format2 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
 			Board b = new Board();
 			while(true) {
 				Boolean notModified = false;
@@ -211,12 +215,20 @@ public class Web {
 								while (!input2.startsWith("If-Modified-Since")){
 									input2 = input2.substring(1);
 								}
-								input2 = input2.substring(19, 47);
+								input2 = input2.substring(19, 48);{
+									if (!input2.contains(",")){
+										input2 = input2.substring(0, input2.length()-1);
+									}
+								}
 								System.out.println("\n------------------\n" + input2 + "\n------------------\n");
-								// trouvé sur http://stackoverflow.com/questions/1930158/how-to-parse-date-from-http-last-modified-header
-								SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
 								try {
-									Date d = format.parse(input2);
+									Date d = new Date();
+									if (input2.contains(",")){
+										d = format2.parse(input2);
+									}
+									else{
+										d = format.parse(input2);
+									}
 									Date fileDate = new Date();
 									if (getContentType(fichier).contains("image")){
 										String dateImage = "Tue Nov 19 20:35:08 CET 2013";
@@ -226,7 +238,6 @@ public class Web {
 										notModified = true;
 									}
 								} catch (ParseException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
@@ -236,8 +247,11 @@ public class Web {
 						}
 						String header = "";
 						String output = "";
+						Date date = new Date();
 						if (notModified){
-							header = "HTTP/1.1 304 OK";
+							header = "HTTP/1.1 304 Not Modified" +
+									"\nServer: WebChess localhost:7777" +
+									"\nDate: " + format2.format(date) + "\n\n";
 							output = header;
 						}
 						else{
@@ -251,7 +265,6 @@ public class Web {
 								header += "Tue, 19 Nov 2013 20:35:08 GMT";
 							}
 							else {
-								Date date = new Date();
 								header += date;
 							}
 							header += "\n\n";
