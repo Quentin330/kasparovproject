@@ -14,11 +14,6 @@ public class HTMLGen {
 	/**
 	 * TODO
 	 */
-	private String body;
-
-	/**
-	 * TODO
-	 */
 	private ArrayList<Square> possibleMoves;
 
 	/**
@@ -36,26 +31,43 @@ public class HTMLGen {
 	/**
 	 * TODO
 	 */
-	private static String bottom1 = "</body>\n";
+	private String body;
 
 	/**
 	 * TODO
 	 */
+	private String left = "";
+
+	/**
+	 * partie du HTML contenant les boutons UNDO et REDO
+	 */
 	private String options = "";
-	
+
+	/**
+	 * TODO
+	 */
+	private String listeCoups = "";
+
+	/**
+	 * TODO
+	 */
+	private String eatenPieces = "";
+
+	/**
+	 * TODO
+	 */
 	private String options2 = "";
 
-	private String listeCoups = "";
-	
-	private String eatenPieces = "";
+	/**
+	 * TODO
+	 */
+	private static String bottom1 = "</body>\n</html>\n";
 
 	/**
 	 * TODO
 	 */
 	private static String bottom2 = "</html>";
 
-	private String left = "";
-	
 	/**
 	 * TODO
 	 * @param b
@@ -101,7 +113,7 @@ public class HTMLGen {
 			this.body += "<td class=\"border\">"+ i +"</td>\n";
 			this.body += "<tr>\n";
 		}
-		this.body += "<tr>\n"
+		this.body += "	<tr>\n"
 				+ "		<td class=\"corner\"></td>\n"
 				+ "		<td class=\"border\">A</td>\n"
 				+ "		<td class=\"border\">B</td>\n"
@@ -115,7 +127,7 @@ public class HTMLGen {
 				+ "	</tr>\n"
 				+ "</table>\n"
 				+ "</form>\n";
-	
+
 	}
 
 	/**
@@ -173,8 +185,6 @@ public class HTMLGen {
 	public String getPage() {
 		return HTMLGen.getHead()
 				+ this.options
-				//+ this.listeCoups
-				//+ this.eatenPieces
 				+ this.left
 				+ this.body
 				+ this.options2
@@ -216,12 +226,13 @@ public class HTMLGen {
 	public String printPiece(int row, int column, Board b, Boolean promotion) {
 		String pieceLine = "<td class=\"";
 		int somme = row + column;
-		if ((b.isEchec("white", b.getWhiteKing().getRow(), b.getWhiteKing().getColumn()) &&
-				row == b.getWhiteKing().getRow() &&
-				column == b.getWhiteKing().getColumn()) ||
-				(b.isEchec("black", b.getBlackKing().getRow(), b.getBlackKing().getColumn()) &&
-				row ==  b.getBlackKing().getRow() &&
-				column == b.getBlackKing().getColumn()))
+		int wkRow = 	b.getWhiteKing().getRow();
+		int wkColumn = 	b.getWhiteKing().getColumn();
+		int bkRow = 	b.getBlackKing().getRow();
+		int bkColumn = 	b.getBlackKing().getColumn();
+		if (((b.isEchec("white", wkRow, wkColumn) && row == wkRow && column == wkColumn) ||
+				(b.isEchec("black", bkRow, bkColumn) && row == bkRow && column == bkColumn)) &&
+				(!nameCase(row, column).equals(b.getSelectedCase())))
 			pieceLine += "echec";
 		else {
 			if (somme % 2 == 1)
@@ -246,7 +257,7 @@ public class HTMLGen {
 		Piece p = b.getPiece(row, column);
 		if (p.getColor().equals(b.getCurrentPlayer()) && !promotion) {
 			if (nameCase(row, column).equals(b.getSelectedCase())) {
-				pieceLine += "Select\"><input type=\"image\" name=\""
+				pieceLine += "CurrentSelect\"><input type=\"image\" name=\""
 						+ nameCase(row, column)
 						+ "\" src=\"pieces/"
 						+ getNomPiece(row, column, b)
@@ -308,11 +319,11 @@ public class HTMLGen {
 	}
 
 	public void remplirListe(Board b){
-		String debut = "<td class=\"bouton\">\n";
-		String fin = "</td>\n";
-		String debutFont = "<font color =\"white\">\n";
+		String debut = "<b><font face =\"courier\" size =\"2\">\n";
+		String fin = "</font></b>\n";
+		String debutFont = "<font color =\"white\">";
 		String finFont = "</font>\n";
-		
+
 		this.listeCoups += debut ;
 		for (int i=1; i<b.getNumeroCoupMax(); ++i) {
 			if (i>=b.getNumeroCoup()){
@@ -336,12 +347,12 @@ public class HTMLGen {
 		Boolean finPartie = false;
 		String player = b.getCurrentPlayer();
 		Piece roi = b.getWhiteKing();
-		String colorEnFrancais = "blanc";
+		//String colorEnFrancais = "blanc";
 		String adversaire = "black";
 		if (player.equals("black")){
 			roi = b.getBlackKing();
 			adversaire = "white";
-			colorEnFrancais = "noir";
+			//colorEnFrancais = "noir";
 		}
 
 		this.options += "<center>\n";
@@ -354,37 +365,39 @@ public class HTMLGen {
 		else
 			this.options += "<a class=\"boutonpagegris\">REDO</a>\n";
 		this.options += "</center>\n";
+
 		this.options2 += "<BR>\n\n";
-		this.options2 += "<center>";
+		this.options2 += "<center>\n";
 		if (promotion){
-			this.options2 += "<td class=\"button\"><a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
+			this.options2 += "<td class=\"bottom\">\n"
+					+ "<a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
 					+ "<a href=\"?Knight\"><img src=\"pieces/" + adversaire + "Knight.svg\" alt=\"C\" width=32 /></a>\n"
 					+ "<a href=\"?Bishop\"><img src=\"pieces/" + adversaire + "Bishop.svg\" alt=\"F\" width=32 /></a>\n"
-					+ "<a href=\"?Queen\"><img src=\"pieces/" + adversaire + "Queen.svg\"  alt=\"D\" width=32 /></a>\n</td>";
+					+ "<a href=\"?Queen\"><img src=\"pieces/" + adversaire + "Queen.svg\"  alt=\"D\" width=32 /></a>\n"
+					+ "</td>\n";
 		}
 		else if (b.isEchec(player, roi.getRow(), roi.getColumn())){
-			this.options2 += "<td class=\"button\"><font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
+			//this.options2 += "<td class=\"bouton\"><font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
 			try {
 				if (b.isEchecEtMat(player)){
-					this.options2 += "Echec et Mat ";
+					this.options2 += "<a class=\"bottom\">CHECKMATE</a>\n";
 					finPartie = true;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			this.options2 += "/!\\ </font></td>";
 		}
 		else if (b.isPat()){
-			this.options2 += "<td class=\"button\"> Egalité par Pat </td>";
+			this.options2 += "<a class=\"bottom\">STALEMATE</a>\n";
 			finPartie = true;
 		}
-		else{
+		else {
 			this.options2 += "<BR>";
 		}
-		this.options2 += "</center><BR>";
+		this.options2 += "</center><BR>\n\n";
 		return finPartie;
 	}
-	
+
 	public void remplirEatenPieces(Board b){
 		this.eatenPieces += "<div id=\"menuright\">\n";
 		this.eatenPieces += "<div id=\"menuhaut\">\n";
@@ -404,8 +417,8 @@ public class HTMLGen {
 				}
 				Piece p = blackIt.next();
 				this.eatenPieces += "<td><img src=\"pieces/"
-				+ getNomPiece(p)
-				+ " width=32 /></td>\n";
+						+ getNomPiece(p)
+						+ " width=32 /></td>\n";
 				tr++;
 			}
 		}
@@ -433,8 +446,8 @@ public class HTMLGen {
 				}
 				Piece p = whiteIt.next();
 				this.eatenPieces += "<td><img src=\"pieces/"
-				+ getNomPiece(p)
-				+ " width=32 /></td>\n";
+						+ getNomPiece(p)
+						+ " width=32 /></td>\n";
 				tr++;
 			}
 		}
@@ -447,28 +460,24 @@ public class HTMLGen {
 		this.eatenPieces += "</div>\n";		
 		this.eatenPieces += "</div>\n";
 	}
-	
+
 	public void getLeft(Board b) {
 		this.left += "<div id=\"menu\">\n";
 		this.left += "<a class= \"bouton\" href= \"?NewGame\">NEW GAME</a>\n";
 		this.left += "<a class= \"boutongris\">SAVE GAME</a>\n";
 		this.left += "<a class= \"boutongris\">LOAD GAME</a>\n";
-		
+
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
-		
-		this.left += "<a class= \"lC\">\nMOVE LIST<BR>\n";
-		//this.left += this.listeCoups;
+
+		this.left += "<a class= \"deroulant\">\nMOVE LIST<BR><BR>\n";
+		this.left += this.listeCoups;
 		this.left += "</a>\n";
-		
-		this.left += "<a class= \"lC\">\nCIMETERY\n";
-		//this.left += eatenPieces1;
+
+		this.left += "<a class= \"deroulant\">\nCIMETERY<BR><BR>\n";
+		this.left += eatenPieces;
 		this.left += "</a>\n";
-		
-		this.left += "<a class= \"lC\">\nHEAVEN\n";
-		//this.left += eatenPieces2;
-		this.left += "</a>\n";
-		
+
 		this.left += "</div>\n";
 	}
 }

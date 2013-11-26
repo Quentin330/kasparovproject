@@ -1,124 +1,3 @@
-div#menu {
-	width: 200px;
-	height: 100%;
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	margin-left: -180px;
-	background-color: rgba(0, 0, 0, 0.5);
-	text-align: center;
-	opacity: 0.60;
-	-webkit-transition: all 0.7s ease-in-out;
-	-moz-transition: all 0.7s ease-in-out;
-	-o-transition: all 0.7s ease-in-out;
-}
-
-#menu:hover {
-	opacity: 1;
-	margin-left: 0px;
-}
-
-/*div#menuright {
-	float:right;
-	width:300px;
-	height:100%;
-	text-align : center;
-	background-color: black;
-	}*/
-	
-div#menuright {
-	width: 300px;
-	height: 100%;
-	position: fixed;
-	right: 0px;
-	top: 0px;
-	opacity: 0.6;
-	margin-right: -275px;
-	background-color: black;
-	text-align: center;
-	-webkit-transition: all 0.7s ease-in-out;
-	-moz-transition: all 0.7s ease-in-out;
-	-o-transition: all 0.7s ease-in-out;
-}
-
-#menuright:hover {
-	opacity: 1;
-	margin-right: 0px;
-}
-
-div#menuhaut {
-	height: 50%;
-	background-color: white;
-}
-
-div#menubas {
-	height: 50%;
-	background-color: black;
-}
-
-.button {
-	font-family: Arial, sans-serif;
-	font-size: 1.3em;
-	display: block;
-	width: 200px;
-	height: 22px;
-	text-decoration: none;
-	padding-top: 20px; /*permet le centrage vertical*/
-	text-align: center;
-	color: #000;
-	background: #444;
-	background: #444;
-	background: -webkit-linear-gradient(#555, #2C2C2C);
-	background: -moz-linear-gradient(#555, #2C2C2C);
-	background: -ms-linear-gradient(#555, #2C2C2C);
-	background: -o-linear-gradient(#555, #2C2C2C);
-	background: linear-gradient(#555, #2C2C2C);
-	border-radius: 8px;
-	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 -1px 0 rgba(255, 255, 255, 0.4);
-}
-
-.unclickablebutton {
-	font-family: Arial, sans-serif;
-	font-size: 1.3em;
-	display: block;
-	width: 200px;
-	height: 22px;
-	padding-top: 20px; /*permet le centrage vertical*/
-	text-align: center;
-	color: #000;
-	background: #444;
-	background: -webkit-linear-gradient(#555, #2C2C2C);
-	background: -moz-linear-gradient(#555, #2C2C2C);
-	background: -ms-linear-gradient(#555, #2C2C2C);
-	background: -o-linear-gradient(#555, #2C2C2C);
-	background: linear-gradient(#555, #2C2C2C);
-	box-shadow: 1px 1px 10px black inset, 0 1px 0 rgba(255, 255, 255, 0.4);
-	border-radius: 8px;
-	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2);
-}
-
-.button:hover {
-	color: #222;
-	background: #555;
-	background: -webkit-linear-gradient(#777, #333);
-	background: -moz-linear-gradient(#777, #333);
-	background: -ms-linear-gradient(#777, #333);
-	background: -o-linear-gradient(#777, #333);
-	background: linear-gradient(#777, #333);
-}
-
-.button:active {
-	color: #000;
-	background: #444;
-	background: -webkit-linear-gradient(#555, #2C2C2C);
-	background: -moz-linear-gradient(#555, #2C2C2C);
-	background: -ms-linear-gradient(#555, #2C2C2C);
-	background: -o-linear-gradient(#555, #2C2C2C);
-	background: linear-gradient(#555, #2C2C2C);
-	box-shadow: 1px 1px 10px black inset, 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
 body {
 	background: lightgrey;
 }
@@ -139,6 +18,14 @@ p {
 	background: white;
 }
 
+.oddCurrentSelect {
+	background: #e66400;
+}
+
+.evenCurrentSelect {
+	background: #e66400;
+}
+
 .oddSelect {
 	background: grey;
 }
@@ -148,7 +35,7 @@ p {
 }
 
 .echec {
-	background: #997581
+	background: #C92E62
 }
 
 .border {
@@ -163,6 +50,26 @@ p {
 
 .corner {
 	
+}
+
+div#menu {
+	width: 240px;
+	height: 100%;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	margin-left: -220px;
+	background-color: rgba(0, 0, 0, 0.5);
+	text-align: center;
+	opacity: 0.60;
+	-webkit-transition: all 0.7s ease-in-out;
+	-moz-transition: all 0.7s ease-in-out;
+	-o-transition: all 0.7s ease-in-out;
+}
+
+#menu:hover {
+	opacity: 1;
+	margin-left: 0px;
 }
 
 .bouton {
@@ -257,13 +164,14 @@ p {
 	-o-transition: all 0.2s ease-in-out;
 }
 
-.lC {
+.deroulant {
 	width: auto;
 	padding: 6px 0;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
 	margin: 10px 10px 10px 10px;
+	overflow: hidden;
 	border-radius: 4px;
 	width: 80%;
 	height: 12px;
@@ -277,10 +185,41 @@ p {
 	-o-transition: all 0.8s ease-in-out;
 }
 
-.lC:hover {
+.deroulant:hover {
 	background-color: #e66400;
+	margin-left: 10px;
+	margin-right: 10px;
 	height: 40%;
 }
 
-.lC:active {
+.deroulant:active {
 	background-color: #000;
+}
+
+.bottom {
+	width: auto;
+	padding: 6px 0;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 10px 10px 10px 10px;
+	border-radius: 4px;
+	width: 300px;
+	background-color: black;
+	font-size: 1.2em;
+	font-family: impact;
+	color: #eee;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+}
+
+
+.bottom:hover {
+	color: black;
+	background-color: white;
+}
+
+.bottom:active {
+	background-color: #000;
+}
