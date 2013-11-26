@@ -478,8 +478,18 @@ public class Board {
 		return echecList;
 	}
 
-
-	public boolean isEchecEtMat(String color) throws OutOfBoardException, NonPossibleMoveException{
+	public boolean isEchecEtMat(String color) {
+		for (int i=0; i<32; ++i){
+			if (this.pieces[i].getColor().equals(this.currentPlayer)){
+				ArrayList<Square> coups = this.pieces[i].possibleMovesSE(this);
+				if (coups.size() > 0)
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean isEchecEtMat2(String color) throws OutOfBoardException, NonPossibleMoveException{
 		int k=0;
 		int l=0;
 		for (int i=0; i<32; i++){
@@ -648,30 +658,16 @@ public class Board {
 		int row2 = caseArrivee.charAt(1)-48;
 		this.deplacerPiece(row1, column1, row2, column2);
 	}
-
+	
 	public Boolean isPat(){
 		for (int i=0; i<32; ++i){
 			if (this.pieces[i].getColor().equals(this.currentPlayer)){
-				if(this.pieces[i] instanceof King){
-					if (this.isEchec(this.pieces[i].getColor(), this.pieces[i].getRow(), this.pieces[i].getColumn())){
+				if(this.pieces[i] instanceof King)
+					if (this.isEchec(this.pieces[i].getColor(), this.pieces[i].getRow(), this.pieces[i].getColumn()))
 						return false;
-					}
-					ArrayList<Square> coups = this.pieces[i].possibleMoves(this);
-					Iterator<Square> it = coups.iterator();
-					while(it.hasNext()){
-						Square s = it.next();
-						if (!this.isEchec(this.pieces[i].getColor(), s.getRow(), s.getColumn())){
-							return false;
-						}
-					}
-				}
-				else{
-					ArrayList<Square> coups = this.pieces[i].possibleMoves(this);
-					if (coups.size() > 0){
-						return false;
-					}
-				}
-
+				ArrayList<Square> coups = this.pieces[i].possibleMovesSE(this);
+				if (coups.size() > 0)
+					return false;
 			}
 		}
 		return true;
