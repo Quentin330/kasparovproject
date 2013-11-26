@@ -54,25 +54,25 @@ public class King extends Piece {
 			}
 		}
 		//haut droite
-		if (this.getRow()!=8 && this.getColumn()!=8){
+		if (this.getRow()!=8 || this.getColumn()!=8){
 			if (!this.isSameColor(board, this.getRow()+1, this.getColumn()+1)){
 				movesList.add(new Square(this.getRow()+1, this.getColumn()+1));
 			}
 		}
 		//haut gauche
-		if (this.getRow()!=8 && this.getColumn()!=1){
+		if (this.getRow()!=8 || this.getColumn()!=1){
 			if (!this.isSameColor(board, this.getRow()+1, this.getColumn()-1)){
 				movesList.add(new Square(this.getRow()+1, this.getColumn()-1));
 			}
 		}
 		//bas droite
-		if (this.getRow()!=1 && this.getColumn()!=8){
+		if (this.getRow()!=1 || this.getColumn()!=8){
 			if (!this.isSameColor(board, this.getRow()-1, this.getColumn()+1)){
 				movesList.add(new Square(this.getRow()-1, this.getColumn()+1));
 			}
 		}
 		//bas gauche
-		if (this.getRow()!=1 && this.getColumn()!=1){
+		if (this.getRow()!=1 || this.getColumn()!=1){
 			if (!this.isSameColor(board, this.getRow()-1, this.getColumn()-1)){
 				movesList.add(new Square(this.getRow()-1, this.getColumn()-1));
 			}
