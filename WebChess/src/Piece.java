@@ -42,10 +42,18 @@ abstract public class Piece {
 	 */
 	private int mangeableEnPrisePassant;
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public int getMangeableEnPrisePassant() {
 		return mangeableEnPrisePassant;
 	}
 
+	/**
+	 * TODO
+	 * @param mangeableEnPrisePassant
+	 */
 	public void setMangeableEnPrisePassant(int mangeableEnPrisePassant) {
 		this.mangeableEnPrisePassant = mangeableEnPrisePassant;
 	}
@@ -275,6 +283,7 @@ abstract public class Piece {
 			movesList.add(new Square(this.getRow()-i, this.getColumn()+i));
 		return movesList;
 	}
+	
 	/**
 	 * Retourne la liste des cases jouables en lignes droites
 	 * jusqu'à la rencontre d'un obstacle.
@@ -357,13 +366,10 @@ abstract public class Piece {
 	public void deplacerPiece(Board board, int row, int column) 
 			throws OutOfBoardException, NonPossibleMoveException, EchecException {
 		Boolean priseEnPassant = false;
-		if (this instanceof Pawn){
-			if (board.isEmpty(row, column)){
-				if (this.column!=column){
+		if (this instanceof Pawn)
+			if (board.isEmpty(row, column))
+				if (this.column!=column)
 					priseEnPassant = true;
-				}
-			}
-		}
 		Coup coup = new Coup();
 		coup.setIsPriseEnPassant(priseEnPassant);
 		coup.setMovedPiece(this);
@@ -389,7 +395,6 @@ abstract public class Piece {
 		}
 		if (!peutJouer)
 			throw new NonPossibleMoveException("coup non possible");
-
 		if (board.isEmpty(row, column)&&!priseEnPassant) {
 			this.row = row;
 			this.column = column;
@@ -397,12 +402,10 @@ abstract public class Piece {
 		else {
 			mange = true;
 			coup.setHasEaten(mange);
-			if (priseEnPassant){
+			if (priseEnPassant)
 				pieceMange = board.getPiece(oldRow, column);
-			}
-			else{
+			else
 				pieceMange = board.getPiece(row, column);
-			}
 			coup.setEatenPiece(pieceMange);
 			pieceMange.isBeingEaten();
 			board.estMangee(pieceMange, pieceMange.getColor());
@@ -412,7 +415,7 @@ abstract public class Piece {
 		if (this.color.equals("black")) {
 			if (board.isEchec("black", 
 					board.getBlackKing().getRow(), 
-					board.getBlackKing().getColumn())){
+					board.getBlackKing().getColumn())) {
 				this.row = oldRow;
 				this.column = oldColumn;
 				if (mange) {
@@ -420,7 +423,7 @@ abstract public class Piece {
 						pieceMange.setRow(oldRow);
 						pieceMange.setColumn(column);
 					}
-					else{
+					else {
 						pieceMange.setRow(row);
 						pieceMange.setColumn(column);
 					}
@@ -440,7 +443,7 @@ abstract public class Piece {
 						pieceMange.setRow(oldRow);
 						pieceMange.setColumn(column);
 					}
-					else{
+					else {
 						pieceMange.setRow(row);
 						pieceMange.setColumn(column);
 					}
@@ -450,39 +453,37 @@ abstract public class Piece {
 			}
 		}
 		if (this instanceof Pawn){
-			if (oldRow-row == 2 || row-oldRow==2){
+			if (oldRow - row == 2 || row - oldRow == 2)
 				this.setMangeableEnPrisePassant(board.getNumeroCoup()+1);
-			}
 			else if (row == 1 || row == 8){
 				coup.setIsPromotion(true);
 				coup.setOldPiece(this);
 			}
 		}
 		board.ajouterCoup(coup);
-		if (coup.getIsPromotion()){
+		if (coup.getIsPromotion())
 			board.setNumeroCoup(board.getNumeroCoup()-1);
-		}
 		if ((this instanceof Rook) || (this instanceof King)) {
 			if (this instanceof King) {
-				if (!this.hasMovedOnce() && row == 1 && column == 7 && !board.isEmpty(1, 8)){
+				if (!this.hasMovedOnce() && row == 1 && column == 7 && !board.isEmpty(1, 8)) {
 					Piece rook = board.getPiece(1, 8);
 					coup.setEatenPiece(rook);
 					rook.setColumn(6);
 					coup.setIsPetitRoque(true);
 				}
-				if (!this.hasMovedOnce() && row == 8 && column == 7 && !board.isEmpty(8, 8)){
+				if (!this.hasMovedOnce() && row == 8 && column == 7 && !board.isEmpty(8, 8)) {
 					Piece rook = board.getPiece(8, 8);
 					coup.setEatenPiece(rook);
 					rook.setColumn(6);
 					coup.setIsPetitRoque(true);
 				}
-				if (!this.hasMovedOnce() && row == 1 && column == 3 && !board.isEmpty(1, 1)){
+				if (!this.hasMovedOnce() && row == 1 && column == 3 && !board.isEmpty(1, 1)) {
 					Piece rook = board.getPiece(1, 1);
 					coup.setEatenPiece(rook);
 					rook.setColumn(4);
 					coup.setIsGrandRoque(true);
 				}
-				if (!this.hasMovedOnce() && row == 8 && column == 3 && !board.isEmpty(8, 1)){
+				if (!this.hasMovedOnce() && row == 8 && column == 3 && !board.isEmpty(8, 1)) {
 					Piece rook = board.getPiece(8, 1);
 					coup.setEatenPiece(rook);
 					rook.setColumn(4);
@@ -536,6 +537,11 @@ abstract public class Piece {
 		return this.isPlayable(row, column, b);
 	}
 
+	/**
+	 * TODO
+	 * @param board
+	 * @return
+	 */
 	public ArrayList<Square> possibleMovesSE(Board board) {
 		Board boardSimu;
 		ArrayList<Square> movesList = new ArrayList<>();
@@ -545,7 +551,6 @@ abstract public class Piece {
 					try {
 						boardSimu = board.clone();
 						boardSimu.deplacerPiece(this.getRow(), this.getColumn(), i, j);
-
 						if (this.color == "white"){
 							ArrayList<Square> echecList = boardSimu.echec("white");
 							int row = boardSimu.getWhiteKing().getRow();

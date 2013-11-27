@@ -28,25 +28,29 @@ public class Square {
 	public int getColumn() {
 		return column;
 	}
-	
+
 	/**
 	 * TODO
-	 * @param Column
 	 * @param row
+	 * @param column
 	 */
 	public Square(int row, int column) {
 		this.row = row;
 		this.column = column;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public Boolean isRealSquare(){
 		return (this.row>0 && this.row<9 && this.column>0 && this.column<9);
 	}
 	
 	/**
 	 * TODO
-	 * @param column
 	 * @param row
+	 * @param column
 	 * @return
 	 */
 	public boolean isThisSquare(int row, int column) {

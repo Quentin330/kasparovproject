@@ -1,32 +1,36 @@
 import java.util.ArrayList;
 
-
 /**
- * TODO
- *
+ * Instance de la pièce représentant le Fou.
  */
 public class Bishop extends Piece {
 
 	/**
-	 * TODO
-	 * @param color
-	 * @param heigth
-	 * @param width
+	 * Constructeur de la pièce. Il s'initialise
+	 * avec la couleur de la pièce, et doit être
+	 * positionner aux coordonnées "row" et "column".
+	 * @param	color
+	 * 				Couleur de la pièce à instancier "white" ou "black".
+	 * @param	row
+	 * 				Coordonnée en abscisse.
+	 * @param	column
+	 * 				Coordonnée en ordonnée.
 	 */
-	public Bishop(String color, int heigth, int width) {
+	public Bishop(String color, int row, int column) {
 		this.setNom("Bishop");
 		this.setColor(color);
-		this.setRow(heigth);
-		this.setColumn(width);
+		this.setRow(row);
+		this.setColumn(column);
 		if (color.equals("black"))
 			this.setShortcut("f");
-
 		else
 			this.setShortcut("F");
 	}
 
 	/**
-	 * TODO
+	 * Retourne la liste des coups possibles du fou
+	 * (sans prendre en considération les coups qui
+	 * peuvent mettre son roi en échec).
 	 */
 	public ArrayList<Square> possibleMoves(Board board) {
 		ArrayList<Square> movesList = new ArrayList<Square>();
@@ -36,9 +40,10 @@ public class Bishop extends Piece {
 	}
 
 	/**
-	 * TODO
+	 * Retourne un clone de la pièce.
 	 */
 	protected Bishop clone() {
 		return new Bishop( this.getColor(), this.getRow(), this.getColumn());
 	}
+	
 }

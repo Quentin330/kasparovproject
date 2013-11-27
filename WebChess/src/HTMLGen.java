@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
-// Pour creer des menus sur les cotés, voir http://pbnaigeon.developpez.com/tutoriel/CSS-HTML/mise-en-page-CSS/
-// Faire un menu sur la droite séparé en 2 horizontalement pour les pieces mangées blanches et les pieces mangées noires.
-
 /**
  * TODO
  *
@@ -41,7 +37,7 @@ public class HTMLGen {
 	/**
 	 * partie du HTML contenant les boutons UNDO et REDO
 	 */
-	private String options = "";
+	private String boutonsUndoRedo = "";
 
 	/**
 	 * TODO
@@ -56,7 +52,7 @@ public class HTMLGen {
 	/**
 	 * TODO
 	 */
-	private String options2 = "";
+	private String legende = "";
 
 	/**
 	 * TODO
@@ -78,18 +74,16 @@ public class HTMLGen {
 		Boolean promotion = false;
 		if (b.getNumeroCoupMax() > b.getNumeroCoup()){
 			Coup c = b.getListeCoups().get(b.getNumeroCoup());
-			if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn){
+			if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn)
 				promotion = true;
-			}
 		}
 		Boolean finPartie = this.remplirOptions(b, promotion);
 		this.getLeft(b);
 		Boolean nonCliquable = (finPartie || promotion);
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
-		if (!b.getSelectedCase().equals("00")) {
+		if (!b.getSelectedCase().equals("00"))
 			this.possibleMoves = b.getPiece(b.getSelectedCase()).possibleMovesSE(b);
-		}
 		this.body = "<BR><BR>"
 				+ "<form>\n"
 				+ "<table align=center>\n"
@@ -184,10 +178,10 @@ public class HTMLGen {
 	 */
 	public String getPage() {
 		return HTMLGen.getHead()
-				+ this.options
+				+ this.boutonsUndoRedo
 				+ this.left
 				+ this.body
-				+ this.options2
+				+ this.legende
 				+ HTMLGen.getBottom1()
 				+ HTMLGen.getBottom2();
 	}
@@ -206,6 +200,11 @@ public class HTMLGen {
 		return getNomPiece(p);
 	}
 
+	/**
+	 * TODO
+	 * @param p
+	 * @return
+	 */
 	public String getNomPiece(Piece p){
 		String nom = "";
 		nom += p.getColor()
@@ -318,6 +317,10 @@ public class HTMLGen {
 		return false;
 	}
 
+	/**
+	 * TODO
+	 * @param b
+	 */
 	public void remplirListe(Board b){
 		String debut = "<b><font face =\"courier\" size =\"2\">\n";
 		String fin = "</font></b>\n";
@@ -326,24 +329,27 @@ public class HTMLGen {
 
 		this.listeCoups += debut ;
 		for (int i=1; i<b.getNumeroCoupMax(); ++i) {
-			if (i>=b.getNumeroCoup()){
+			if (i>=b.getNumeroCoup())
 				debutFont = "<font color =\"grey\">\n";
-			}
-			if (i%2 == 0){
+			if (i%2 == 0)
 				this.listeCoups += debutFont + " - " + b.getListeCoups().get(i).afficherCoup() + finFont + "<BR>";
-			}
 			else{
 				this.listeCoups += debutFont;
-				if ((i+1)/2 < 10){
+				if ((i+1)/2 < 10)
 					this.listeCoups += "0";
-				}
 				this.listeCoups += (i+1)/2 + ". " + b.getListeCoups().get(i).afficherCoup() + finFont;			
 			}
 		}
 		this.listeCoups += fin;
 	}
 
-	public Boolean remplirOptions(Board b, Boolean promotion){
+	/**
+	 * TODO
+	 * @param b
+	 * @param promotion
+	 * @return
+	 */
+	public Boolean remplirOptions(Board b, Boolean promotion) {
 		Boolean finPartie = false;
 		String player = b.getCurrentPlayer();
 		Piece roi = b.getWhiteKing();
@@ -354,51 +360,52 @@ public class HTMLGen {
 			adversaire = "white";
 			//colorEnFrancais = "noir";
 		}
-
-		this.options += "<center>\n";
+		this.boutonsUndoRedo += "<center>\n";
 		if (b.getNumeroCoup()>1 && !promotion)
-			this.options += "<a href=\"?Undo\" class=\"boutonpage\">UNDO</a>\n";
+			this.boutonsUndoRedo += "<a href=\"?Undo\" class=\"boutonpage\">UNDO</a>\n";
 		else
-			this.options += "<a class=\"boutonpagegris\">UNDO</a>\n";
+			this.boutonsUndoRedo += "<a class=\"boutonpagegris\">UNDO</a>\n";
 		if (b.getNumeroCoup()<b.getNumeroCoupMax() && !promotion)
-			this.options += "<a href=\"?Redo\" class=\"boutonpage\">REDO</a>\n";
+			this.boutonsUndoRedo += "<a href=\"?Redo\" class=\"boutonpage\">REDO</a>\n";
 		else
-			this.options += "<a class=\"boutonpagegris\">REDO</a>\n";
-		this.options += "</center>\n";
+			this.boutonsUndoRedo += "<a class=\"boutonpagegris\">REDO</a>\n";
+		this.boutonsUndoRedo += "</center>\n";
 
-		this.options2 += "<BR>\n\n";
-		this.options2 += "<center>\n";
-		if (promotion){
-			this.options2 += "<td class=\"bottom\">\n"
+		this.legende += "<BR>\n\n";
+		this.legende += "<center>\n";
+		if (promotion)
+			this.legende += "<td class=\"bottom\">\n"
 					+ "<a href=\"?Rook\"><img src=\"pieces/" + adversaire + "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
 					+ "<a href=\"?Knight\"><img src=\"pieces/" + adversaire + "Knight.svg\" alt=\"C\" width=32 /></a>\n"
 					+ "<a href=\"?Bishop\"><img src=\"pieces/" + adversaire + "Bishop.svg\" alt=\"F\" width=32 /></a>\n"
 					+ "<a href=\"?Queen\"><img src=\"pieces/" + adversaire + "Queen.svg\"  alt=\"D\" width=32 /></a>\n"
 					+ "</td>\n";
-		}
-		else if (b.isEchec(player, roi.getRow(), roi.getColumn())){
-			//this.options2 += "<td class=\"bouton\"><font color =\"red\"> /!\\ Roi " + colorEnFrancais + " en Echec ";
+		else if (b.isEchec(player, roi.getRow(), roi.getColumn())) {
 			try {
-				if (b.isEchecEtMat(player)){
-					this.options2 += "<a class=\"bottom\">CHECKMATE</a>\n";
+				if (b.isEchecEtMat(player)) {
+					this.legende += "<a class=\"bottom\">CHECKMATE</a>\n";
 					finPartie = true;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		else if (b.isPat()){
-			this.options2 += "<a class=\"bottom\">STALEMATE</a>\n";
+		else if (b.isPat()) {
+			this.legende += "<a class=\"bottom\">STALEMATE</a>\n";
 			finPartie = true;
 		}
 		else {
-			this.options2 += "<BR>";
+			this.legende += "<BR>";
 		}
-		this.options2 += "</center><BR>\n\n";
+		this.legende += "</center><BR>\n\n";
 		return finPartie;
 	}
 
-	public void remplirEatenPieces(Board b){
+	/**
+	 * TODO
+	 * @param b
+	 */
+	public void remplirEatenPieces(Board b) {
 		this.eatenPieces += "<div id=\"menuright\">\n";
 		this.eatenPieces += "<div id=\"menuhaut\">\n";
 		this.eatenPieces += "<font color = \"black\">Pieces mangées noires :<BR>\n";
@@ -406,15 +413,14 @@ public class HTMLGen {
 		ArrayList<Piece> blackEatenPieces = b.getBlackEatenPieces();
 		Iterator<Piece> blackIt = blackEatenPieces.iterator();
 		int tr = 0;
-		while (blackIt.hasNext()){
+		while (blackIt.hasNext()) {
 			if (tr==3){
 				this.eatenPieces += "</tr>\n";
 				tr = 0;
 			}
-			else{
-				if (tr==0){
+			else {
+				if (tr==0)
 					this.eatenPieces += "<tr>\n";
-				}
 				Piece p = blackIt.next();
 				this.eatenPieces += "<td><img src=\"pieces/"
 						+ getNomPiece(p)
@@ -422,7 +428,7 @@ public class HTMLGen {
 				tr++;
 			}
 		}
-		if (tr != 0){
+		if (tr != 0) {
 			this.eatenPieces += "</tr>\n";
 			tr = 0;
 		}
@@ -435,15 +441,14 @@ public class HTMLGen {
 		ArrayList<Piece> whiteEatenPieces = b.getWhiteEatenPieces();
 		Iterator<Piece> whiteIt = whiteEatenPieces.iterator();
 		this.eatenPieces += "</tr>\n";
-		while (whiteIt.hasNext()){
-			if (tr==3){
+		while (whiteIt.hasNext()) {
+			if (tr==3) {
 				this.eatenPieces += "</tr>\n";
 				tr = 0;
 			}
-			else{
-				if (tr==0){
+			else {
+				if (tr==0)
 					this.eatenPieces += "<tr>\n";
-				}
 				Piece p = whiteIt.next();
 				this.eatenPieces += "<td><img src=\"pieces/"
 						+ getNomPiece(p)
@@ -451,7 +456,7 @@ public class HTMLGen {
 				tr++;
 			}
 		}
-		if (tr != 0){
+		if (tr != 0) {
 			this.eatenPieces += "</tr>\n";
 			tr = 0;
 		}
@@ -461,23 +466,24 @@ public class HTMLGen {
 		this.eatenPieces += "</div>\n";
 	}
 
+	/**
+	 * TODO
+	 * @param b
+	 */
 	public void getLeft(Board b) {
 		this.left += "<div id=\"menu\">\n";
 		this.left += "<a class= \"bouton\" href= \"?NewGame\">NEW GAME</a>\n";
 		this.left += "<a class= \"boutongris\">SAVE GAME</a>\n";
 		this.left += "<a class= \"boutongris\">LOAD GAME</a>\n";
-
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
-
 		this.left += "<a class= \"deroulant\">\nMOVE LIST<BR><BR>\n";
 		this.left += this.listeCoups;
 		this.left += "</a>\n";
-
 		this.left += "<a class= \"deroulant\">\nCIMETERY<BR><BR>\n";
 		this.left += eatenPieces;
 		this.left += "</a>\n";
-
 		this.left += "</div>\n";
 	}
+	
 }

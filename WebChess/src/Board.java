@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-// annuler coup ne marche pas si un pion a mang� pour sa promotion
+
 /**
  * Classe instanciant une partie, à savoir le plateau, 
  * l'état et la position de l'ensemble des pièces de la partie.
@@ -15,8 +15,14 @@ public class Board {
 	 */
 	private Piece[] pieces;
 
+	/**
+	 * TODO
+	 */
 	private ArrayList<Piece> whiteEatenPieces;
 
+	/**
+	 * TODO
+	 */
 	private ArrayList<Piece> blackEatenPieces;
 
 	/**
@@ -42,55 +48,84 @@ public class Board {
 	 */
 	private String selectedCase;
 
+	/**
+	 * TODO
+	 */
 	private int numeroCoup;
 
+	/**
+	 * TODO
+	 */
 	private int numeroCoupMax;
 
+	/**
+	 * TODO
+	 */
 	private HashMap<Integer, Coup> listeCoups;
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public ArrayList<Piece> getWhiteEatenPieces() {
 		return whiteEatenPieces;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public ArrayList<Piece> getBlackEatenPieces() {
 		return blackEatenPieces;
 	}
 
-	public void estMangee (Piece p, String color){
-		if (color.equals("white")){
+	/**
+	 * TODO
+	 * @param p
+	 * @param color
+	 */
+	public void estMangee (Piece p, String color) {
+		if (color.equals("white"))
 			this.whiteEatenPieces.add(p);
-		}
-		else{
+		else
 			this.blackEatenPieces.add(p);
-		}
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public HashMap<Integer, Coup> getListeCoups() {
 		return listeCoups;
 	}
 
-	public void ajouterCoup (Coup coup){
-		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
+	/**
+	 * TODO
+	 * @param coup
+	 */
+	public void ajouterCoup (Coup coup) {
+		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i)
 			listeCoups.remove(i);
-		}
 		listeCoups.put(this.numeroCoup, coup);
 		this.coupSuivant();
 	}
 
-	public void piecesNonMangees(){
-		for (int i = whiteEatenPieces.size() - 1 ; i >= 0 ; i--) {
-			if (!whiteEatenPieces.get(i).isDead()){
+	/**
+	 * TODO
+	 */
+	public void piecesNonMangees() {
+		for (int i = whiteEatenPieces.size() - 1 ; i >= 0 ; i--)
+			if (!whiteEatenPieces.get(i).isDead())
 				whiteEatenPieces.remove(whiteEatenPieces.get(i));
-			}
-		}
-		for (int i = blackEatenPieces.size() - 1 ; i >= 0 ; i--) {
-			if (!blackEatenPieces.get(i).isDead()){
+		for (int i = blackEatenPieces.size() - 1 ; i >= 0 ; i--) 
+			if (!blackEatenPieces.get(i).isDead())
 				blackEatenPieces.remove(blackEatenPieces.get(i));
-			}
-		}
 	}
 
-	public void annulerCoup(){
+	/**
+	 * TODO
+	 */
+	public void annulerCoup() {
 		this.numeroCoup --;
 		this.annulerCoup(this.listeCoups.get(this.numeroCoup));
 		this.selectedCase = "00";
@@ -102,47 +137,46 @@ public class Board {
 				whiteEatenPieces.remove(p);
 			}
 		}
-		Ceci est impossible Exception in thread "main" java.util.ConcurrentModificationException
-		solution trouv�e sur http://www.developpez.net/forums/d763054/java/general-java/debuter/probleme-type-java-util-concurrentmodificationexception-lors-suppression/
+		Ceci est impossible Exception in thread "main" 
+		java.util.ConcurrentModificationException
+		solution trouvée sur http://www.developpez.net/
+		forums/d763054/java/general-java/debuter/
+		probleme-type-java-util-concurrentmodificationexception-lors-suppression/
 		 */
 		this.piecesNonMangees();
 	}
 
-	private void annulerCoup(Coup coup){
-		if (coup.getIsPromotion()){
+	private void annulerCoup(Coup coup) {
+		if (coup.getIsPromotion()) {
 			int pion = 0;
 			for (int i=0; i<32; ++i){
-				if (this.pieces[i].equals(coup.getMovedPiece())){
+				if (this.pieces[i].equals(coup.getMovedPiece())) {
 					pion = i;
 					break;
 				}
 			}
 			this.pieces[pion] = coup.getOldPiece();
-			if (coup.getHasEaten()){
+			if (coup.getHasEaten()) {
 				coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
 				coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
 			}
 			this.pieces[pion].setRow(coup.getCaseDepart().getRow());
 			this.pieces[pion].setColumn(coup.getCaseDepart().getColumn());
 		}
-		else{
-			if (coup.getIsGrandRoque() || coup.getIsPetitRoque()){
-				if (coup.getIsGrandRoque()){
+		else {
+			if (coup.getIsGrandRoque() || coup.getIsPetitRoque()) {
+				if (coup.getIsGrandRoque())
 					coup.getEatenPiece().setColumn(1);
-				}
-				else if (coup.getIsPetitRoque()){
-					coup.getEatenPiece().setColumn(8);		
-				}
+				else if (coup.getIsPetitRoque())
+					coup.getEatenPiece().setColumn(8);
 				coup.getEatenPiece().moveOnce(false);
 				coup.getMovedPiece().moveOnce(false);
 			}
-			else if (coup.getHasEaten()){
-				if (coup.getIsPriseEnPassant()){
+			else if (coup.getHasEaten()) {
+				if (coup.getIsPriseEnPassant())
 					coup.getEatenPiece().setRow(coup.getCaseDepart().getRow());
-				}
-				else{
+				else
 					coup.getEatenPiece().setRow(coup.getCaseArrivee().getRow());
-				}
 				coup.getEatenPiece().setColumn(coup.getCaseArrivee().getColumn());
 			}
 			coup.getMovedPiece().setRow(coup.getCaseDepart().getRow());
@@ -150,24 +184,41 @@ public class Board {
 		}
 	}
 
-	public void coupSuivant(){
+	/**
+	 * TODO
+	 */
+	public void coupSuivant() {
 		this.numeroCoup += 1;
 		this.numeroCoupMax = this.numeroCoup;
 	}
 
+	/**
+	 * TODO
+	 */
 	public void coupPrecedent(){
 		this.numeroCoup -= 1;
 	}
 
-
+	/**
+	 * TODO
+	 * @return
+	 */
 	public int getNumeroCoup() {
 		return numeroCoup;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public int getNumeroCoupMax() {
 		return numeroCoupMax;
 	}
 
+	/**
+	 * TODO
+	 * @param numeroCoup
+	 */
 	public void setNumeroCoup(int numeroCoup) {
 		this.numeroCoup = numeroCoup;
 	}
@@ -250,97 +301,24 @@ public class Board {
 			this.currentPlayer = "black";
 	}
 
-
-	public ArrayList<Piece> cloneListe(ArrayList<Piece> liste){
+	/**
+	 * TODO
+	 * @param liste
+	 * @return
+	 */
+	public ArrayList<Piece> cloneListe(ArrayList<Piece> liste) {
 		ArrayList<Piece> clone = new ArrayList<Piece>();
-		for (int i=0; i<liste.size(); ++i){
+		for (int i=0; i<liste.size(); ++i)
 			clone.add(liste.get(i));
-		}
 		return clone;
-	}
-
-
-	/**
-	 * TODO
-	 * @param pieces
-	 * @param blackKing
-	 * @param whiteKing
-	 */
-	public Board(Piece[] pieces, King blackKing, King whiteKing, ArrayList<Piece> whiteEatenPieces, ArrayList<Piece> blackEatenPieces) {
-		this.listeCoups = new HashMap<Integer, Coup>();
-		this.numeroCoup = 1;
-		this.selectedCase = "00";
-		this.currentPlayer = "white";
-		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
-		this.blackEatenPieces = this.cloneListe(blackEatenPieces);
-		this.pieces = new Piece[32];
-		for (int i = 0; i < 32; ++i){
-			this.pieces[i] = pieces[i].clone();
-			if (this.pieces[i] instanceof King){
-				if (this.pieces[i].getColor().equals("black")){
-					this.blackKing =(King) this.pieces[i];
-				}
-				else{
-					this.whiteKing =(King) this.pieces[i];
-				}
-			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public Board(Piece[] pieces,
-			King blackKing,
-			King whiteKing,
-			ArrayList<Piece> whiteEatenPieces,
-			ArrayList<Piece> blackEatenPieces,
-			String currentPlayer,
-			String selectedCase,
-			int numeroCoup,
-			int numeroCoupMax,
-			HashMap<Integer, Coup> lC) {
-		this.listeCoups = (HashMap<Integer, Coup>) lC.clone();
-		this.numeroCoup = numeroCoup;
-		this.numeroCoupMax = numeroCoupMax;
-		this.selectedCase = selectedCase;
-		this.currentPlayer = currentPlayer;
-		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
-		this.blackEatenPieces = this.cloneListe(blackEatenPieces);
-		this.pieces = new Piece[32];
-		for (int i = 0; i < 32; ++i){
-			this.pieces[i] = pieces[i].clone();
-			if (this.pieces[i] instanceof King){
-				if (this.pieces[i].getColor().equals("black")){
-					this.blackKing =(King) this.pieces[i];
-				}
-				else{
-					this.whiteKing =(King) this.pieces[i];
-				}
-			}
-		}
-	}
-	
-	/**
-	 * TODO
-	 */
-	public Board clone(){
-		return new Board(this.pieces,
-				this.blackKing,
-				this.whiteKing,
-				this.whiteEatenPieces,
-				this.blackEatenPieces,
-				this.currentPlayer,
-				this.selectedCase,
-				this.numeroCoup,
-				this.numeroCoupMax,
-				this.listeCoups);
 	}
 
 	/**
 	 * TODO
 	 */
 	public Board(){
-		this.whiteEatenPieces = new ArrayList<Piece>() ;
-		this.blackEatenPieces = new ArrayList<Piece>() ;
+		this.whiteEatenPieces = new ArrayList<Piece>();
+		this.blackEatenPieces = new ArrayList<Piece>();
 		this.listeCoups = new HashMap<Integer, Coup>();
 		this.numeroCoup = 1;
 		this.selectedCase = "00";
@@ -372,18 +350,101 @@ public class Board {
 
 	/**
 	 * TODO
+	 * @param pieces
+	 * @param blackKing
+	 * @param whiteKing
+	 */
+	public Board(Piece[] pieces,
+			King blackKing,
+			King whiteKing,
+			ArrayList<Piece> whiteEatenPieces,
+			ArrayList<Piece> blackEatenPieces) {
+		this.listeCoups = new HashMap<Integer, Coup>();
+		this.numeroCoup = 1;
+		this.selectedCase = "00";
+		this.currentPlayer = "white";
+		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
+		this.blackEatenPieces = this.cloneListe(blackEatenPieces);
+		this.pieces = new Piece[32];
+		for (int i = 0; i < 32; ++i) {
+			this.pieces[i] = pieces[i].clone();
+			if (this.pieces[i] instanceof King)
+				if (this.pieces[i].getColor().equals("black"))
+					this.blackKing =(King) this.pieces[i];
+				else
+					this.whiteKing =(King) this.pieces[i];
+		}
+	}
+
+	/**
+	 * TODO
+	 * @param pieces
+	 * @param blackKing
+	 * @param whiteKing
+	 * @param whiteEatenPieces
+	 * @param blackEatenPieces
+	 * @param currentPlayer
+	 * @param selectedCase
+	 * @param numeroCoup
+	 * @param numeroCoupMax
+	 * @param lC
+	 */
+	@SuppressWarnings("unchecked")
+	public Board(Piece[] pieces,
+			King blackKing,
+			King whiteKing,
+			ArrayList<Piece> whiteEatenPieces,
+			ArrayList<Piece> blackEatenPieces,
+			String currentPlayer,
+			String selectedCase,
+			int numeroCoup,
+			int numeroCoupMax,
+			HashMap<Integer, Coup> lC) {
+		this.listeCoups = (HashMap<Integer, Coup>) lC.clone();
+		this.numeroCoup = numeroCoup;
+		this.numeroCoupMax = numeroCoupMax;
+		this.selectedCase = selectedCase;
+		this.currentPlayer = currentPlayer;
+		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
+		this.blackEatenPieces = this.cloneListe(blackEatenPieces);
+		this.pieces = new Piece[32];
+		for (int i = 0; i < 32; ++i){
+			this.pieces[i] = pieces[i].clone();
+			if (this.pieces[i] instanceof King)
+				if (this.pieces[i].getColor().equals("black"))
+					this.blackKing =(King) this.pieces[i];
+				else
+					this.whiteKing =(King) this.pieces[i];
+		}
+	}
+	
+	/**
+	 * TODO
+	 */
+	public Board clone() {
+		return new Board(this.pieces,
+				this.blackKing,
+				this.whiteKing,
+				this.whiteEatenPieces,
+				this.blackEatenPieces,
+				this.currentPlayer,
+				this.selectedCase,
+				this.numeroCoup,
+				this.numeroCoupMax,
+				this.listeCoups);
+	}
+
+	/**
+	 * TODO
 	 * @param row
 	 * @param column
 	 * @return
 	 */
-	public boolean isEmpty(int row, int column){
-		for (int i=0; i<32; ++i){
-			if (this.pieces[i].getRow()==row){
-				if (this.pieces[i].getColumn()==column){
+	public boolean isEmpty(int row, int column) {
+		for (int i=0; i<32; ++i)
+			if (this.pieces[i].getRow()==row)
+				if (this.pieces[i].getColumn()==column)
 					return false;
-				}
-			}
-		}
 		return true;
 	}
 
@@ -393,7 +454,7 @@ public class Board {
 	 * @param column
 	 * @return
 	 */
-	public boolean isWhite(int row, int column){
+	public boolean isWhite(int row, int column) {
 		for (int i=0; i<32; ++i)
 			if (this.pieces[i].getRow()==row && this.pieces[i].getColumn()==column)
 				return this.pieces[i].isWhite();
@@ -406,47 +467,44 @@ public class Board {
 	 * @param column
 	 * @return
 	 */
-	public boolean isBlack(int row, int column){
+	public boolean isBlack(int row, int column) {
 		for (int i=0; i<32; ++i)
 			if (this.pieces[i].getRow()==row && this.pieces[i].getColumn()==column)
 				return this.pieces[i].isBlack();
 		return false;
 	}
 
-	public ArrayList<Square> arroundSquares (Piece p){
+	/**
+	 * TODO
+	 * @param p
+	 * @return
+	 */
+	public ArrayList<Square> arroundSquares (Piece p) {
 		ArrayList<Square> arround = new ArrayList<Square>();
 		Square haut = new Square(p.getRow()+1, p.getColumn());
-		if (haut.isRealSquare()){
+		if (haut.isRealSquare())
 			arround.add(haut);
-		}
 		Square bas = new Square(p.getRow()-1, p.getColumn());
-		if (bas.isRealSquare()){
+		if (bas.isRealSquare())
 			arround.add(bas);
-		}
 		Square droite = new Square(p.getRow(), p.getColumn()+1);
-		if (droite.isRealSquare()){
+		if (droite.isRealSquare())
 			arround.add(droite);
-		}
 		Square gauche = new Square(p.getRow(), p.getColumn()-1);
-		if (gauche.isRealSquare()){
+		if (gauche.isRealSquare())
 			arround.add(gauche);
-		}
 		Square hautdroite = new Square(p.getRow()+1, p.getColumn()+1);
-		if (hautdroite.isRealSquare()){
+		if (hautdroite.isRealSquare())
 			arround.add(hautdroite);
-		}
 		Square hautgauche = new Square(p.getRow()+1, p.getColumn()-1);
-		if (hautgauche.isRealSquare()){
+		if (hautgauche.isRealSquare())
 			arround.add(hautgauche);
-		}
 		Square basdroite = new Square(p.getRow()-1, p.getColumn()+1);
-		if (basdroite.isRealSquare()){
+		if (basdroite.isRealSquare())
 			arround.add(basdroite);
-		}
 		Square basgauche = new Square(p.getRow()-1, p.getColumn()-1);
-		if (basgauche.isRealSquare()){
+		if (basgauche.isRealSquare())
 			arround.add(basgauche);
-		}
 		return arround;
 	}
 
@@ -460,24 +518,25 @@ public class Board {
 		if (color.equals("black"))
 			for (int i=0; i<32; ++i)
 				if (this.pieces[i].isWhite())
-					if (this.pieces[i] instanceof King){
+					if (this.pieces[i] instanceof King)
 						echecList.addAll(this.arroundSquares(this.pieces[i]));
-					}
-					else{
+					else
 						echecList.addAll(this.pieces[i].possibleMoves(this));
-					}
 		if (color.equals("white"))
 			for (int i=0; i<32; ++i)
 				if (this.pieces[i].isBlack())
-					if (this.pieces[i] instanceof King){
+					if (this.pieces[i] instanceof King)
 						echecList.addAll(this.arroundSquares(this.pieces[i]));
-					}
-					else{
+					else
 						echecList.addAll(this.pieces[i].possibleMoves(this));
-					}
 		return echecList;
 	}
 
+	/**
+	 * TODO
+	 * @param color
+	 * @return
+	 */
 	public boolean isEchecEtMat(String color) {
 		for (int i=0; i<32; ++i){
 			if (this.pieces[i].getColor().equals(this.currentPlayer)){
@@ -487,29 +546,6 @@ public class Board {
 			}
 		}
 		return true;
-	}
-	
-	public boolean isEchecEtMat2(String color) throws OutOfBoardException, NonPossibleMoveException{
-		int k=0;
-		int l=0;
-		for (int i=0; i<32; i++){
-			if (this.pieces[i].getColor().equals(color)){
-				ArrayList<Square> coupsPossibles = this.pieces[i].possibleMoves(this);
-				Iterator<Square> it = coupsPossibles.iterator();
-				while (it.hasNext()){
-					Square s = it.next();
-					Board b = this.clone();
-					l++;
-					try {
-						b.pieces[i].deplacerPiece(b, s.getRow(), s.getColumn());
-					} catch (EchecException e){
-						k++;
-					}
-
-				}
-			}
-		}
-		return (l==k);
 	}
 
 	/**
@@ -568,31 +604,30 @@ public class Board {
 	 * @throws NonPossibleMoveException
 	 */
 	public void deplacerPiece(int row1, int column1, int row2, int column2) 
-			throws OutOfBoardException, NonPossibleMoveException{
+			throws OutOfBoardException, NonPossibleMoveException {
 		this.getPiece(row1, column1).deplacerPiece(this, row2, column2);
 	}
 
-	public void setPromotion(String piece){
+	/**
+	 * TODO
+	 * @param piece
+	 */
+	public void setPromotion(String piece) {
 		Boolean promotion = false;
 		Coup c = this.getListeCoups().get(this.getNumeroCoup());
-		if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn){
+		if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn)
 			promotion = true;
-		}
 		assert (promotion);
 		Piece pion = c.getMovedPiece();
-		Piece p;
-		if (piece.equals("Rook")){
+		Piece p = null;
+		if (piece.equals("Rook"))
 			p = new Rook(pion.getColor(), pion.getRow(), pion.getColumn());
-		}
-		else if (piece.equals("Knight")){
+		else if (piece.equals("Knight"))
 			p = new Knight(pion.getColor(), pion.getRow(), pion.getColumn());
-		}
-		else if (piece.equals("Bishop")){
+		else if (piece.equals("Bishop"))
 			p = new Bishop(pion.getColor(), pion.getRow(), pion.getColumn());
-		}
-		else{
+		else if (piece.equals("Queen"))
 			p = new Queen(pion.getColor(), pion.getRow(), pion.getColumn());
-		}
 		int numPiece = 0;
 		for (int i=0; i<32; ++i){
 			if (this.pieces[i].equals(c.getMovedPiece())){
@@ -605,34 +640,33 @@ public class Board {
 		this.coupSuivant();
 	}
 
-	public void retablirCoup() throws OutOfBoardException, NonPossibleMoveException{
+	/**
+	 * TODO
+	 * @throws OutOfBoardException
+	 * @throws NonPossibleMoveException
+	 */
+	public void retablirCoup() 
+			throws OutOfBoardException, NonPossibleMoveException {
 		int max = this.numeroCoupMax;
 		HashMap<Integer, Coup> hash = new HashMap<Integer, Coup>();
-		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
+		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i)
 			hash.put(i, this.listeCoups.get(i));
-		}
 		Coup c = this.listeCoups.get(this.numeroCoup);
 		Piece saveNewPiece = c.getMovedPiece();
 		this.deplacerPiece(c.getCaseDepart().getNomCase(), c.getCaseArrivee().getNomCase());
 		if (c.getIsPromotion()){
-			if (saveNewPiece instanceof Rook){
+			if (saveNewPiece instanceof Rook)
 				this.setPromotion("Rook");
-			}
-			else if (saveNewPiece instanceof Knight){
+			else if (saveNewPiece instanceof Knight)
 				this.setPromotion("Knight");
-			}
-			else if (saveNewPiece instanceof Bishop){
+			else if (saveNewPiece instanceof Bishop)
 				this.setPromotion("Bishop");
-			}
-			else{
+			else if (saveNewPiece instanceof Queen)
 				this.setPromotion("Queen");
-			}
-
 		}
 		this.numeroCoupMax = max;
-		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i){
+		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i)
 			this.listeCoups.put(i, hash.get(i));
-		}
 	}
 
 	/**
@@ -643,7 +677,7 @@ public class Board {
 	 * @throws NonPossibleMoveException
 	 */
 	public void deplacerPiece(String caseDepart, String caseArrivee) 
-			throws OutOfBoardException, NonPossibleMoveException{
+			throws OutOfBoardException, NonPossibleMoveException {
 		assert(!(caseDepart.charAt(0)<'A') && 
 				!(caseDepart.charAt(0)>'H') && 
 				!(caseDepart.charAt(1)<'1') && 
@@ -659,9 +693,13 @@ public class Board {
 		this.deplacerPiece(row1, column1, row2, column2);
 	}
 	
-	public Boolean isPat(){
-		for (int i=0; i<32; ++i){
-			if (this.pieces[i].getColor().equals(this.currentPlayer)){
+	/**
+	 * TODO
+	 * @return
+	 */
+	public Boolean isPat() {
+		for (int i=0; i<32; ++i) {
+			if (this.pieces[i].getColor().equals(this.currentPlayer)) {
 				if(this.pieces[i] instanceof King)
 					if (this.isEchec(this.pieces[i].getColor(), this.pieces[i].getRow(), this.pieces[i].getColumn()))
 						return false;
@@ -680,7 +718,8 @@ public class Board {
 	 * @throws OutOfBoardException
 	 * @throws NonPossibleMoveException
 	 */
-	public Piece getPiece(String caseJeu) throws OutOfBoardException, NonPossibleMoveException{
+	public Piece getPiece(String caseJeu) 
+			throws OutOfBoardException, NonPossibleMoveException {
 		assert(!(caseJeu.charAt(0)<'A') && 
 				!(caseJeu.charAt(0)>'H') && 
 				!(caseJeu.charAt(1)<'1') && 
@@ -695,7 +734,7 @@ public class Board {
 	 * @param caseJeu
 	 * @return
 	 */
-	public boolean isEmpty(String caseJeu){
+	public boolean isEmpty(String caseJeu) {
 		assert(!(caseJeu.charAt(0)<'A') && 
 				!(caseJeu.charAt(0)>'H') && 
 				!(caseJeu.charAt(1)<'1') && 

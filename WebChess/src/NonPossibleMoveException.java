@@ -1,3 +1,4 @@
+
 /**
  * TODO
  *
@@ -16,4 +17,5 @@ public class NonPossibleMoveException extends Exception {
 	public NonPossibleMoveException(String s){
 		super(s);
 	}
+	
 }
