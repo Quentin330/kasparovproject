@@ -1,14 +1,13 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
-public class SavedGamesList implements Serializable{
+public class SavedGamesList implements Serializable {
 
 	/**
 	 * Default serial version id
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private ArrayList<String> savedGames;
 
 	public ArrayList<String> getSavedGames() {
@@ -18,16 +17,16 @@ public class SavedGamesList implements Serializable{
 	public void setSavedGames(ArrayList<String> savedGames) {
 		this.savedGames = savedGames;
 	}
-	
-	public void newSave(String s){
+
+	public void newSave(String s) {
 		savedGames.add(s);
 	}
-	
-	public SavedGamesList(){
+
+	public SavedGamesList() {
 		this.savedGames = new ArrayList<String>();
 	}
-	
-	public Boolean isSave(String s){
+
+	public Boolean isSave(String s) {
 		return savedGames.contains(s);
 	}
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /**
  * Instance de la pièce représentant le Fou.
  */
-public class Bishop extends Piece implements Serializable{
+public class Bishop extends Piece implements Serializable {
 
 	/**
 	 * Default serial version id
@@ -12,15 +12,15 @@ public class Bishop extends Piece implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructeur de la pièce. Il s'initialise
-	 * avec la couleur de la pièce, et doit être
-	 * positionner aux coordonnées "row" et "column".
-	 * @param	color
-	 * 				Couleur de la pièce à instancier "white" ou "black".
-	 * @param	row
-	 * 				Coordonnée en abscisse.
-	 * @param	column
-	 * 				Coordonnée en ordonnée.
+	 * Constructeur de la pièce. Il s'initialise avec la couleur de la pièce, et
+	 * doit être positionner aux coordonnées "row" et "column".
+	 * 
+	 * @param color
+	 *            Couleur de la pièce à instancier "white" ou "black".
+	 * @param row
+	 *            Coordonnée en abscisse.
+	 * @param column
+	 *            Coordonnée en ordonnée.
 	 */
 	public Bishop(String color, int row, int column) {
 		this.setNom("Bishop");
@@ -34,9 +34,8 @@ public class Bishop extends Piece implements Serializable{
 	}
 
 	/**
-	 * Retourne la liste des coups possibles du fou
-	 * (sans prendre en considération les coups qui
-	 * peuvent mettre son roi en échec).
+	 * Retourne la liste des coups possibles du fou (sans prendre en
+	 * considération les coups qui peuvent mettre son roi en échec).
 	 */
 	public ArrayList<Square> possibleMoves(Board board) {
 		ArrayList<Square> movesList = new ArrayList<Square>();
@@ -49,7 +48,7 @@ public class Bishop extends Piece implements Serializable{
 	 * Retourne un clone de la pièce.
 	 */
 	protected Bishop clone() {
-		return new Bishop( this.getColor(), this.getRow(), this.getColumn());
+		return new Bishop(this.getColor(), this.getRow(), this.getColumn());
 	}
-	
+
 }

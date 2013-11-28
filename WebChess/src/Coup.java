@@ -1,10 +1,9 @@
 import java.io.Serializable;
 
-
 /**
  * TODO
  */
-public class Coup implements Serializable{
+public class Coup implements Serializable {
 
 	/**
 	 * Default serial version id
@@ -66,10 +65,12 @@ public class Coup implements Serializable{
 	 */
 	private Boolean isPromotion;
 
-	//dans le cas d'une promotion le pion devient eatenPiece et la nouvelle piece devient movedPiece
+	// dans le cas d'une promotion le pion devient eatenPiece et la nouvelle
+	// piece devient movedPiece
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Boolean getIsPromotion() {
@@ -78,6 +79,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param isPromotion
 	 */
 	public void setIsPromotion(Boolean isPromotion) {
@@ -86,6 +88,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Piece getMovedPiece() {
@@ -94,6 +97,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param movedPiece
 	 */
 	public void setMovedPiece(Piece movedPiece) {
@@ -102,6 +106,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Piece getOldPiece() {
@@ -110,6 +115,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param oldPiece
 	 */
 	public void setOldPiece(Piece oldPiece) {
@@ -118,6 +124,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Boolean getHasEaten() {
@@ -126,6 +133,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param hasEaten
 	 */
 	public void setHasEaten(Boolean hasEaten) {
@@ -134,6 +142,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Boolean getIsPetitRoque() {
@@ -142,6 +151,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param isPetitRoque
 	 */
 	public void setIsPetitRoque(Boolean isPetitRoque) {
@@ -150,6 +160,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Boolean getIsGrandRoque() {
@@ -158,6 +169,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param isGrandRoque
 	 */
 	public void setIsGrandRoque(Boolean isGrandRoque) {
@@ -166,6 +178,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Piece getEatenPiece() {
@@ -174,6 +187,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param eatenPiece
 	 */
 	public void setEatenPiece(Piece eatenPiece) {
@@ -182,6 +196,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Square getCaseDepart() {
@@ -190,6 +205,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param caseDepart
 	 */
 	public void setCaseDepart(Square caseDepart) {
@@ -198,6 +214,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Square getCaseArrivee() {
@@ -206,6 +223,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param caseArrivee
 	 */
 	public void setCaseArrivee(Square caseArrivee) {
@@ -221,6 +239,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param numeroCoup
 	 */
 	public void setNumeroCoup(int numeroCoup) {
@@ -229,6 +248,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public Boolean getIsPriseEnPassant() {
@@ -237,6 +257,7 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param isPriseEnPassant
 	 */
 	public void setIsPriseEnPassant(Boolean isPriseEnPassant) {
@@ -256,9 +277,10 @@ public class Coup implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
-	public String afficherCoup(){
+	public String afficherCoup() {
 		if (this.isPetitRoque)
 			return "0-0";
 		if (this.isGrandRoque)

@@ -2,15 +2,15 @@ import java.io.Serializable;
 
 /**
  * TODO
- *
+ * 
  */
-public class Square implements Serializable{
+public class Square implements Serializable {
 
 	/**
 	 * Default serial version id
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * TODO
 	 */
@@ -19,17 +19,19 @@ public class Square implements Serializable{
 	 * TODO
 	 */
 	private int column;
-	
+
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public int getRow() {
 		return row;
 	}
-	
+
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public int getColumn() {
@@ -38,6 +40,7 @@ public class Square implements Serializable{
 
 	/**
 	 * TODO
+	 * 
 	 * @param row
 	 * @param column
 	 */
@@ -45,17 +48,18 @@ public class Square implements Serializable{
 		this.row = row;
 		this.column = column;
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 */
-	public Boolean isRealSquare(){
-		return (this.row>0 && this.row<9 && this.column>0 && this.column<9);
+	public Boolean isRealSquare() {
+		return (this.row > 0 && this.row < 9 && this.column > 0 && this.column < 9);
 	}
-	
+
 	/**
 	 * TODO
+	 * 
 	 * @param row
 	 * @param column
 	 * @return
@@ -63,28 +67,29 @@ public class Square implements Serializable{
 	public boolean isThisSquare(int row, int column) {
 		return (column == this.getColumn() && row == this.row);
 	}
-	
+
 	/**
 	 * TODO
+	 * 
 	 * @return
 	 */
 	public String getNomCase() {
 		String nom = new String();
-		if (this.getColumn()==1)
+		if (this.getColumn() == 1)
 			nom += "A";
-		else if (this.getColumn()==2)
+		else if (this.getColumn() == 2)
 			nom += "B";
-		else if (this.getColumn()==3)
+		else if (this.getColumn() == 3)
 			nom += "C";
-		else if (this.getColumn()==4)
+		else if (this.getColumn() == 4)
 			nom += "D";
-		else if (this.getColumn()==5)
+		else if (this.getColumn() == 5)
 			nom += "E";
-		else if (this.getColumn()==6)
+		else if (this.getColumn() == 6)
 			nom += "F";
-		else if (this.getColumn()==7)
+		else if (this.getColumn() == 7)
 			nom += "G";
-		else if (this.getColumn()==8)
+		else if (this.getColumn() == 8)
 			nom += "H";
 		nom += Integer.toString(this.getRow());
 		return nom;

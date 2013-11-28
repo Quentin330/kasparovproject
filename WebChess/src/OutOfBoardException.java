@@ -1,4 +1,3 @@
-
 /**
  * Exception prévue pour un coup qui serait en dehors du plateau de jeu.
  */

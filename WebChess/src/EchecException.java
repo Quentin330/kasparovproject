@@ -1,4 +1,3 @@
-
 /**
  * Exception prévue pour un coup qui mettrai son roi en échec.
  */

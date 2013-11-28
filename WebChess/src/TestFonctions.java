@@ -2,30 +2,30 @@
 
 /**
  * TODO
- *
+ * 
  */
 public class TestFonctions {
 
 	/**
 	 * TODO
+	 * 
 	 * @param b
 	 * @return
 	 */
-	public static String affichageBoard(Board b){
+	public static String affichageBoard(Board b) {
 		String s = "";
 		Piece p;
-		for (int i = 8; i > 0; --i){
-			s+="|";
-			for (int j = 1; j < 9; ++j){
+		for (int i = 8; i > 0; --i) {
+			s += "|";
+			for (int j = 1; j < 9; ++j) {
 				if (b.isEmpty(i, j))
 					s += "  ";
 				else {
-					p = b.getPiece(i,j);
-					if (p.isWhite()){
-						s+="W";
-					}
-					else{
-						s+="B";
+					p = b.getPiece(i, j);
+					if (p.isWhite()) {
+						s += "W";
+					} else {
+						s += "B";
 					}
 					if (p instanceof Pawn)
 						s += "P";
@@ -40,7 +40,7 @@ public class TestFonctions {
 					else if (p instanceof King)
 						s += "K";
 				}
-				s+="|";
+				s += "|";
 			}
 			s += "\n";
 		}
@@ -49,54 +49,51 @@ public class TestFonctions {
 
 	/**
 	 * TODO
+	 * 
 	 * @param argv
-	 * @throws NonPossibleMoveException 
-	 * @throws OutOfBoardException 
+	 * @throws NonPossibleMoveException
+	 * @throws OutOfBoardException
 	 */
-	public static void main(String argv[]) throws OutOfBoardException, NonPossibleMoveException {
+	public static void main(String argv[]) throws OutOfBoardException,
+			NonPossibleMoveException {
 
-	//	Board b = new Board();
-	//	HTMLGen html = new HTMLGen(b);
-		
-	//	System.out.println(html.getPage());
-		 /*
+		Board b = new Board();
+		// HTMLGen html = new HTMLGen(b);
+
+		// System.out.println(html.getPage());
+
 		System.out.println(affichageBoard(b));
-		try{
+		try {
 			b.deplacerPiece("E2", "E4");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(affichageBoard(b));
-		try{
+		try {
 			b.deplacerPiece("A7", "A5");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(affichageBoard(b));
-		try{
+		try {
 			b.deplacerPiece("F1", "B5");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(affichageBoard(b));
-		try{
+		try {
 			b.deplacerPiece("D7", "D5");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(affichageBoard(b));
-		try{
+		try {
 			b.deplacerPiece("C7", "C6");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(affichageBoard(b));
-		*/
+
 	}
 
 }
