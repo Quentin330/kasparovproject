@@ -8,20 +8,18 @@ import java.util.Iterator;
  */
 public class Board {
 
-	//private Square[] historique_;
-
 	/**
 	 * Tableau de l'ensemble des pièces de la partie.
 	 */
 	private Piece[] pieces;
 
 	/**
-	 * TODO
+	 * Liste des pièces blanches mangées.
 	 */
 	private ArrayList<Piece> whiteEatenPieces;
 
 	/**
-	 * TODO
+	 * Liste des pièces noires mangées.
 	 */
 	private ArrayList<Piece> blackEatenPieces;
 
@@ -49,40 +47,43 @@ public class Board {
 	private String selectedCase;
 
 	/**
-	 * TODO
+	 * Indice indiquant le numero du coup.
 	 */
-	private int numeroCoup;
+	private int indexMove;
 
 	/**
-	 * TODO
+	 * Indice indiquant le numero maximum du coup
+	 * (différent de "indexMove" après un ou plusieurs coup).
 	 */
-	private int numeroCoupMax;
+	private int indexMoveMax;
 
 	/**
-	 * TODO
+	 * Table de hashage contenantla liste des coups jouées.
 	 */
 	private HashMap<Integer, Coup> listeCoups;
 
 	/**
-	 * TODO
-	 * @return
+	 * Getteur de la liste des pièces blanches prises.
+	 * @return	La liste des pièces blanches prises.
 	 */
 	public ArrayList<Piece> getWhiteEatenPieces() {
 		return whiteEatenPieces;
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Getteur de la liste des pièces noires prises.
+	 * @return	La liste des pièces noires prises.
 	 */
 	public ArrayList<Piece> getBlackEatenPieces() {
 		return blackEatenPieces;
 	}
 
 	/**
-	 * TODO
-	 * @param p
-	 * @param color
+	 * Ajoute une pièce à la liste des pièces prises.
+	 * @param 	p
+	 * 				Pièce à ajouter.
+	 * @param 	color
+	 * 				Couleur de la pièce à ajouter.
 	 */
 	public void estMangee (Piece p, String color) {
 		if (color.equals("white"))
@@ -92,21 +93,22 @@ public class Board {
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Getteur de la liste des coups joués au cours de la partie.
+	 * @return	La liste des coups joués au cours de la partie.
 	 */
 	public HashMap<Integer, Coup> getListeCoups() {
 		return listeCoups;
 	}
 
 	/**
-	 * TODO
-	 * @param coup
+	 * Ajoute un coup dans la variable "listeCoups".
+	 * @param	coup
+	 * 				Coup à ajouter.
 	 */
 	public void ajouterCoup (Coup coup) {
-		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i)
+		for (int i=this.indexMove; i<this.indexMoveMax; ++i)
 			listeCoups.remove(i);
-		listeCoups.put(this.numeroCoup, coup);
+		listeCoups.put(this.indexMove, coup);
 		this.coupSuivant();
 	}
 
@@ -126,8 +128,8 @@ public class Board {
 	 * TODO
 	 */
 	public void annulerCoup() {
-		this.numeroCoup --;
-		this.annulerCoup(this.listeCoups.get(this.numeroCoup));
+		this.indexMove --;
+		this.annulerCoup(this.listeCoups.get(this.indexMove));
 		this.selectedCase = "00";
 		this.nextPlayer();
 		/*Iterator<Piece> whiteIt = whiteEatenPieces.iterator();
@@ -188,15 +190,15 @@ public class Board {
 	 * TODO
 	 */
 	public void coupSuivant() {
-		this.numeroCoup += 1;
-		this.numeroCoupMax = this.numeroCoup;
+		this.indexMove += 1;
+		this.indexMoveMax = this.indexMove;
 	}
 
 	/**
 	 * TODO
 	 */
 	public void coupPrecedent(){
-		this.numeroCoup -= 1;
+		this.indexMove -= 1;
 	}
 
 	/**
@@ -204,7 +206,7 @@ public class Board {
 	 * @return
 	 */
 	public int getNumeroCoup() {
-		return numeroCoup;
+		return indexMove;
 	}
 
 	/**
@@ -212,7 +214,7 @@ public class Board {
 	 * @return
 	 */
 	public int getNumeroCoupMax() {
-		return numeroCoupMax;
+		return indexMoveMax;
 	}
 
 	/**
@@ -220,7 +222,7 @@ public class Board {
 	 * @param numeroCoup
 	 */
 	public void setNumeroCoup(int numeroCoup) {
-		this.numeroCoup = numeroCoup;
+		this.indexMove = numeroCoup;
 	}
 
 	/**
@@ -320,7 +322,7 @@ public class Board {
 		this.whiteEatenPieces = new ArrayList<Piece>();
 		this.blackEatenPieces = new ArrayList<Piece>();
 		this.listeCoups = new HashMap<Integer, Coup>();
-		this.numeroCoup = 1;
+		this.indexMove = 1;
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
 		this.blackKing 	= new King	("black", 8, 5);
@@ -360,7 +362,7 @@ public class Board {
 			ArrayList<Piece> whiteEatenPieces,
 			ArrayList<Piece> blackEatenPieces) {
 		this.listeCoups = new HashMap<Integer, Coup>();
-		this.numeroCoup = 1;
+		this.indexMove = 1;
 		this.selectedCase = "00";
 		this.currentPlayer = "white";
 		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
@@ -401,8 +403,8 @@ public class Board {
 			int numeroCoupMax,
 			HashMap<Integer, Coup> lC) {
 		this.listeCoups = (HashMap<Integer, Coup>) lC.clone();
-		this.numeroCoup = numeroCoup;
-		this.numeroCoupMax = numeroCoupMax;
+		this.indexMove = numeroCoup;
+		this.indexMoveMax = numeroCoupMax;
 		this.selectedCase = selectedCase;
 		this.currentPlayer = currentPlayer;
 		this.whiteEatenPieces = this.cloneListe(whiteEatenPieces);
@@ -429,8 +431,8 @@ public class Board {
 				this.blackEatenPieces,
 				this.currentPlayer,
 				this.selectedCase,
-				this.numeroCoup,
-				this.numeroCoupMax,
+				this.indexMove,
+				this.indexMoveMax,
 				this.listeCoups);
 	}
 
@@ -647,11 +649,11 @@ public class Board {
 	 */
 	public void retablirCoup() 
 			throws OutOfBoardException, NonPossibleMoveException {
-		int max = this.numeroCoupMax;
+		int max = this.indexMoveMax;
 		HashMap<Integer, Coup> hash = new HashMap<Integer, Coup>();
-		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i)
+		for (int i=this.indexMove; i<this.indexMoveMax; ++i)
 			hash.put(i, this.listeCoups.get(i));
-		Coup c = this.listeCoups.get(this.numeroCoup);
+		Coup c = this.listeCoups.get(this.indexMove);
 		Piece saveNewPiece = c.getMovedPiece();
 		this.deplacerPiece(c.getCaseDepart().getNomCase(), c.getCaseArrivee().getNomCase());
 		if (c.getIsPromotion()){
@@ -664,8 +666,8 @@ public class Board {
 			else if (saveNewPiece instanceof Queen)
 				this.setPromotion("Queen");
 		}
-		this.numeroCoupMax = max;
-		for (int i=this.numeroCoup; i<this.numeroCoupMax; ++i)
+		this.indexMoveMax = max;
+		for (int i=this.indexMove; i<this.indexMoveMax; ++i)
 			this.listeCoups.put(i, hash.get(i));
 	}
 
