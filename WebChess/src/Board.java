@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,7 +7,12 @@ import java.util.Iterator;
  * Classe instanciant une partie, à savoir le plateau, 
  * l'état et la position de l'ensemble des pièces de la partie.
  */
-public class Board {
+public class Board implements Serializable{
+
+	/**
+	 * default serial version ID
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Tableau de l'ensemble des pièces de la partie.

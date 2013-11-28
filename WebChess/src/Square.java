@@ -1,8 +1,15 @@
+import java.io.Serializable;
+
 /**
  * TODO
  *
  */
-public class Square {
+public class Square implements Serializable{
+
+	/**
+	 * Default serial version id
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * TODO

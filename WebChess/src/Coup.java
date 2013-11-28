@@ -1,8 +1,15 @@
+import java.io.Serializable;
+
 
 /**
  * TODO
  */
-public class Coup {
+public class Coup implements Serializable{
+
+	/**
+	 * Default serial version id
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * TODO

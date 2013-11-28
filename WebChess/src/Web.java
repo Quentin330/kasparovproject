@@ -64,10 +64,20 @@ public class Web {
 			Socket socket;
 			InputStream istream;
 			OutputStream ostream;
-			// trouv� sur http://stackoverflow.com/questions/1930158/how-to-parse-date-from-http-last-modified-header
+			// trouv� sur http://stackoverflow.com/questions/1930158/how-to-parse-date-from-http-last-modified-header
 			SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 			SimpleDateFormat format2 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
 			Board b = new Board();
+			SavedGamesList save = new SavedGamesList();
+			ObjectInputStream ois1;
+			try
+			{
+				ois1 = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File("ListeSauvegardes.txt"))));
+				save = (SavedGamesList)ois1.readObject();
+				ois1.close();
+			}
+			catch (IOException e) {e.printStackTrace();}
+			catch (ClassNotFoundException e2) {e2.printStackTrace();}
 			while(true) {
 				Boolean notModified = false;
 				socket = socketserver.accept();
@@ -106,7 +116,51 @@ public class Web {
 						if (fichier.length()==0 || fichier.equals("index.html")) {
 							//avec parametres
 							if (parametres.length()>0) {
-								if (parametres.equals("Rook") || parametres.equals("Knight") || parametres.equals("Bishop") || parametres.equals("Queen")){
+								// trouvé sur http://www.tomsguide.fr/forum/id-553824/ecrire-lire-fichier-txt-java.html
+								if (parametres.startsWith("Save")){
+									ObjectOutputStream oos;
+									String file = parametres.substring(5);
+									if (file.equals("ListeSauvegardes") || save.isSave(file)){
+										// TODO Message nom déjà pris
+									}
+									else {
+										try{
+											oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File(file + ".txt"))));
+											oos.writeObject(b);
+											oos.close();
+											save.newSave(file);
+											ObjectOutputStream oos2;
+											oos2 = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(new File("ListeSauvegardes.txt"))));
+											oos2.writeObject(save);
+											oos2.close();
+										}
+										catch (java.io.IOException e) {e.printStackTrace();}
+									}
+								}
+								else if (parametres.startsWith("Load")){
+									ObjectInputStream ois;
+									String file = parametres.substring(5);
+									if (save.isSave(file)){
+									try
+									{
+										ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(file + ".txt"))));
+										b = (Board)ois.readObject();
+										ois.close();
+									}
+									catch (IOException e) {e.printStackTrace();}
+									catch (ClassNotFoundException e2) {e2.printStackTrace();}
+									}
+									else{
+										//TODO Message sauvegarde inexistante
+									}
+								}
+								else if (parametres.startsWith("delete")){
+									String partie = parametres.substring(7);
+									save.getSavedGames().remove(partie);
+									File partieFile = new File(partie + ".txt");
+									partieFile.delete();
+								}
+								else if (parametres.equals("Rook") || parametres.equals("Knight") || parametres.equals("Bishop") || parametres.equals("Queen")){
 									Boolean promotion = false;
 									if (b.getNumeroCoupMax() > b.getNumeroCoup()){
 										Coup c = b.getListeCoups().get(b.getNumeroCoup());
@@ -203,7 +257,7 @@ public class Web {
 								}
 							}
 							try {
-								HTMLGen html = new HTMLGen(b);
+								HTMLGen html = new HTMLGen(b, save.getSavedGames());
 								content += html.getPage();
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -220,7 +274,7 @@ public class Web {
 										input2 = input2.substring(0, input2.length()-1);
 									}
 								}
-								System.out.println("\n------------------\n" + input2 + "\n------------------\n");
+								//System.out.println("\n------------------\n" + input2 + "\n------------------\n");
 								try {
 									Date d = new Date();
 									if (input2.contains(",")){
@@ -271,7 +325,7 @@ public class Web {
 
 							output = header + content;
 						}
-						System.out.println(header);
+						//System.out.println(header);
 
 						byte[] temp = output.getBytes();
 						ostream.write(temp);

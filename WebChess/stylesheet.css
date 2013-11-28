@@ -185,14 +185,48 @@ div#menu {
 	-o-transition: all 0.8s ease-in-out;
 }
 
+.deroulantred {
+	width: auto;
+	padding: 6px 0;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 10px 10px 10px 10px;
+	overflow: hidden;
+	border-radius: 4px;
+	width: 80%;
+	height: 12px;
+	background-color: black;
+	font-size: 0.6em;
+	font-weight: bolder;
+	font-family: tahoma, sans-serif;
+	color: #eee;
+	-webkit-transition: all 0.8s ease-in-out;
+	-moz-transition: all 0.8s ease-in-out;
+	-o-transition: all 0.8s ease-in-out;
+}
+
 .deroulant:hover {
 	background-color: #e66400;
 	margin-left: 10px;
 	margin-right: 10px;
-	height: 40%;
+	/*height: 40%;*/
+	height: auto;
+}
+
+.deroulantred:hover {
+	background-color: red;
+	margin-left: 10px;
+	margin-right: 10px;
+	/*height: 40%;*/
+	height: auto;
 }
 
 .deroulant:active {
+	background-color: #000;
+}
+
+.deroulantred:active {
 	background-color: #000;
 }
 

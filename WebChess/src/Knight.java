@@ -1,9 +1,15 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Instance de la pièce représentant le Cavalier.
  */
-public class Knight extends Piece {
+public class Knight extends Piece implements Serializable{
+
+	/**
+	 * Default serial version id
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructeur de la pièce. Il s'initialise

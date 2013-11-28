@@ -55,10 +55,10 @@ public class TestFonctions {
 	 */
 	public static void main(String argv[]) throws OutOfBoardException, NonPossibleMoveException {
 
-		Board b = new Board();
-		HTMLGen html = new HTMLGen(b);
+	//	Board b = new Board();
+	//	HTMLGen html = new HTMLGen(b);
 		
-		System.out.println(html.getPage());
+	//	System.out.println(html.getPage());
 		 /*
 		System.out.println(affichageBoard(b));
 		try{

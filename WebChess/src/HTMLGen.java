@@ -70,7 +70,7 @@ public class HTMLGen {
 	 * @throws OutOfBoardException
 	 * @throws NonPossibleMoveException
 	 */
-	public HTMLGen(Board b) throws OutOfBoardException, NonPossibleMoveException {
+	public HTMLGen(Board b, ArrayList<String> saves) throws OutOfBoardException, NonPossibleMoveException {
 		Boolean promotion = false;
 		if (b.getNumeroCoupMax() > b.getNumeroCoup()){
 			Coup c = b.getListeCoups().get(b.getNumeroCoup());
@@ -78,7 +78,7 @@ public class HTMLGen {
 				promotion = true;
 		}
 		Boolean finPartie = this.remplirOptions(b, promotion);
-		this.getLeft(b);
+		this.getLeft(b, saves);
 		Boolean nonCliquable = (finPartie || promotion);
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
@@ -470,11 +470,24 @@ public class HTMLGen {
 	 * TODO
 	 * @param b
 	 */
-	public void getLeft(Board b) {
+	public void getLeft(Board b, ArrayList<String> saves) {
 		this.left += "<div id=\"menu\">\n";
 		this.left += "<a class= \"bouton\" href= \"?NewGame\">NEW GAME</a>\n";
-		this.left += "<a class= \"boutongris\">SAVE GAME</a>\n";
-		this.left += "<a class= \"boutongris\">LOAD GAME</a>\n";
+		this.left += "<form class= \"deroulant\" action=\"\" method=\"GET\">\n SAVE GAME<BR><BR><input type=\"text\" name=\"Save\"/>\n <input type=\"submit\" value=\"Save Game\"/>\n</form>";
+		this.left += "<p class= \"deroulant\">LOAD GAME<BR><BR>";
+		Iterator<String> it = saves.iterator();
+		while (it.hasNext()){
+			String s = it.next();
+			this.left += "<a href= \"?Load=" + s + "\">" + s + "</a><BR><BR>\n";
+		}
+		this.left += "</p>\n";
+		this.left += "<p class= \"deroulantred\">DELETE SAVE<BR><BR>";
+		Iterator<String> it2 = saves.iterator();
+		while (it2.hasNext()){
+			String s2 = it2.next();
+			this.left += "<a href= \"?delete=" + s2 + "\">" + s2 + "</a><BR><BR>\n";
+		}
+		this.left += "</p>\n";
 		this.remplirListe(b);
 		this.remplirEatenPieces(b);
 		this.left += "<a class= \"deroulant\">\nMOVE LIST<BR><BR>\n";
@@ -485,5 +498,5 @@ public class HTMLGen {
 		this.left += "</a>\n";
 		this.left += "</div>\n";
 	}
-	
+
 }

@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -5,7 +6,12 @@ import java.util.Iterator;
  * Classe instanciant une piece.
  * Elle comprend en variable de classe sa couleur, sa position, et son type (en chaine de caractère).
  */
-abstract public class Piece {
+abstract public class Piece implements Serializable{
+
+	/**
+	 * Default serial version id
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Couleur de la piece ("black" ou "white").
@@ -453,8 +459,9 @@ abstract public class Piece {
 			}
 		}
 		if (this instanceof Pawn){
-			if (oldRow - row == 2 || row - oldRow == 2)
+			if (oldRow - row == 2 || row - oldRow == 2){
 				this.setMangeableEnPrisePassant(board.getNumeroCoup()+1);
+			}
 			else if (row == 1 || row == 8){
 				coup.setIsPromotion(true);
 				coup.setOldPiece(this);
@@ -582,8 +589,10 @@ abstract public class Piece {
 					} catch (OutOfBoardException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						
 					} catch (NonPossibleMoveException e) {
 						// TODO Auto-generated catch block
+						System.out.println("Raw : " + this.row + " Column : " + this.column + " vers Raw : " + i + " Column : " + j);
 						e.printStackTrace();
 					}
 				}
