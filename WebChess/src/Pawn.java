@@ -123,7 +123,9 @@ public class Pawn extends Piece implements Serializable{
 	 * Retourne un clone de la pièce.
 	 */
 	protected Pawn clone() {
-		return new Pawn( this.getColor(), this.getRow(), this.getColumn());
+		Pawn p = new Pawn( this.getColor(), this.getRow(), this.getColumn());
+		p.setMangeableEnPrisePassant(this.getMangeableEnPrisePassant());
+		return p;
 	}
 	
 }

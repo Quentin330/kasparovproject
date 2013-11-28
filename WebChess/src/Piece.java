@@ -592,7 +592,6 @@ abstract public class Piece implements Serializable{
 						
 					} catch (NonPossibleMoveException e) {
 						// TODO Auto-generated catch block
-						System.out.println("Raw : " + this.row + " Column : " + this.column + " vers Raw : " + i + " Column : " + j);
 						e.printStackTrace();
 					}
 				}
