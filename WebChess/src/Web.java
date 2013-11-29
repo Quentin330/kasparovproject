@@ -185,6 +185,14 @@ public class Web {
 									save.getSavedGames().remove(partie);
 									File partieFile = new File(partie + ".txt");
 									partieFile.delete();
+									ObjectOutputStream oos2;
+									oos2 = new ObjectOutputStream(
+											new BufferedOutputStream(
+													new FileOutputStream(
+															new File(
+																	"ListeSauvegardes.txt"))));
+									oos2.writeObject(save);
+									oos2.close();
 								} else if (parametres.startsWith("delete")){
 									partieASupprimer = parametres.substring(7);
 									
@@ -352,7 +360,8 @@ public class Web {
 						} else {
 							header = "HTTP/1.1 200 OK"
 									+ "\nServer: WebChess localhost:7777"
-									+ "\nContent-Length: " + content.length()
+									// Différente longueur de string et byte avec les accents en UTF-8
+									+ "\nContent-Length: " + content.getBytes("UTF-8").length
 									+ "\nConnection: close"
 									+ "\nContent-Type: "
 									+ getContentType(fichier)
@@ -366,15 +375,14 @@ public class Web {
 							header += "\n\n";
 
 							output = header + content;
+							if (getContentType(fichier).contains("html")){
+								System.out.println(content);
+							}
 						}
 						// System.out.println(header);
-
-						byte[] temp = output.getBytes();
+						byte[] temp = output.getBytes("UTF-8");
 						ostream.write(temp);
-						/*
-						 * for(int i=0; i<output.length() ; ++i){ int temp =
-						 * (int) output.charAt(i); ostream.write(temp); }
-						 */
+						ostream.flush();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

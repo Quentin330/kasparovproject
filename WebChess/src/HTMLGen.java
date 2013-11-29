@@ -55,12 +55,7 @@ public class HTMLGen {
 	/**
 	 * Fin de la page HTML (1e partie)
 	 */
-	private static String bottom1 = "</body>\n</html>\n";
-
-	/**
-	 * Fin de la page HTML (2e partie)
-	 */
-	private static String bottom2 = "</html>";
+	private static String bottom1 = "<div id=\"basdepage\">Cette page vous a été presentée avec honneur par Andrea et Quentin.<BR>Nous vous souhaitons bonne chance dans votre partie.</div>\n</body>\n</html>";
 
 	/**
 	 * Constructeur du HTMLGen permettant de remplir les diff�rentes chaines de caract�re en fonction de l'�tat du plateau et des sauvegardes
@@ -155,31 +150,13 @@ public class HTMLGen {
 	}
 
 	/**
-	 * getter de la chaine de caract�re bottom2
-	 * 
-	 * @return bottom2
-	 */
-	public static String getBottom2() {
-		return bottom2;
-	}
-
-	/**
-	 * setter de la chaine de caract�re bottom2
-	 * 
-	 * @param bottom2
-	 */
-	public static void setBottom2(String bottom2) {
-		HTMLGen.bottom2 = bottom2;
-	}
-
-	/**
 	 * Fonction permettant l'acc�s au code html de la page compl�te
 	 * 
 	 * @return chaine de caract�re contenant la page enti�re en html
 	 */
 	public String getPage() {
 		return HTMLGen.getHead() + this.boutonsUndoRedo + this.left + this.body
-				+ this.legende + HTMLGen.getBottom1() + HTMLGen.getBottom2();
+				+ this.legende + HTMLGen.getBottom1() +"\n\n";
 	}
 
 	/**
@@ -436,7 +413,7 @@ public class HTMLGen {
 	public void remplirEatenPieces(Board b) {
 		this.eatenPieces += "<div id=\"menuright\">\n";
 		this.eatenPieces += "<div id=\"menuhaut\">\n";
-		this.eatenPieces += "<font color = \"black\">Pieces mangées noires :<BR>\n";
+		this.eatenPieces += "<font color = \"black\">Black eaten pieces :<BR>\n";
 		this.eatenPieces += "<table align=\"center\">";
 		ArrayList<Piece> blackEatenPieces = b.getBlackEatenPieces();
 		Iterator<Piece> blackIt = blackEatenPieces.iterator();
@@ -462,7 +439,7 @@ public class HTMLGen {
 		this.eatenPieces += "</font>\n";
 		this.eatenPieces += "</div>\n";
 		this.eatenPieces += "<div id=\"menubas\">\n";
-		this.eatenPieces += "<font color = \"white\">Pieces mangées blanches :<BR>\n";
+		this.eatenPieces += "<font color = \"white\">White eaten pieces :<BR>\n";
 		this.eatenPieces += "<table align=\"center\">";
 		ArrayList<Piece> whiteEatenPieces = b.getWhiteEatenPieces();
 		Iterator<Piece> whiteIt = whiteEatenPieces.iterator();
