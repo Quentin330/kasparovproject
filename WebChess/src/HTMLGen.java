@@ -2,18 +2,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * TODO
+ * Classe servant à générer le code HTML de la page de jeu
  * 
  */
 public class HTMLGen {
 
 	/**
-	 * TODO
+	 * Liste des coups possibles
 	 */
 	private ArrayList<Square> possibleMoves;
 
 	/**
-	 * TODO
+	 * Header statique
 	 */
 	private static String head = "<html>\n"
 			+ "<head>\n"
@@ -23,12 +23,12 @@ public class HTMLGen {
 			+ "	<title>WebChess Kasparov</title>\n" + "</head>\n" + "<body>\n";
 
 	/**
-	 * TODO
+	 * Chaine de caractère contenant le corps de la page
 	 */
 	private String body;
 
 	/**
-	 * TODO
+	 * Chaine de caractère contenant la banière gauche de la page
 	 */
 	private String left = "";
 
@@ -38,34 +38,34 @@ public class HTMLGen {
 	private String boutonsUndoRedo = "";
 
 	/**
-	 * TODO
+	 * partie du HTML contenant la liste des coups
 	 */
 	private String listeCoups = "";
 
 	/**
-	 * TODO
+	 * partie du HTML contenant le cimetière
 	 */
 	private String eatenPieces = "";
 
 	/**
-	 * TODO
+	 * Partie du HTML contenant les messages d'échec et pat et le choix des pièces pour la promotion
 	 */
 	private String legende = "";
 
 	/**
-	 * TODO
+	 * Fin de la page HTML (1e partie)
 	 */
 	private static String bottom1 = "</body>\n</html>\n";
 
 	/**
-	 * TODO
+	 * Fin de la page HTML (2e partie)
 	 */
 	private static String bottom2 = "</html>";
 
 	/**
-	 * TODO
-	 * 
-	 * @param b
+	 * Constructeur du HTMLGen permettant de remplir les différentes chaines de caractère en fonction de l'état du plateau et des sauvegardes
+	 * @param b le plateau de jeu
+	 * @param saves la liste des sauvegardes
 	 * @throws OutOfBoardException
 	 * @throws NonPossibleMoveException
 	 */
@@ -119,16 +119,16 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * getter de la chaine de caractère head
 	 * 
-	 * @return
+	 * @return head
 	 */
 	public static String getHead() {
 		return head;
 	}
 
 	/**
-	 * TODO
+	 * setter de la chaine de caractère head
 	 * 
 	 * @param head
 	 */
@@ -137,16 +137,16 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * getter de la chaine de caractère bottom1
 	 * 
-	 * @return
+	 * @return bottom1
 	 */
 	public static String getBottom1() {
 		return bottom1;
 	}
 
 	/**
-	 * TODO
+	 * setter de la chaine de caractère bottom1
 	 * 
 	 * @param bottom1
 	 */
@@ -155,16 +155,16 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * getter de la chaine de caractère bottom2
 	 * 
-	 * @return
+	 * @return bottom2
 	 */
 	public static String getBottom2() {
 		return bottom2;
 	}
 
 	/**
-	 * TODO
+	 * setter de la chaine de caractère bottom2
 	 * 
 	 * @param bottom2
 	 */
@@ -173,9 +173,9 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant l'accès au code html de la page complète
 	 * 
-	 * @return
+	 * @return chaine de caractère contenant la page entière en html
 	 */
 	public String getPage() {
 		return HTMLGen.getHead() + this.boutonsUndoRedo + this.left + this.body
@@ -183,12 +183,12 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant de remplir la partie de la page contenant la pièce dans le plateau
 	 * 
 	 * @param row
 	 * @param column
 	 * @param b
-	 * @return
+	 * @return chaine de caractère contenant le nom de la pièce et son raccourci
 	 */
 	public String getNomPiece(int row, int column, Board b) {
 		if (b.isEmpty(row, column))
@@ -198,10 +198,10 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant de remplir la partie de la page contenant la pièce dans le plateau
 	 * 
 	 * @param p
-	 * @return
+	 * @return chaine de caractère contenant le nom de la pièce et son raccourci
 	 */
 	public String getNomPiece(Piece p) {
 		String nom = "";
@@ -211,12 +211,12 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant l'accès du code HTML complet d'affichage d'une pièce
 	 * 
 	 * @param row
 	 * @param column
 	 * @param b
-	 * @return
+	 * @return code HTML complet d'affichage d'une pièce
 	 */
 	public String printPiece(int row, int column, Board b, Boolean promotion) {
 		String pieceLine = "<td class=\"";
@@ -267,11 +267,11 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant l'accès au nom d'une case à partir de ses coordonnées
 	 * 
 	 * @param row
 	 * @param column
-	 * @return
+	 * @return nom d'une case
 	 */
 	public String nameCase(int row, int column) {
 		String name = "";
@@ -306,12 +306,12 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant de savoir si une case est jouable par la pièce actuellement selectionnée
 	 * 
 	 * @param row
 	 * @param column
 	 * @param b
-	 * @return
+	 * @return booléen
 	 */
 	public boolean isPlayable(int row, int column, Board b) {
 		Iterator<Square> it = this.possibleMoves.iterator();
@@ -324,7 +324,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction remplissant la liste des coups
 	 * 
 	 * @param b
 	 */
@@ -354,7 +354,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant de remplir le code html de la légende et des boutons undo et redo
 	 * 
 	 * @param b
 	 * @param promotion
@@ -414,7 +414,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant de remplir le code HTML du cimetière de pièces
 	 * 
 	 * @param b
 	 */
@@ -476,7 +476,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * TODO
+	 * Fonction permettant de remplir le code HTML du bandeau de gauche
 	 * 
 	 * @param b
 	 */
