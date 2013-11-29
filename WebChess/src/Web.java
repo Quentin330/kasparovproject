@@ -88,6 +88,7 @@ public class Web {
 				e2.printStackTrace();
 			}
 			while (true) {
+				String partieASupprimer = "";
 				Boolean notModified = false;
 				socket = socketserver.accept();
 				istream = socket.getInputStream();
@@ -179,11 +180,14 @@ public class Web {
 									} else {
 										// TODO Message sauvegarde inexistante
 									}
-								} else if (parametres.startsWith("delete")) {
-									String partie = parametres.substring(7);
+								} else if (parametres.startsWith("Suppr")) {
+									String partie = parametres.substring(6);
 									save.getSavedGames().remove(partie);
 									File partieFile = new File(partie + ".txt");
 									partieFile.delete();
+								} else if (parametres.startsWith("delete")){
+									partieASupprimer = parametres.substring(7);
+									
 								} else if (parametres.equals("Rook")
 										|| parametres.equals("Knight")
 										|| parametres.equals("Bishop")
@@ -291,7 +295,8 @@ public class Web {
 							}
 							try {
 								HTMLGen html = new HTMLGen(b,
-										save.getSavedGames());
+										save.getSavedGames(),
+										partieASupprimer);
 								content += html.getPage();
 							} catch (Exception e) {
 								e.printStackTrace();

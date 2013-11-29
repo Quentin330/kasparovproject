@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Classe servant à générer le code HTML de la page de jeu
+ * Classe servant ï¿½ gï¿½nï¿½rer le code HTML de la page de jeu
  * 
  */
 public class HTMLGen {
@@ -23,12 +23,12 @@ public class HTMLGen {
 			+ "	<title>WebChess Kasparov</title>\n" + "</head>\n" + "<body>\n";
 
 	/**
-	 * Chaine de caractère contenant le corps de la page
+	 * Chaine de caractï¿½re contenant le corps de la page
 	 */
 	private String body;
 
 	/**
-	 * Chaine de caractère contenant la banière gauche de la page
+	 * Chaine de caractï¿½re contenant la baniï¿½re gauche de la page
 	 */
 	private String left = "";
 
@@ -43,12 +43,12 @@ public class HTMLGen {
 	private String listeCoups = "";
 
 	/**
-	 * partie du HTML contenant le cimetière
+	 * partie du HTML contenant le cimetiï¿½re
 	 */
 	private String eatenPieces = "";
 
 	/**
-	 * Partie du HTML contenant les messages d'échec et pat et le choix des pièces pour la promotion
+	 * Partie du HTML contenant les messages d'ï¿½chec et pat et le choix des piï¿½ces pour la promotion
 	 */
 	private String legende = "";
 
@@ -63,13 +63,13 @@ public class HTMLGen {
 	private static String bottom2 = "</html>";
 
 	/**
-	 * Constructeur du HTMLGen permettant de remplir les différentes chaines de caractère en fonction de l'état du plateau et des sauvegardes
+	 * Constructeur du HTMLGen permettant de remplir les diffï¿½rentes chaines de caractï¿½re en fonction de l'ï¿½tat du plateau et des sauvegardes
 	 * @param b le plateau de jeu
 	 * @param saves la liste des sauvegardes
 	 * @throws OutOfBoardException
 	 * @throws NonPossibleMoveException
 	 */
-	public HTMLGen(Board b, ArrayList<String> saves)
+	public HTMLGen(Board b, ArrayList<String> saves, String partieASupprimer)
 			throws OutOfBoardException, NonPossibleMoveException {
 		Boolean promotion = false;
 		if (b.getNumeroCoupMax() > b.getNumeroCoup()) {
@@ -77,7 +77,7 @@ public class HTMLGen {
 			if (c.getIsPromotion() && c.getMovedPiece() instanceof Pawn)
 				promotion = true;
 		}
-		Boolean finPartie = this.remplirOptions(b, promotion);
+		Boolean finPartie = this.remplirOptions(b, promotion, partieASupprimer);
 		this.getLeft(b, saves);
 		Boolean nonCliquable = (finPartie || promotion);
 		this.remplirListe(b);
@@ -119,7 +119,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * getter de la chaine de caractère head
+	 * getter de la chaine de caractï¿½re head
 	 * 
 	 * @return head
 	 */
@@ -128,7 +128,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * setter de la chaine de caractère head
+	 * setter de la chaine de caractï¿½re head
 	 * 
 	 * @param head
 	 */
@@ -137,7 +137,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * getter de la chaine de caractère bottom1
+	 * getter de la chaine de caractï¿½re bottom1
 	 * 
 	 * @return bottom1
 	 */
@@ -146,7 +146,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * setter de la chaine de caractère bottom1
+	 * setter de la chaine de caractï¿½re bottom1
 	 * 
 	 * @param bottom1
 	 */
@@ -155,7 +155,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * getter de la chaine de caractère bottom2
+	 * getter de la chaine de caractï¿½re bottom2
 	 * 
 	 * @return bottom2
 	 */
@@ -164,7 +164,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * setter de la chaine de caractère bottom2
+	 * setter de la chaine de caractï¿½re bottom2
 	 * 
 	 * @param bottom2
 	 */
@@ -173,9 +173,9 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant l'accès au code html de la page complète
+	 * Fonction permettant l'accï¿½s au code html de la page complï¿½te
 	 * 
-	 * @return chaine de caractère contenant la page entière en html
+	 * @return chaine de caractï¿½re contenant la page entiï¿½re en html
 	 */
 	public String getPage() {
 		return HTMLGen.getHead() + this.boutonsUndoRedo + this.left + this.body
@@ -183,12 +183,12 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant de remplir la partie de la page contenant la pièce dans le plateau
+	 * Fonction permettant de remplir la partie de la page contenant la piï¿½ce dans le plateau
 	 * 
 	 * @param row
 	 * @param column
 	 * @param b
-	 * @return chaine de caractère contenant le nom de la pièce et son raccourci
+	 * @return chaine de caractï¿½re contenant le nom de la piï¿½ce et son raccourci
 	 */
 	public String getNomPiece(int row, int column, Board b) {
 		if (b.isEmpty(row, column))
@@ -198,10 +198,10 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant de remplir la partie de la page contenant la pièce dans le plateau
+	 * Fonction permettant de remplir la partie de la page contenant la piï¿½ce dans le plateau
 	 * 
 	 * @param p
-	 * @return chaine de caractère contenant le nom de la pièce et son raccourci
+	 * @return chaine de caractï¿½re contenant le nom de la piï¿½ce et son raccourci
 	 */
 	public String getNomPiece(Piece p) {
 		String nom = "";
@@ -211,12 +211,12 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant l'accès du code HTML complet d'affichage d'une pièce
+	 * Fonction permettant l'accï¿½s du code HTML complet d'affichage d'une piï¿½ce
 	 * 
 	 * @param row
 	 * @param column
 	 * @param b
-	 * @return code HTML complet d'affichage d'une pièce
+	 * @return code HTML complet d'affichage d'une piï¿½ce
 	 */
 	public String printPiece(int row, int column, Board b, Boolean promotion) {
 		String pieceLine = "<td class=\"";
@@ -267,7 +267,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant l'accès au nom d'une case à partir de ses coordonnées
+	 * Fonction permettant l'accï¿½s au nom d'une case ï¿½ partir de ses coordonnï¿½es
 	 * 
 	 * @param row
 	 * @param column
@@ -306,12 +306,12 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant de savoir si une case est jouable par la pièce actuellement selectionnée
+	 * Fonction permettant de savoir si une case est jouable par la piï¿½ce actuellement selectionnï¿½e
 	 * 
 	 * @param row
 	 * @param column
 	 * @param b
-	 * @return booléen
+	 * @return boolï¿½en
 	 */
 	public boolean isPlayable(int row, int column, Board b) {
 		Iterator<Square> it = this.possibleMoves.iterator();
@@ -354,13 +354,13 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant de remplir le code html de la légende et des boutons undo et redo
+	 * Fonction permettant de remplir le code html de la lï¿½gende et des boutons undo et redo
 	 * 
 	 * @param b
 	 * @param promotion
 	 * @return
 	 */
-	public Boolean remplirOptions(Board b, Boolean promotion) {
+	public Boolean remplirOptions(Board b, Boolean promotion, String partieASupprimer) {
 		Boolean finPartie = false;
 		String player = b.getCurrentPlayer();
 		Piece roi = b.getWhiteKing();
@@ -384,7 +384,10 @@ public class HTMLGen {
 
 		this.legende += "<BR>\n\n";
 		this.legende += "<center>\n";
-		if (promotion)
+		if (!partieASupprimer.equals("")){
+			this.legende += "Delete " + partieASupprimer + " ? " + "<a href=\"?Suppr=" + partieASupprimer + "\"> YES </a>" + "<a href=\"?\"> NO </a>";
+		}
+		else if (promotion)
 			this.legende += "<td class=\"bottom\">\n"
 					+ "<a href=\"?Rook\"><img src=\"pieces/" + adversaire
 					+ "Rook.svg\"   alt=\"T\" width=32 /></a>\n"
@@ -414,7 +417,7 @@ public class HTMLGen {
 	}
 
 	/**
-	 * Fonction permettant de remplir le code HTML du cimetière de pièces
+	 * Fonction permettant de remplir le code HTML du cimetiï¿½re de piï¿½ces
 	 * 
 	 * @param b
 	 */
