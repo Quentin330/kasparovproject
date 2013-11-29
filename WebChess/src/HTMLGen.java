@@ -385,7 +385,7 @@ public class HTMLGen {
 		this.legende += "<BR>\n\n";
 		this.legende += "<center>\n";
 		if (!partieASupprimer.equals("")){
-			this.legende += "Delete " + partieASupprimer + " ?<BR>" + "<a class=\"bouton404\" href=\"?Suppr=" + partieASupprimer + "\"> YES </a>" + "<a class=\"bouton404\" href=\"?\"> NO </a>";
+			this.legende += "<a class=\"bottom\">Delete " + partieASupprimer + " ?</a><BR>" + "<a class=\"bouton404\" href=\"?Suppr=" + partieASupprimer + "\"> YES </a>" + "<a class=\"bouton404\" href=\"?\"> NO </a>";
 		}
 		else if (promotion)
 			this.legende += "<td class=\"bottom\">\n"
