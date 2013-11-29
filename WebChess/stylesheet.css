@@ -284,3 +284,57 @@ div#menu {
 .bottom:active {
 	background-color: #000;
 }
+
+.bottomwhite {
+	width: auto;
+	padding: 6px 0;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 10px 10px 10px 10px;
+	border-radius: 4px;
+	width: 300px;
+	background-color: white;
+	font-size: 1.2em;
+	font-family: impact;
+	color: black;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+}
+
+
+.bottomwhite:hover {
+	color: white;
+}
+
+.bottomwhite:active {
+	background-color: #000;
+}
+
+.bottomblack {
+	width: auto;
+	padding: 6px 0;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 10px 10px 10px 10px;
+	border-radius: 4px;
+	width: 300px;
+	background-color: black;
+	font-size: 1.2em;
+	font-family: impact;
+	color: #eee;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+}
+
+
+.bottomblack:hover {
+	color: black;
+}
+
+.bottomblack:active {
+	background-color: white;
+}

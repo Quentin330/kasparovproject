@@ -84,7 +84,7 @@ public class HTMLGen {
 		this.remplirEatenPieces(b);
 		if (!b.getSelectedCase().equals("00"))
 			this.possibleMoves = b.getPiece(b.getSelectedCase())
-					.possibleMovesSE(b);
+			.possibleMovesSE(b);
 		this.body = "<BR><BR>" + "<form>\n" + "<table align=center>\n"
 				+ "	<tr>\n" + "		<td class=\"corner\"></td>\n"
 				+ "		<td class=\"border\">A</td>\n"
@@ -402,6 +402,13 @@ public class HTMLGen {
 				if (b.isEchecEtMat(player)) {
 					this.legende += "<a class=\"bottom\">CHECKMATE</a>\n";
 					finPartie = true;
+				} else {
+					if (b.getCurrentPlayer().equals("white")){
+						this.legende += "<a class=\"bottomwhite\">White</a>\n";
+					}
+					else{
+						this.legende += "<a class=\"bottomblack\">Black</a>\n";
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -410,7 +417,12 @@ public class HTMLGen {
 			this.legende += "<a class=\"bottom\">STALEMATE</a>\n";
 			finPartie = true;
 		} else {
-			this.legende += "<BR>";
+			if (b.getCurrentPlayer().equals("white")){
+				this.legende += "<a class=\"bottomwhite\">White</a>\n";
+			}
+			else{
+				this.legende += "<a class=\"bottomblack\">Black</a>\n";
+			}
 		}
 		this.legende += "</center><BR>\n\n";
 		return finPartie;
