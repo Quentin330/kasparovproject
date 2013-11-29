@@ -439,7 +439,7 @@ public class HTMLGen {
 		this.eatenPieces += "</font>\n";
 		this.eatenPieces += "</div>\n";
 		this.eatenPieces += "<div id=\"menubas\">\n";
-		this.eatenPieces += "<font color = \"white\">White eaten pieces :<BR>\n";
+		this.eatenPieces += "<font color = \"white\"><BR>White eaten pieces :<BR>\n";
 		this.eatenPieces += "<table align=\"center\">";
 		ArrayList<Piece> whiteEatenPieces = b.getWhiteEatenPieces();
 		Iterator<Piece> whiteIt = whiteEatenPieces.iterator();

@@ -375,9 +375,6 @@ public class Web {
 							header += "\n\n";
 
 							output = header + content;
-							if (getContentType(fichier).contains("html")){
-								System.out.println(content);
-							}
 						}
 						// System.out.println(header);
 						byte[] temp = output.getBytes("UTF-8");
