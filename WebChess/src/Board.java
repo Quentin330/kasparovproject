@@ -52,13 +52,13 @@ public class Board implements Serializable {
 	private String selectedCase;
 
 	/**
-	 * Indice indiquant le numero du coup.
+	 * Indice indiquant l'indice du coup courant dans la liste des coup.
 	 */
 	private int indexMove;
 
 	/**
-	 * Indice indiquant le numero maximum du coup (différent de "indexMove"
-	 * après un ou plusieurs coup).
+	 * Indice indiquant l'indice maximum des coups (différent de "indexMove"
+	 * après un ou plusieurs annulerCoup).
 	 */
 	private int indexMoveMax;
 
@@ -123,7 +123,7 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Met à jour le tableau des pièces mangées.
 	 */
 	public void piecesNonMangees() {
 		for (int i = whiteEatenPieces.size() - 1; i >= 0; i--)
@@ -135,7 +135,7 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Annule le dernier coup joué dans board.
 	 */
 	public void annulerCoup() {
 		this.indexMove--;
@@ -155,6 +155,12 @@ public class Board implements Serializable {
 		this.piecesNonMangees();
 	}
 
+	/**
+	 * Annule le dernier coup joué par rapprot à un coup.
+	 * 
+	 * @param coup
+	 * 				dernier coup joué.
+	 */
 	private void annulerCoup(Coup coup) {
 		if (coup.getIsPromotion()) {
 			int pion = 0;
@@ -194,7 +200,7 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Incrémente indexMove lors d'un coup d'un des joueurs.
 	 */
 	public void coupSuivant() {
 		this.indexMove += 1;
@@ -202,34 +208,35 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Décrémente indexMove.
 	 */
 	public void coupPrecedent() {
 		this.indexMove -= 1;
 	}
 
 	/**
-	 * TODO
+	 * Getteur de indexMove.
 	 * 
-	 * @return
+	 * @return l'indice du coup courant dans la liste des coup.
 	 */
 	public int getNumeroCoup() {
 		return indexMove;
 	}
 
 	/**
-	 * TODO
+	 * Getteur de indexMoveMax.
 	 * 
-	 * @return
+	 * @return l'indice maximum des coups.
 	 */
 	public int getNumeroCoupMax() {
 		return indexMoveMax;
 	}
 
 	/**
-	 * TODO
+	 * Affecte la valeur numeroCoup à indexMove.
 	 * 
 	 * @param numeroCoup
+	 * 				valeur à affecter à indexMove.
 	 */
 	public void setNumeroCoup(int numeroCoup) {
 		this.indexMove = numeroCoup;
@@ -266,52 +273,55 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getteur de la liste des pièces présentes dans board.
 	 * 
-	 * @return
+	 * @return La liste des pièces présentes dans board.
+	 * 			
 	 */
 	public Piece[] getPieces() {
 		return pieces;
 	}
 
 	/**
-	 * TODO
+	 * Getteur du roi noir.
 	 * 
-	 * @return
+	 * @return le roi du joueur en noir.
 	 */
 	public King getBlackKing() {
 		return blackKing;
 	}
 
 	/**
-	 * TODO
+	 * setteur du roi noir.
 	 * 
 	 * @param blackKing
+	 * 				roi noir à initialiser.
 	 */
 	public void setBlackKing(King blackKing) {
 		this.blackKing = blackKing;
 	}
 
 	/**
-	 * TODO
+	 * Getteur du roi blanc.
 	 * 
-	 * @return
+	 * @return el roi du joueur en blanc.
 	 */
 	public King getWhiteKing() {
 		return whiteKing;
 	}
 
 	/**
-	 * TODO
+	 * setteur du roi blanc.
 	 * 
 	 * @param whiteKing
+	 * 				roi blanc à initialiser.
 	 */
 	public void setWhiteKing(King whiteKing) {
 		this.whiteKing = whiteKing;
 	}
 
 	/**
-	 * TODO
+	 * Fait passer le tour à l'adversaire (lors d'un coup joué).
 	 */
 	public void nextPlayer() {
 		if (this.currentPlayer.equals("black"))
@@ -321,10 +331,11 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Duplique une liste de pièces.
 	 * 
 	 * @param liste
-	 * @return
+	 * 				la liste des pièces à cloner.
+	 * @return la liste dupliquée.
 	 */
 	public ArrayList<Piece> cloneListe(ArrayList<Piece> liste) {
 		ArrayList<Piece> clone = new ArrayList<Piece>();
@@ -334,7 +345,8 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Constructeur de board. Initialise un début de partie
+	 * si aucun paramètre n'est donné.
 	 */
 	public Board() {
 		this.whiteEatenPieces = new ArrayList<Piece>();
@@ -369,11 +381,15 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Constructeur d'un board initialisé avec certain paramètre.
+	 * Peut être initialiser avec tous les paramètres, ou aucun.
 	 * 
 	 * @param pieces
+	 * 				listes des pièces en jeu.
 	 * @param blackKing
+	 * 				roi du joueur en noir.
 	 * @param whiteKing
+	 * 				roi du joueur en blanc.
 	 */
 	public Board(Piece[] pieces, King blackKing, King whiteKing,
 			ArrayList<Piece> whiteEatenPieces, ArrayList<Piece> blackEatenPieces) {
@@ -395,18 +411,29 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Constructeur d'un board initialisé avec tous les paramètres.
+	 * Peut être initialiser avec certains paramètres, ou aucun.
 	 * 
 	 * @param pieces
+	 * 				listes des pièces en jeu.
 	 * @param blackKing
+	 * 				roi du joueur en noir.
 	 * @param whiteKing
+	 * 				roi du joueur en blanc.
 	 * @param whiteEatenPieces
+	 * 				liste des pièces blanche prises.
 	 * @param blackEatenPieces
+	 * 				liste des pièces noires prises.
 	 * @param currentPlayer
+	 * 				joueur font c'est le tour.
 	 * @param selectedCase
+	 * 				case en surbrillance.
 	 * @param numeroCoup
+	 * 				indice du coup courant dans la liste des coups.
 	 * @param numeroCoupMax
+	 * 				indice maximum d'un coup dans la liste des coups.
 	 * @param lC
+	 * 				liste des coups joués au cours de la partie.
 	 */
 	@SuppressWarnings("unchecked")
 	public Board(Piece[] pieces, King blackKing, King whiteKing,
@@ -433,7 +460,7 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * retourne un clone de board.
 	 */
 	public Board clone() {
 		return new Board(this.pieces, this.blackKing, this.whiteKing,
@@ -443,11 +470,14 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * vérifie si la case (row,column) est vide.
 	 * 
 	 * @param row
+	 * 				position en abscisse de la case.
 	 * @param column
-	 * @return
+	 * 				position en ordonnée de la case.
+	 * @return 	vrai si la case est vide, faux si la case est
+	 * 			occupée par une pièce.
 	 */
 	public boolean isEmpty(int row, int column) {
 		for (int i = 0; i < 32; ++i)
@@ -458,11 +488,31 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * vérifie si la case (caseJeu) est vide.
+	 * 
+	 * @param caseJeu
+	 * 					coordonnees en chaine de caractères 
+	 * 					de la case.
+	 * @return vrai si la case est vide, faux si la case est
+	 * 			occupée par une pièce.
+	 */
+	public boolean isEmpty(String caseJeu) {
+		assert (!(caseJeu.charAt(0) < 'A') && !(caseJeu.charAt(0) > 'H')
+				&& !(caseJeu.charAt(1) < '1') && !(caseJeu.charAt(1) > '8'));
+		int column = caseJeu.charAt(0) - 'A' + '1' - 48;
+		int row = caseJeu.charAt(1) - 48;
+		return this.isEmpty(row, column);
+	}
+
+	/**
+	 * vérifie si la case (row,column) contient une pièce blanche.
 	 * 
 	 * @param row
+	 * 				position en abscisse de la case.
 	 * @param column
-	 * @return
+	 * 				position en ordonnée de la case.
+	 * @return 	vrai si la case contient une pièce blanche,
+	 * 			faux si elle est noire ou si elle est vide.
 	 */
 	public boolean isWhite(int row, int column) {
 		for (int i = 0; i < 32; ++i)
@@ -473,11 +523,14 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * vérifie si la case (row,column) contient une pièce noire.
 	 * 
 	 * @param row
+	 * 				position en abscisse de la case.
 	 * @param column
-	 * @return
+	 * 				position en ordonnée de la case.
+	 * @return	vrai si la case contient une pièce noire,
+	 * 			faux si elle est blanche ou si elle est vide.
 	 */
 	public boolean isBlack(int row, int column) {
 		for (int i = 0; i < 32; ++i)
@@ -488,10 +541,11 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Ajoute dans une liste toutes les cases contigües à une pièce.
 	 * 
 	 * @param p
-	 * @return
+	 * 				pièce à évaluer
+	 * @return la liste des cases contigües à la pièce.
 	 */
 	public ArrayList<Square> arroundSquares(Piece p) {
 		ArrayList<Square> arround = new ArrayList<Square>();
@@ -523,10 +577,13 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Retourne la liste des cases où l'adversaire peut prendre au 
+	 * prochain coup, en d'autres termes les cases qui mettrait le
+	 * roi de la couleur indiqué en echec.
 	 * 
 	 * @param color
-	 * @return
+	 * 				couleur du roi qui serait en echec.
+	 * @return la liste des cases.
 	 */
 	public ArrayList<Square> echec(String color) {
 		ArrayList<Square> echecList = new ArrayList<Square>();
@@ -548,10 +605,11 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Détermine s'il y a echec et mat du joueur jouant color .
 	 * 
 	 * @param color
-	 * @return
+	 * 				couleur du joueur à évaluer
+	 * @return vrai si le joueur color est en echec et mat, faux sinon.
 	 */
 	public boolean isEchecEtMat(String color) {
 		for (int i = 0; i < 32; ++i) {
@@ -565,12 +623,17 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Détermine si la case (row,column) est prenable par
+	 * l'adversaire au coup suivant. (le joueur considéré
+	 * correspond à la couleur passée en paramètres).
 	 * 
 	 * @param color
+	 * 				couleur du joueur
 	 * @param row
+	 * 				coordonnée en abscisse de la case.
 	 * @param column
-	 * @return
+	 * 				coordonnée en ordonnée de la case.
+	 * @return vrai si la case met le joueur en echec, faux sinon
 	 */
 	public boolean isEchec(String color, int row, int column) {
 		ArrayList<Square> echecList = this.echec(color);
@@ -578,12 +641,17 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Détermine si la case (row,column) est prenable par
+	 * l'adversaire au coup suivant. (le joueur considéré
+	 * dépend de la liste des case passée). 
 	 * 
 	 * @param echecList
+	 * 				liste des cases mettant le joueur en echec.
 	 * @param row
+	 * 				coordonnée en abscisse de la case.
 	 * @param column
-	 * @return
+	 * 				coordonnée en ordonnée de la case.
+	 * @return vrai si la case met le joueur en echec, faux sinon
 	 */
 	public boolean isEchec(ArrayList<Square> echecList, int row, int column) {
 		Iterator<Square> it = echecList.iterator();
@@ -596,11 +664,13 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * getteur de la pièce contenu dans la case (row,column).
 	 * 
 	 * @param row
+	 * 				coordonnée en abscisse de la case.
 	 * @param column
-	 * @return
+	 * 				coordonnée en ordonnée de la case.
+	 * @return la pièce contenu dans la case.
 	 */
 	public Piece getPiece(int row, int column) {
 		assert (!this.isEmpty(row, column));
@@ -613,14 +683,40 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * getteur de la pièce contenu dans la case (caseJeu).
 	 * 
-	 * @param row1
-	 * @param column1
-	 * @param row2
-	 * @param column2
+	 * @param caseJeu
+	 * 				coordonnée en chaîne de caractère de la case.
+	 * @return la pièce contenu dans la case.
 	 * @throws OutOfBoardException
 	 * @throws NonPossibleMoveException
+	 */
+	public Piece getPiece(String caseJeu) throws OutOfBoardException,
+			NonPossibleMoveException {
+		assert (!(caseJeu.charAt(0) < 'A') && !(caseJeu.charAt(0) > 'H')
+				&& !(caseJeu.charAt(1) < '1') && !(caseJeu.charAt(1) > '8'));
+		int column = caseJeu.charAt(0) - 'A' + '1' - 48;
+		int row = caseJeu.charAt(1) - 48;
+		return this.getPiece(row, column);
+	}
+
+	/**
+	 * Déplace la pièce contenu dans la case (row1,column1) vers 
+	 * la case (row2,column2).
+	 * 
+	 * @param row1
+	 * 				coordonnée en abscisse de la case initiale.
+	 * @param column1
+	 * 				coordonnée en ordonnée de la case initiale.
+	 * @param row2
+	 * 				coordonnée en abscisse de la case de destination.
+	 * @param column2
+	 * 				coordonnée en ordonnée de la case de destination.
+	 * @throws OutOfBoardException
+	 * 				exception renvoyée si les coordonnées explicitées
+	 * 				ne corresondent pas à une case du plateau.
+	 * @throws NonPossibleMoveException
+	 * 				exception renvoyée si le coup n'est pas jouable.
 	 */
 	public void deplacerPiece(int row1, int column1, int row2, int column2)
 			throws OutOfBoardException, NonPossibleMoveException {
@@ -628,9 +724,43 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Déplace la pièce contenu dans la case (caseDepart) vers 
+	 * la case (caseArrivee).
+	 * 
+	 * @param caseDepart 
+	 * 					coordonnees en chaine de caractères 
+	 * 					de la case de départ.
+	 * @param caseArrivee
+	 * 					coordonnees en chaine de caractères 
+	 * 					de la case d'arrivée.
+	 * @throws OutOfBoardException
+	 * 				exception renvoyée si les coordonnées explicitées
+	 * 				ne corresondent pas à une case du plateau.
+	 * @throws NonPossibleMoveException
+	 * 				exception renvoyée si le coup n'est pas jouable.
+	 */
+	public void deplacerPiece(String caseDepart, String caseArrivee)
+			throws OutOfBoardException, NonPossibleMoveException {
+		assert (!(caseDepart.charAt(0) < 'A') && !(caseDepart.charAt(0) > 'H')
+				&& !(caseDepart.charAt(1) < '1')
+				&& !(caseDepart.charAt(1) > '8')
+				&& !(caseArrivee.charAt(0) < 'A')
+				&& !(caseArrivee.charAt(0) > 'H')
+				&& !(caseArrivee.charAt(1) < '1') && !(caseArrivee.charAt(1) > '8'));
+		int column1 = caseDepart.charAt(0) - 'A' + '1' - 48;
+		int column2 = caseArrivee.charAt(0) - 'A' + '1' - 48;
+		int row1 = caseDepart.charAt(1) - 48;
+		int row2 = caseArrivee.charAt(1) - 48;
+		this.deplacerPiece(row1, column1, row2, column2);
+	}
+
+	/**
+	 * initialise une promotion
 	 * 
 	 * @param piece
+	 * 				pièce à remplacer lors de la promotion
+	 * 				les choix possibles sont "Rook", "Knight",
+	 * 				"Bishop" ou "Queen".
 	 */
 	public void setPromotion(String piece) {
 		Boolean promotion = false;
@@ -661,7 +791,7 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Rétablit un coup, (possible après un ou plusieurs annulerCoup)
 	 * 
 	 * @throws OutOfBoardException
 	 * @throws NonPossibleMoveException
@@ -692,30 +822,7 @@ public class Board implements Serializable {
 	}
 
 	/**
-	 * TODO
-	 * 
-	 * @param caseDepart
-	 * @param caseArrivee
-	 * @throws OutOfBoardException
-	 * @throws NonPossibleMoveException
-	 */
-	public void deplacerPiece(String caseDepart, String caseArrivee)
-			throws OutOfBoardException, NonPossibleMoveException {
-		assert (!(caseDepart.charAt(0) < 'A') && !(caseDepart.charAt(0) > 'H')
-				&& !(caseDepart.charAt(1) < '1')
-				&& !(caseDepart.charAt(1) > '8')
-				&& !(caseArrivee.charAt(0) < 'A')
-				&& !(caseArrivee.charAt(0) > 'H')
-				&& !(caseArrivee.charAt(1) < '1') && !(caseArrivee.charAt(1) > '8'));
-		int column1 = caseDepart.charAt(0) - 'A' + '1' - 48;
-		int column2 = caseArrivee.charAt(0) - 'A' + '1' - 48;
-		int row1 = caseDepart.charAt(1) - 48;
-		int row2 = caseArrivee.charAt(1) - 48;
-		this.deplacerPiece(row1, column1, row2, column2);
-	}
-
-	/**
-	 * TODO
+	 * Evalue s'il y a un cas de pat sur le plateau.
 	 * 
 	 * @return
 	 */
@@ -732,36 +839,5 @@ public class Board implements Serializable {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param caseJeu
-	 * @return
-	 * @throws OutOfBoardException
-	 * @throws NonPossibleMoveException
-	 */
-	public Piece getPiece(String caseJeu) throws OutOfBoardException,
-			NonPossibleMoveException {
-		assert (!(caseJeu.charAt(0) < 'A') && !(caseJeu.charAt(0) > 'H')
-				&& !(caseJeu.charAt(1) < '1') && !(caseJeu.charAt(1) > '8'));
-		int column = caseJeu.charAt(0) - 'A' + '1' - 48;
-		int row = caseJeu.charAt(1) - 48;
-		return this.getPiece(row, column);
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param caseJeu
-	 * @return
-	 */
-	public boolean isEmpty(String caseJeu) {
-		assert (!(caseJeu.charAt(0) < 'A') && !(caseJeu.charAt(0) > 'H')
-				&& !(caseJeu.charAt(1) < '1') && !(caseJeu.charAt(1) > '8'));
-		int column = caseJeu.charAt(0) - 'A' + '1' - 48;
-		int row = caseJeu.charAt(1) - 48;
-		return this.isEmpty(row, column);
 	}
 }
