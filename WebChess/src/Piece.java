@@ -50,16 +50,16 @@ abstract public class Piece implements Serializable {
 	private int mangeableEnPrisePassant;
 
 	/**
-	 * TODO
+	 * getter mangeableEnPrisePassant
 	 * 
-	 * @return
+	 * @return mangeableEnPrisePassant
 	 */
 	public int getMangeableEnPrisePassant() {
 		return mangeableEnPrisePassant;
 	}
 
 	/**
-	 * TODO
+	 * setter mangeableEnPrisePassant
 	 * 
 	 * @param mangeableEnPrisePassant
 	 */
@@ -571,10 +571,11 @@ abstract public class Piece implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Retourne la liste des coups possibles de la pièce (en prenant
+	 * en considération les coups qui peuvent mettre son roi en échec).
 	 * 
 	 * @param board
-	 * @return
+	 * @return liste des coups possibles de la pièce
 	 */
 	public ArrayList<Square> possibleMovesSE(Board board) {
 		Board boardSimu;
@@ -616,11 +617,9 @@ abstract public class Piece implements Serializable {
 								movesList.add(new Square(i, j));
 						}
 					} catch (OutOfBoardException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 
 					} catch (NonPossibleMoveException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

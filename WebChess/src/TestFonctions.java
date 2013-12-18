@@ -1,13 +1,13 @@
 //import java.util.ArrayList;
 
 /**
- * TODO
+ * Classe contenant un main qui teste nos fonctions de jeu en mode console
  * 
  */
 public class TestFonctions {
 
 	/**
-	 * TODO
+	 * Affichage du plateau de jeu en console
 	 * 
 	 * @param b
 	 * @return
@@ -48,7 +48,7 @@ public class TestFonctions {
 	}
 
 	/**
-	 * TODO
+	 * main testant des fonctions en mode console
 	 * 
 	 * @param argv
 	 * @throws NonPossibleMoveException

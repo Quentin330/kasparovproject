@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * TODO
+ * Implementation d'une case (utile pour faire une fonction qui renvoie les 2 coordonnées d'une case)
  * 
  */
 public class Square implements Serializable {
@@ -12,16 +12,16 @@ public class Square implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * TODO
+	 * ordonnée de la case
 	 */
 	private int row;
 	/**
-	 * TODO
+	 * abscisse de la case
 	 */
 	private int column;
 
 	/**
-	 * TODO
+	 * Getter de l'abscisse
 	 * 
 	 * @return
 	 */
@@ -30,7 +30,7 @@ public class Square implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getter de l'ordonnée
 	 * 
 	 * @return
 	 */
@@ -39,7 +39,7 @@ public class Square implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Constructeur de square
 	 * 
 	 * @param row
 	 * @param column
@@ -50,15 +50,16 @@ public class Square implements Serializable {
 	}
 
 	/**
+	 * Verification que la case est dans le tableau
 	 * 
-	 * @return
+	 * @return true si la case appartient au tableau
 	 */
 	public Boolean isRealSquare() {
 		return (this.row > 0 && this.row < 9 && this.column > 0 && this.column < 9);
 	}
 
 	/**
-	 * TODO
+	 * Verifie si la case instanciée a les coordonnées passées en paramètre
 	 * 
 	 * @param row
 	 * @param column
@@ -69,9 +70,9 @@ public class Square implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Nom de la case instanciée
 	 * 
-	 * @return
+	 * @return chaine de caractères correspondant au nom de la case
 	 */
 	public String getNomCase() {
 		String nom = new String();

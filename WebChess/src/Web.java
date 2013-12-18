@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * TODO
+ * Classe contenant le main servant à lancer le serveur
  * 
  */
 public class Web {
@@ -57,9 +57,9 @@ public class Web {
 	}
 
 	/**
-	 * runner
+	 * runner du serveur
 	 * 
-	 * @param args
+	 * @param args (ne s'en sert pas)
 	 */
 	public static void main(String[] args) {
 		ServerSocket socketserver;
@@ -135,7 +135,7 @@ public class Web {
 									String file = parametres.substring(5);
 									if (file.equals("ListeSauvegardes")
 											|| save.isSave(file)) {
-										// TODO Message nom déjà pris
+										// ne fait rien si le nom est déjà pris
 									} else {
 										try {
 											oos = new ObjectOutputStream(
@@ -178,7 +178,7 @@ public class Web {
 											e2.printStackTrace();
 										}
 									} else {
-										// TODO Message sauvegarde inexistante
+										// ne fait rien si la sauvegarde est inexistante
 									}
 								} else if (parametres.startsWith("Suppr")) {
 									String partie = parametres.substring(6);
@@ -213,7 +213,7 @@ public class Web {
 									if (promotion) {
 										b.setPromotion(parametres);
 									} else {
-										// TODO page HTML pour les tricheurs
+										// Ne fait rien si une piece est en parametre et que le coup n'est pas une promotion
 									}
 								} else if (parametres.equals("NewGame"))
 									b = new Board();
@@ -221,8 +221,7 @@ public class Web {
 									if (b.getNumeroCoup() > 1) {
 										b.annulerCoup();
 									} else {
-										// TODO Message d'erreur
-										// "annulation Impossible" (page html)
+										// annulation Impossible car aucun coup n'a été joué
 									}
 								else if (parametres.equals("Redo"))
 									if (b.getNumeroCoup() < b
@@ -234,8 +233,7 @@ public class Web {
 											e.printStackTrace();
 										}
 									} else {
-										// TODO Message d'erreur
-										// "Redo Impossible" (page html)
+										// Redo Impossible car aucun coup n'a été annulé
 									}
 								// case ou l'on veut aller
 								else if (parametres.startsWith("to")) {
@@ -243,7 +241,7 @@ public class Web {
 											|| (parametres.charAt(2) > 'H')
 											|| (parametres.charAt(3) < '1')
 											|| (parametres.charAt(3) > '8')) {
-										// TODO page HTML pour les tricheurs
+										// Ne fait rien si les parametres sont hors du tableau
 									} else {
 										String nomCase = "";
 										nomCase += parametres.charAt(2);
@@ -262,8 +260,7 @@ public class Web {
 												}
 												b.nextPlayer();
 											} else {
-												// TODO page HTML pour les
-												// tricheurs
+												// ne fait rien si la case n'est pas jouable
 											}
 										} catch (Exception e) {
 											e.printStackTrace();
@@ -276,13 +273,13 @@ public class Web {
 											|| (parametres.charAt(0) > 'H')
 											|| (parametres.charAt(1) < '1')
 											|| (parametres.charAt(1) > '8')) {
-										// TODO page HTML pour les tricheurs
+										// Ne fait rien si les parametres sont hors du tableau
 									} else {
 										String nomCase = "";
 										nomCase += parametres.charAt(0);
 										nomCase += parametres.charAt(1);
 										if (b.isEmpty(nomCase)) {
-											// TODO page HTML pour les tricheurs
+											// Ne fait rien si on selectionne une case vide
 										} else {
 											try {
 												if (b.getPiece(nomCase)
@@ -291,8 +288,7 @@ public class Web {
 																.getCurrentPlayer()))
 													b.setSelectedCase(nomCase);
 												else {
-													// TODO page HTML pour les
-													// tricheurs
+													// Ne fait rien si la piece de la case en parametre n'est pas de la bonne couleur
 												}
 											} catch (Exception e) {
 												e.printStackTrace();
@@ -301,6 +297,7 @@ public class Web {
 									}
 								}
 							}
+							// géneration de la page html
 							try {
 								HTMLGen html = new HTMLGen(b,
 										save.getSavedGames(),
@@ -310,6 +307,7 @@ public class Web {
 								e.printStackTrace();
 							}
 						} else {
+							// gestion code 304
 							if (input.contains("If-Modified-Since")) {
 								String input2 = new String(input);
 								while (!input2.startsWith("If-Modified-Since")) {
@@ -358,6 +356,7 @@ public class Web {
 									+ "\n\n";
 							output = header;
 						} else {
+							// envoi de la page html au navigateur
 							header = "HTTP/1.1 200 OK"
 									+ "\nServer: WebChess localhost:7777"
 									// Différente longueur de string et byte avec les accents en UTF-8
@@ -381,7 +380,7 @@ public class Web {
 						ostream.write(temp);
 						ostream.flush();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						//  Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -392,7 +391,7 @@ public class Web {
 			// System.out.println("::: Deconnexion");
 
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+			//  Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

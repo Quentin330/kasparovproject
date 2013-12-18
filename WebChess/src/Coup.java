@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * TODO
+ * Classe permettant la sauvegarde d'un coup.
  */
 public class Coup implements Serializable {
 
@@ -11,57 +11,57 @@ public class Coup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * TODO
+	 * Pièce en cours de déplacement.
 	 */
 	private Piece movedPiece;
 
 	/**
-	 * TODO
+	 * Pièce précédente sauvegardée dans le cas d'une promotion. 
 	 */
 	private Piece oldPiece;
 
 	/**
-	 * TODO
+	 * Booleen vérifiant si une pièce a été mangé pendant un coup.
 	 */
 	private Boolean hasEaten;
 
 	/**
-	 * TODO
+	 * Booleen verifiant si le coup est un petit roque.
 	 */
 	private Boolean isPetitRoque;
 
 	/**
-	 * TODO
+	 * Booleen verifiant si le coup est un grand roque.
 	 */
 	private Boolean isGrandRoque;
 
 	/**
-	 * TODO
+	 * Pièce mangée sauvegardée.
 	 */
 	private Piece eatenPiece;
 
 	/**
-	 * TODO
+	 * Case de départ pour le déplacement.
 	 */
 	private Square caseDepart;
 
 	/**
-	 * TODO
+	 * Case d'arrivée pour le déplacement.
 	 */
 	private Square caseArrivee;
 
 	/**
-	 * TODO
+	 * Numéro du coup.
 	 */
 	private int numeroCoup;
 
 	/**
-	 * TODO
+	 * Booleen vérifiant si le coup est une prise en passant.
 	 */
 	private Boolean isPriseEnPassant;
 
 	/**
-	 * TODO
+	 * Booleen vérifiant si le coup est une promotion.
 	 */
 	private Boolean isPromotion;
 
@@ -69,70 +69,70 @@ public class Coup implements Serializable {
 	// piece devient movedPiece
 
 	/**
-	 * TODO
+	 * Getter de isPromotion.
 	 * 
-	 * @return
+	 * @return vrai si le coup est une promotion.
 	 */
 	public Boolean getIsPromotion() {
 		return isPromotion;
 	}
 
 	/**
-	 * TODO
+	 * Setter de isPromotion.
 	 * 
-	 * @param isPromotion
+	 * @param isPromotion booleen si le coup est une promotion.
 	 */
 	public void setIsPromotion(Boolean isPromotion) {
 		this.isPromotion = isPromotion;
 	}
 
 	/**
-	 * TODO
+	 * Getter de movedPiece.
 	 * 
-	 * @return
+	 * @return la pièce en encours de déplacement.
 	 */
 	public Piece getMovedPiece() {
 		return movedPiece;
 	}
 
 	/**
-	 * TODO
+	 * Setter de movedPiece.
 	 * 
-	 * @param movedPiece
+	 * @param movedPiece la pièce en encours de déplacement.
 	 */
 	public void setMovedPiece(Piece movedPiece) {
 		this.movedPiece = movedPiece;
 	}
 
 	/**
-	 * TODO
+	 * Getter de oldPiece.
 	 * 
-	 * @return
+	 * @return la pièce précédente (avant le roque).
 	 */
 	public Piece getOldPiece() {
 		return oldPiece;
 	}
 
 	/**
-	 * TODO
+	 * Setter de oldPiece
 	 * 
-	 * @param oldPiece
+	 * @param oldPiece la pièce précédente (avant le roque).
 	 */
 	public void setOldPiece(Piece oldPiece) {
 		this.oldPiece = oldPiece;
 	}
 
 	/**
-	 * TODO
+	 * Getter de hasEaten.
 	 * 
-	 * @return
+	 * @return vrai si une pièce a été mangée pendant le coup.
 	 */
 	public Boolean getHasEaten() {
 		return hasEaten;
 	}
 
 	/**
-	 * TODO
+	 * Setter de hasEaten.
 	 * 
 	 * @param hasEaten
 	 */
@@ -141,16 +141,16 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getter de isPetitRoque.
 	 * 
-	 * @return
+	 * @return vrai si le coup est un petitRoque.
 	 */
 	public Boolean getIsPetitRoque() {
 		return isPetitRoque;
 	}
 
 	/**
-	 * TODO
+	 * Setter de isPetitRoque.
 	 * 
 	 * @param isPetitRoque
 	 */
@@ -159,7 +159,7 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getter de isGrandRoque.
 	 * 
 	 * @return
 	 */
@@ -168,7 +168,7 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Setter de isGrandRoque.
 	 * 
 	 * @param isGrandRoque
 	 */
@@ -177,16 +177,16 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getter de eatenPiece.
 	 * 
-	 * @return
+	 * @return la pièce mangée.
 	 */
 	public Piece getEatenPiece() {
 		return eatenPiece;
 	}
 
 	/**
-	 * TODO
+	 * Setter de eatenPiece.
 	 * 
 	 * @param eatenPiece
 	 */
@@ -195,16 +195,16 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getter de caseDepart.
 	 * 
-	 * @return
+	 * @return la case de départ.
 	 */
 	public Square getCaseDepart() {
 		return caseDepart;
 	}
 
 	/**
-	 * TODO
+	 * Setter de caseDepart.
 	 * 
 	 * @param caseDepart
 	 */
@@ -213,16 +213,16 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getter de caseArrivee.
 	 * 
-	 * @return
+	 * @return la case d'arrivée.
 	 */
 	public Square getCaseArrivee() {
 		return caseArrivee;
 	}
 
 	/**
-	 * TODO
+	 * Setter de caseArrivee.
 	 * 
 	 * @param caseArrivee
 	 */
@@ -231,32 +231,32 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Getter du numero du coup.
 	 */
 	public int getNumeroCoup() {
 		return numeroCoup;
 	}
 
 	/**
-	 * TODO
+	 * Setter du numero du coup.
 	 * 
-	 * @param numeroCoup
+	 * @param numeroCoup le numero du coup.
 	 */
 	public void setNumeroCoup(int numeroCoup) {
 		this.numeroCoup = numeroCoup;
 	}
 
 	/**
-	 * TODO
+	 * Getter de isPriseEnPassant.
 	 * 
-	 * @return
+	 * @return true si le coup est une prise en passant.
 	 */
 	public Boolean getIsPriseEnPassant() {
 		return isPriseEnPassant;
 	}
 
 	/**
-	 * TODO
+	 * Setter de isPriseEnPassant.
 	 * 
 	 * @param isPriseEnPassant
 	 */
@@ -265,7 +265,7 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Constructeur du coup.
 	 */
 	public Coup() {
 		this.isPromotion = false;
@@ -276,9 +276,10 @@ public class Coup implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * Affichage du coup.
 	 * 
-	 * @return
+	 * @return 	un string contenant les informations
+	 * 			sur son type sa case de départ et sa case d'arrivée.
 	 */
 	public String afficherCoup() {
 		if (this.isPetitRoque)
