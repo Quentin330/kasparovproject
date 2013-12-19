@@ -9,3 +9,4 @@ Une fois le serveur lancé, ouvrir un navigateur (tant que c'est pas internet ex
 Une fois dans la page, le plateau de jeu est au milieu et les options sont dans le bandeau sur la droite (mais ça c'est écrit sur la page comme vous nous l'avez conseillé).
 Pour quitter le serveur on aurait aimé vous faire un petit script qui tue le processus mais bon on a pas réussi alors il va falloir tuer le processus vous même ('ps -ef |grep chess.jar' et 'kill -9 XXXX' avec XXXX le numero du processus devraient vous être utile, mais bon ça vous devez le savoir).
 Merci beaucoup et bon jeu (et comme le disait notre ami Gary Kasparov, "Il n'y a pas de sport plus violent que les échecs.")
+PS : likez notre projet sur github (oui ça aussi c'est une blague mais l'adresse de notre github au cas ou tous les fichiers de l'archive soit corrompus, dont celui ci donc au cas ou vous ne pourriez même pas lire ça vous pouvez trouver les fichiers sur https://github.com/Quentin330/kasparovproject )
